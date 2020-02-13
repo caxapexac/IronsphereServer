@@ -1,9 +1,9 @@
 # Ironsphere server #
 
 [![Inline Docs](http://inch-ci.org/github/caxapexac/IronsphereServer.svg?branch=master)](http://inch-ci.org/github/caxapexac/IronsphereServer)
-[![Build Status](https://david-dm.org/caxapexac/IronsphereServer.svg)](https://david-dm.org/caxapexac/IronsphereServer)
-[![Build Status](https://david-dm.org/caxapexac/IronsphereServer/dev-status.svg)](https://david-dm.org/caxapexac/IronsphereServer#info=devDependencies)
-[![Build Status](https://travis-ci.org/caxapexac/IronsphereServer.png?branch=master)](https://travis-ci.org/caxapexac/IronsphereServer)
+[![Circle CI](https://circleci.com/gh/caxapexac/IronsphereServer.svg?style=shield)](https://circleci.com/gh/caxapexac/IronsphereServer)
+[![Dependencies](https://david-dm.org/caxapexac/IronsphereServer.svg)](https://david-dm.org/caxapexac/IronsphereServer)
+[![DevDependencies](https://david-dm.org/caxapexac/IronsphereServer/dev-status.svg)](https://david-dm.org/caxapexac/IronsphereServer#info=devDependencies)
 [![Known Vulnerabilities](https://snyk.io/test/github/caxapexac/IronsphereServer/badge.svg?targetFile=package.json)](https://snyk.io/test/github/caxapexac/IronsphereServer?targetFile=package.json)
 [![Maintainability](https://api.codeclimate.com/v1/badges/af8d9995f5c480c73273/maintainability)](https://codeclimate.com/github/caxapexac/IronsphereServer/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/af8d9995f5c480c73273/test_coverage)](https://codeclimate.com/github/caxapexac/IronsphereServer/test_coverage)
