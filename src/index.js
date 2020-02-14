@@ -1,4 +1,4 @@
-const nativeoop = require("../build/Release/nativeoop.node")
+const nativeoop = require("bindings")("nativeoop");
 
 console.log("-=Server is starting=-"); //Log also into file and with current time
 //Start
