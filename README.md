@@ -20,13 +20,14 @@
 0. ~~Папей гавна~~
 1. `npm install -g node-gyp`
 2. Install `Python 2.7`
-3. `npm install -g --production windows-build-tools`
+3. `npm install -g --production windows-build-tools` OR `npm install --global --production windows-build-tools --vs2019`
 4. INSTEAD OF steps 2-3 you can install [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools) then `npm config set msvs_version 2019`
+5. [Full guide](https://spin.atomicobject.com/2019/03/27/node-gyp-windows/)
 
 # Importand (development) #
 
-1. `npm run gyp-config` to create makefiles (if added/removed files)
-2. `npm run gyp-buuld` to build dll
+1. `npm run build` to rebuild server
+2. OR `npm run build-logic` (change inside for linux) to rebuild logic as terminal executable
 
 # Линки #
 
@@ -66,6 +67,8 @@
 
 ## Other
 - [Firebase pros/cons](https://crisp.chat/blog/why-you-should-never-use-firebase-realtime-database/)
+- [Webpack config](https://webpack.js.org/configuration/#options)
+- [Webpack online config](https://createapp.dev/webpack)
 - []()
 
 
