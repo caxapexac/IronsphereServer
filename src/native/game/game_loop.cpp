@@ -1,4 +1,4 @@
-#include "gameloop.hpp"
+#include "game_loop.hpp"
 
 std::string game_loop::start(std::string data)
 {
@@ -7,7 +7,6 @@ std::string game_loop::start(std::string data)
 
 std::string game_loop::update(std::string data)
 {
-
     return "updates with: " + data;
 }
 

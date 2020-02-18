@@ -69,6 +69,7 @@
 - [Firebase pros/cons](https://crisp.chat/blog/why-you-should-never-use-firebase-realtime-database/)
 - [Webpack config](https://webpack.js.org/configuration/#options)
 - [Webpack online config](https://createapp.dev/webpack)
+- [GH REST API MySQL Generator](https://github.com/o1lab/xmysql/)
 - []()
 
 

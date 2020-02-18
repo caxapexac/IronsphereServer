@@ -17,4 +17,5 @@ set_target_properties(
     PROPERTIES 
         OUTPUT_NAME "logic"
         SUFFIX ".exe"
+        VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"
 )

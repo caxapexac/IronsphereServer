@@ -1,6 +1,6 @@
 #include "napi.h"
 #include <string>
-#include "game/gameloop.hpp"
+#include "game/game_loop.hpp"
 
 
 // Arg0 - Json string
