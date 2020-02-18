@@ -1,11 +1,9 @@
 // L1
 
-template <typename T>
-class field
-{
+template<typename T> class field {
 private:
     T data[];
 
 public:
-    field(T);
+    field (T);
 };

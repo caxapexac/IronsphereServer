@@ -1,19 +1,21 @@
-#include "logger.hpp"
+#ifndef LOGIC_GAME_HPP
+#define LOGIC_GAME_HPP
 
-class game
-{
+#include "../other/logger.hpp"
+
+class game {
 private:
     /* data */
 public:
-    game(/* args */);
-    ~game();
+    game (/* args */);
+    ~game ();
 };
 
-game::game(/* args */)
-{
-    
+game::game (/* args */) {
+
 }
 
-game::~game()
-{
+game::~game () {
 }
+
+#endif //LOGIC_GAME_HPP

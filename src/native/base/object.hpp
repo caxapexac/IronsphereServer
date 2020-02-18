@@ -1,5 +1,7 @@
 // #include <string>
 
+// TODO into interfaces ?
+
 // // Abstract object
 // class object
 // {
@@ -10,7 +12,7 @@
 
 //     // Serves as the default hash function.
 //     virtual int hash();
-    
+
 //     // Deep copy of an object
 //     virtual object clone();
 

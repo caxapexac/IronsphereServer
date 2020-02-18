@@ -107,3 +107,5 @@ dist
 CMakeFiles/
 CMakeCache.txt
 build/
+.idea/
+cmake-build-debug/

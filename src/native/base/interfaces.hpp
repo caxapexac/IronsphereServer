@@ -1,28 +1,33 @@
+#ifndef LOGIC_INTERFACES_HPP
+#define LOGIC_INTERFACES_HPP
+
 #include <string>
 #include <memory>
-#include <../utils/json.hpp>
-#include <../utils/json_tools.hpp>
+#include "../utils/json.hpp"
+#include "../utils/json_tools.hpp"
+
+using json = nlohmann::json;
 
 // For flushing memory before returning into object pool
-class idisposable
-{
+class idisposable {
 public:
-    virtual void dispose() = 0;
-    virtual ~idisposable() {}
+    virtual void dispose () = 0;
+    virtual ~idisposable () = default;
 };
 
-class iserializable
-{
+// For json serialization
+class iserializable {
 public:
-    virtual std::shared_ptr<nlohmann::json> serialize(serializers type) = 0;
-    virtual void deserialize(nlohmann::json& package) = 0;
-    virtual ~iserializable() {}
+    virtual std::shared_ptr<json> serialize (serializers type) = 0;
+    virtual void deserialize (json& package) = 0;
+    virtual ~iserializable () = default;
 };
 
-class ihashable
-{
+// TODO purposes?
+class ihashable {
 public:
-    virtual int get_hash() = 0;
-    virtual ~ihashable() {}
+    virtual int get_hash () = 0;
+    virtual ~ihashable () = default;
 };
 
+#endif //LOGIC_INTERFACES_HPP

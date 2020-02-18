@@ -1,9 +1,9 @@
 //#include "operational/game.hpp"
 #include <iostream>
-#include "base/object.hpp"
+#include "game/game_loop.hpp"
 
 int main() {
-    std::cout << objectt::start("hello") << std::endl;
+    std::cout << "hello" << std::endl;
 
     // std::shared_ptr<game> g = game::get(0);
     // std::shared_ptr<json> j = g->pack(3);

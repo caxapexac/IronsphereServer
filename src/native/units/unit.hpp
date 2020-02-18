@@ -1,18 +1,15 @@
 #ifndef LOGIC_UNIT_H
 #define LOGIC_UNIT_H
 
-#include "../base/object.hpp"
 #include "../base/interfaces.hpp"
 #include "../structs/vectors.hpp"
-#include "../abilities/ability.hpp"
-#include "../../utils/coords.hpp"
 
 // L1
 template <typename T>
-class unit : object, iserializable
+class unit : iserializable, idisposable
 {
 private:
-    
+
 
 public:
     unit();

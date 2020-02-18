@@ -1,3 +1,6 @@
+#ifndef LOGIC_JSON_TOOLS_H
+#define LOGIC_JSON_TOOLS_H
+
 #include <memory>
 #include "json.hpp"
 
@@ -49,3 +52,5 @@ std::shared_ptr<std::vector<T>> json_tools::unpack_vector(json& package) {
     }
     return vec;
 }
+
+#endif //LOGIC_JSON_TOOLS_H
