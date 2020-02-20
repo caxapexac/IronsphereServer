@@ -7,7 +7,7 @@
 class player : public iserializable {
 private:
     int money; //TODO make it more complex
-    std::shared_ptr<std::vector<std::shared_ptr<unit>>> units; //TODO maybe make it more simple.
+    std::vector<std::shared_ptr<unit&>> units;
     // TODO IMHO we don't need to store it there. Game class stores it all the way
 
 public:
@@ -61,7 +61,7 @@ void player::deserialize (json& package) {
 }
 
 std::shared_ptr<std::vector<std::shared_ptr<unit>>>& player::get_units () {
-    return units;
+    return units; //TODO Replace indexator
 }
 
 void player::process () {

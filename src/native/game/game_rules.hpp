@@ -10,7 +10,7 @@ private:
     map_builder builder; //TODO L6
     // TODO L6 Win rule
     // TODO L6 Step queue (useless)
-    // TODO new game ability
+    // TODO new game ability ?
 public:
     std::shared_ptr<json> serialize (serializers type) const override;
     void deserialize (json& package) override;

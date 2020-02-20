@@ -1,6 +1,6 @@
 #include "napi.h"
 #include <string>
-#include "game/game_loop.hpp"
+#include "game/game_main.hpp"
 
 
 // Arg0 - Json string
@@ -23,16 +23,12 @@ Napi::String Start(const Napi::CallbackInfo& info)
 Napi::String Update(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
-    if (info.Length() < 1) {
+    if (info.Length() > 0) {
         Napi::TypeError::New(env, "Wrong number of arguments is Update()").ThrowAsJavaScriptException();
         return Napi::String::New(env, "Error");
     }
-    if (!info[0].IsString()) {
-        Napi::TypeError::New(env, "Argument isn't a string in Update()").ThrowAsJavaScriptException();
-        return Napi::String::New(env, "Error");
-    }
     std::string data = info[0].ToString();
-    return Napi::String::New(env, game_loop::update(data));
+    return Napi::String::New(env, game_loop::update());
 }
 
 // Arg0 - Json string
@@ -55,16 +51,11 @@ Napi::String Signal(const Napi::CallbackInfo& info)
 Napi::String Destroy(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
-    if (info.Length() < 1) {
+    if (info.Length() > 0) {
         Napi::TypeError::New(env, "Wrong number of arguments is Destroy()").ThrowAsJavaScriptException();
         return Napi::String::New(env, "Error");
     }
-    if (!info[0].IsString()) {
-        Napi::TypeError::New(env, "Argument isn't a string in Destroy()").ThrowAsJavaScriptException();
-        return Napi::String::New(env, "Error");
-    }
-    std::string data = info[0].ToString();
-    return Napi::String::New(env, game_loop::destroy(data));
+    return Napi::String::New(env, game_loop::destroy());
 }
 
 

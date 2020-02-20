@@ -1,14 +1,14 @@
 #ifndef LOGIC_TRANSFORM_H
 #define LOGIC_TRANSFORM_H
 
-#include "vectors.hpp"
+#include "vector2.hpp"
 #include "../base/interfaces.hpp"
 
 // https://docs.unity3d.com/ScriptReference/Transform.html
 class transform : public iserializable {
 private:
     vector2<int> position; // Tile x,y
-    float rotation {}; // Rotation in grads (0..360)
+    float rotation {}; // Rotation in grads (0..360) or 2pi
     float scale {}; // For collision detection where 1 is the width of tile
     vector2<float> offset; // Offset from center of tile position (-1..1) where 1 is the width of tile
 

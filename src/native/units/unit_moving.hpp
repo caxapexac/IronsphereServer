@@ -2,6 +2,9 @@
 #define LOGIC_UNIT_MOVING_HPP
 
 #include "unit.hpp"
+
+//TODO speed
+
 //
 // class unit_moving : public unit {
 // private:

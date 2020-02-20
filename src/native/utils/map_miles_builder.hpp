@@ -3,6 +3,7 @@
 
 #include "map_builder.hpp"
 
+// TODO add generating pivot point for every players
 class map_miles_builder : public map_builder {
 protected:
     int seed;

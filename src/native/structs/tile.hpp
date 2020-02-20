@@ -10,12 +10,12 @@
 // L1
 class tile : public iserializable {
 private:
-    bool passable; // Ground TODO maybe change to type or use texture
+    bool passable; // Ground TODO maybe change to type or use texture TODO remove
     float height; // Ground TODO for custom pathfinding (neighbours heights' difference)
     int texture; // Ground TODO enum
 
     int unit_id; // TODO what is it
-    int unit_pivot_anchor {}; // TODO what is it (maybe move to unit?)
+    int unit_pivot_anchor; // TODO what is it (maybe move to unit?) TODO vector2
 
 public:
     explicit tile (bool npassable = true, float nheight = 1, int ntexture = T_Default);
@@ -55,7 +55,7 @@ tile& tile::operator= (const tile& copy) {
 
 std::shared_ptr<json> tile::serialize (serializers type) const {
     switch (type) {
-        case serial_full:
+        case serial_full: //TODO
         case serial_own:
             return std::make_shared<json>(json {{"passable",          passable},
                                                 {"height",            height},
@@ -77,7 +77,7 @@ void tile::deserialize (json& package) {
     height = package["height"].get<float>();
     texture = package["texture"].get<int>();
     unit_id = package["unit_id"].get<int>();
-    unit_pivot_anchor = package["unit_pivot_anchor"].get<int>();
+    unit_pivot_anchor = package["unit_pivot_anchor"].get<int>(); //TODO vector2
 }
 
 int tile::get_unit_id () {

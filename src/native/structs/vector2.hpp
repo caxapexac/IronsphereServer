@@ -47,11 +47,4 @@ void vector2<T>::deserialize (json& package) {
 }
 
 
-template<typename T>
-struct vector3 {
-    T x, y, z;
-    explicit vector3 (T nx = 0, T ny = 0, T nz = 0) : x(nx), y(ny), z(nz) { }
-    // TODO
-};
-
 #endif //LOGIC_VECTORS_H

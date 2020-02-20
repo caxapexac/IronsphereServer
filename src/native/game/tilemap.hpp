@@ -5,13 +5,13 @@
 #include "../structs/tile.hpp"
 #include "../base/interfaces.hpp"
 #include "../units/unit.hpp"
-#include "../structs/double_array.hpp"
+#include "../structs/square_array.hpp"
 
 // L1
 class tilemap : public iserializable {
 private:
-    std::shared_ptr<double_array<tile>> tiles;
-    //TODO are units there?
+    std::shared_ptr<square_array<tile>> tiles;
+    //TODO are units there? No.
 
 public:
     explicit tilemap (const vector2<int>& scale); //TODO Changed seed to scale
@@ -21,11 +21,11 @@ public:
     void deserialize (json& package) override;
 
     tile& get_tile (const vector2<int>& position);
-    std::shared_ptr<unit> get_unit (const vector2<int>& position); //TODO maybe reference
+    std::shared_ptr<unit> get_unit (const vector2<int>& position); //TODO maybe reference (need pattern)
 };
 
 tilemap::tilemap (const vector2<int>& scale) {
-    tiles = std::make_shared<double_array<tile>>(scale);
+    tiles = std::make_shared<square_array<tile>>(scale);
 }
 
 tilemap::tilemap (const tilemap& copy) {

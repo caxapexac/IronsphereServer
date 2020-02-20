@@ -1,5 +1,5 @@
-#ifndef LOGIC_DOUBLE_ARRAY_HPP
-#define LOGIC_DOUBLE_ARRAY_HPP
+#ifndef LOGIC_SQUARE_ARRAY_HPP
+#define LOGIC_SQUARE_ARRAY_HPP
 
 #include <memory>
 #include "../other/logger.hpp"
@@ -7,16 +7,17 @@
 #include "../base/errors.hpp"
 #include "../structs/transform.hpp"
 
+//TODO rename
 template<class T> // Where T : Tile with copy constructor
-class double_array : public iserializable {
+class square_array : public iserializable {
 private:
-    vector2<int> scale; // X - width, Y - height TODO maybe mock it inside vector2?
+    vector2<int> scale; // X - width, Y - height
     std::shared_ptr<std::shared_ptr<T>[]> data; //TODO into plain array of T (background is mutable only inside, not tile)
 
 public:
-    explicit double_array (const vector2<int>& nscale = vector2<int>(64, 64));
-    double_array (const double_array& copy);
-    double_array& operator= (const double_array& copy);
+    explicit square_array (const vector2<int>& nscale = vector2<int>(64, 64));
+    square_array (const square_array& copy);
+    square_array& operator= (const square_array& copy);
     std::shared_ptr<json> serialize (serializers type) const override;
     void deserialize (json& package) override;
 
@@ -30,7 +31,7 @@ public:
 
 
 template<class T>
-double_array<T>::double_array (const vector2<int>& nscale) : scale(nscale) {
+square_array<T>::square_array (const vector2<int>& nscale) : scale(nscale) {
     static_assert(std::is_convertible<T*, iserializable*>::value, "double_array class may only contain serializable objects");
     // TODO into exception
     // TODO destructor https://kezunlin.me/post/b82753fc/
@@ -41,7 +42,7 @@ double_array<T>::double_array (const vector2<int>& nscale) : scale(nscale) {
 }
 
 template<class T>
-double_array<T>::double_array (const double_array& copy) : scale(copy.scale) {
+square_array<T>::square_array (const double_array& copy) : scale(copy.scale) {
     // TODO copy data size checking
     data = std::shared_ptr<std::shared_ptr<T>[]>(new std::shared_ptr<T>[scale.x * scale.y]);
     for (int i = 0; i < scale.x * scale.y; ++i) {
@@ -51,7 +52,7 @@ double_array<T>::double_array (const double_array& copy) : scale(copy.scale) {
 }
 
 template<class T>
-double_array<T>& double_array<T>::operator= (const double_array& copy) {
+square_array<T>& square_array<T>::operator= (const square_array& copy) {
     if (this != &copy) {
         //TODO can I have this = double_array(copy); ?
         scale = copy.scale;
@@ -64,7 +65,7 @@ double_array<T>& double_array<T>::operator= (const double_array& copy) {
 }
 
 template<class T>
-std::shared_ptr<json> double_array<T>::serialize (serializers type) const {
+std::shared_ptr<json> square_array<T>::serialize (serializers type) const {
     json packed_data;
     switch (type) {
         case serial_full:
@@ -83,7 +84,7 @@ std::shared_ptr<json> double_array<T>::serialize (serializers type) const {
 }
 
 template<class T>
-void double_array<T>::deserialize (json& package) {
+void square_array<T>::deserialize (json& package) {
     static_assert(std::is_convertible<T*, iserializable*>::value, "double_array class may only contain serializable objects");
     // TODO checking?
     scale.deserialize(package["scale"]);
@@ -99,7 +100,7 @@ void double_array<T>::deserialize (json& package) {
 }
 
 template<class T>
-T& double_array<T>::operator[] (const vector2<int>& position) {
+T& square_array<T>::operator[] (const vector2<int>& position) {
     if (!((position.x >= 0) && (position.x < scale.x)) && !((position.y >= 0) && (position.y < scale.y))) {
         logger::get().log(logger::O_Broad | logger::T_Warn, "Index out of bounds! ", position.serialize(serial_full).get());
         throw std::runtime_error("Index out of bounds!"); //TODO own excepcion (L7)
@@ -110,28 +111,28 @@ T& double_array<T>::operator[] (const vector2<int>& position) {
 }
 
 template<class T>
-T& double_array<T>::operator[] (const std::shared_ptr<vector2<int>>& position_ptr) {
+T& square_array<T>::operator[] (const std::shared_ptr<vector2<int>>& position_ptr) {
     return (*this)[position_ptr.get()];
 }
 
 //TODO purposes
 template<class T>
-void double_array<T>::clear () {
+void square_array<T>::clear () {
     for (int i = 0; i < size(); ++i) {
         data[i] = nullptr;
     }
 }
 
 template<class T>
-int double_array<T>::size () const {
+int square_array<T>::size () const {
     return scale.x * scale.y;
 }
 
 // TODO purposes
 template<class T>
-bool double_array<T>::empty () const {
+bool square_array<T>::empty () const {
     return ((scale.x == 0) && (scale.y == 0));
 }
 
 
-#endif //LOGIC_DOUBLE_ARRAY_HPP
+#endif //LOGIC_SQUARE_ARRAY_HPP

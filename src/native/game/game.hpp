@@ -56,7 +56,7 @@ game::game (const game& copy) {
 
 game& game::operator= (const game& copy) {
     if (this != &copy) {
-        //this = transform(copy); //TODO ^^^
+        //this = game(copy); //TODO ^^^
     }
     return *this;
 }

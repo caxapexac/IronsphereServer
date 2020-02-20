@@ -12,6 +12,7 @@ class logger;
 // TODO Maybe remove singleton?
 // TODO Cuz of L4 change into proxy pattern (ilogger + concrete loggers)
 // TODO Change output format using agapter
+// TODO logger for statistics (for end game screen stats)
 class logger {
 private:
     static std::shared_ptr<logger> instance_ptr;

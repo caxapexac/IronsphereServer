@@ -1,5 +1,5 @@
-#ifndef LOGIC_GAME1_HPP
-#define LOGIC_GAME1_HPP
+#ifndef LOGIC_GAME_SINGLEPLAYER_HPP
+#define LOGIC_GAME_SINGLEPLAYER_HPP
 
 #include "game.hpp"
 
@@ -22,4 +22,4 @@
 //     ~game ();
 // };
 
-#endif //LOGIC_GAME1_HPP
+#endif //LOGIC_GAME_SINGLEPLAYER_HPP

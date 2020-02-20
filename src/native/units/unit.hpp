@@ -9,6 +9,7 @@ class unit : public iserializable, idisposable {
 protected:
     int id; // TODO maybe struct player+id
     int health;
+    float view_radius; //used for war smoke and enemy visiblity TODO add into constructor/serialization
     std::shared_ptr<transform> transformation; //TODO rename
 
 public:
