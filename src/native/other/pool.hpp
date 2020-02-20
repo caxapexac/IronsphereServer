@@ -11,7 +11,7 @@ private:
     std::stack<std::shared_ptr<T>> items;
 
 public:
-    explicit pool (int start_capacity = 8);
+    explicit pool (int start_capacity = 8); //TODO there is no capacity in stl ;(
     std::shared_ptr<T> get ();
     void recycle (std::shared_ptr<T> item);
     ~pool ();
@@ -22,16 +22,23 @@ template<typename T> pool<T>::pool (int start_capacity) {
 }
 
 template<typename T> std::shared_ptr<T> pool<T>::get () {
-    if (items.size > 0)
-        return items.pop();
+    if (items.size() > 0)
+    {
+        std::shared_ptr ptr = items.top();
+        items.pop();
+        return ptr;
+    }
     else
-        return std::make_shared<T>()
+    {
+        return std::make_shared<T>();
+    }
+
 }
 
 template<typename T> void pool<T>::recycle (std::shared_ptr<T> item) {
     // Recycle only items without other references
-    if (item.use_count > 1)
-        throw shared_pointer_exception(item.stringify());
+    if (static_cast<int>(item.use_count) > 1)
+        throw shared_pointer_exception(item->stringify());
     // TODO maybe item.dispose()
     items.push(item);
 }

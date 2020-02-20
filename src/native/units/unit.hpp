@@ -2,46 +2,86 @@
 #define LOGIC_UNIT_H
 
 #include "../base/interfaces.hpp"
-#include "../structs/vectors.hpp"
+#include "../structs/transform.hpp"
 
 // L1
-template <typename T>
-class unit : iserializable, idisposable
-{
-private:
-
-
-public:
-    unit();
-};
-
-
-
-
-
-
-
-class unit : public serializable {
-private:
-    int id;
-
-    std::shared_ptr<coords> pivot_position;
+class unit : public iserializable, idisposable {
+protected:
+    int id; // TODO maybe struct player+id
     int health;
-    int size;
+    std::shared_ptr<transform> transformation; //TODO rename
 
 public:
-    int get_id();
+    explicit unit (int nid = 0, int nhealth = 10, const transform& ntransformation = transform());
+    unit (const unit& copy);
+    unit& operator= (const unit& copy);
+    std::shared_ptr<json> serialize (serializers type) const override;
+    void deserialize (json& package) override;
+    void dispose () override;
 
-    explicit unit(json &package);
-    std::shared_ptr<json> pack(int serializer) override;
+    int get_id ();
+    int get_health ();
+    std::shared_ptr<transform>& get_transform ();
 
-    virtual bool is_transparent() = 0;
-
-    std::shared_ptr<coords>& get_pivot_position();
-    int get_size();
-
-    virtual void update();
+    virtual void update ();
+    //virtual bool is_transparent() = 0; //TODO why?
 };
+
+unit::unit (int nid, int nhealth, const transform& ntransformation) : id(nid), health(nhealth) {
+    transformation = std::make_shared<transform>(ntransformation);
+}
+
+unit::unit (const unit& copy) {
+    //TODO
+}
+
+unit& unit::operator= (const unit& copy) {
+    if (this != &copy) {
+        //this = transform(copy); //TODO ^^^
+    }
+    return *this;
+}
+
+std::shared_ptr<json> unit::serialize (serializers type) const {
+    switch (type) {
+        case serial_full:
+        case serial_own:
+            return std::make_shared<json>(json {{"id",             id},
+                                                {"health",         health},
+                                                {"transformation", *transformation->serialize(type)}});
+        case serial_enemy:
+            return std::make_shared<json>(json {}); // TODO or exception
+        default:
+            break; //TODO exception
+    }
+}
+
+void unit::deserialize (json& package) {
+    // TODO checking
+    id = package["id"].get<int>();
+    health = package["health"].get<int>();
+    transformation->deserialize(package["transformation"]);
+}
+
+void unit::dispose () {
+    //TODO for pool
+}
+
+int unit::get_id () {
+    return id;
+}
+
+int unit::get_health () {
+    return health;
+}
+
+std::shared_ptr<transform>& unit::get_transform () {
+    return transformation;
+}
+
+void unit::update () {
+    //if (health <= 0) choreographer::get()->kill(std::shared_ptr<unit>(this));
+}
 
 
 #endif //LOGIC_UNIT_H

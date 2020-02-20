@@ -12,7 +12,7 @@ Napi::String Start(const Napi::CallbackInfo& info)
         return Napi::String::New(env, "Error");
     }
     if (!info[0].IsString()) {
-        Napi::TypeError::New(env, "Argument isnn't a string in Start()").ThrowAsJavaScriptException();
+        Napi::TypeError::New(env, "Argument isn't a string in Start()").ThrowAsJavaScriptException();
         return Napi::String::New(env, "Error");
     }
     std::string data = info[0].ToString();
@@ -28,7 +28,7 @@ Napi::String Update(const Napi::CallbackInfo& info)
         return Napi::String::New(env, "Error");
     }
     if (!info[0].IsString()) {
-        Napi::TypeError::New(env, "Argument isnn't a string in Update()").ThrowAsJavaScriptException();
+        Napi::TypeError::New(env, "Argument isn't a string in Update()").ThrowAsJavaScriptException();
         return Napi::String::New(env, "Error");
     }
     std::string data = info[0].ToString();
@@ -44,7 +44,7 @@ Napi::String Signal(const Napi::CallbackInfo& info)
         return Napi::String::New(env, "Error");
     }
     if (!info[0].IsString()) {
-        Napi::TypeError::New(env, "Argument isnn't a string in Signal()").ThrowAsJavaScriptException();
+        Napi::TypeError::New(env, "Argument isn't a string in Signal()").ThrowAsJavaScriptException();
         return Napi::String::New(env, "Error");
     }
     std::string data = info[0].ToString();
@@ -60,7 +60,7 @@ Napi::String Destroy(const Napi::CallbackInfo& info)
         return Napi::String::New(env, "Error");
     }
     if (!info[0].IsString()) {
-        Napi::TypeError::New(env, "Argument isnn't a string in Destroy()").ThrowAsJavaScriptException();
+        Napi::TypeError::New(env, "Argument isn't a string in Destroy()").ThrowAsJavaScriptException();
         return Napi::String::New(env, "Error");
     }
     std::string data = info[0].ToString();

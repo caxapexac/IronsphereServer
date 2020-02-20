@@ -1,10 +1,13 @@
 #ifndef LOGIC_INTERFACES_HPP
 #define LOGIC_INTERFACES_HPP
 
+class iserializable;
+
 #include <string>
 #include <memory>
 #include "../utils/json.hpp"
 #include "../utils/json_tools.hpp"
+
 
 using json = nlohmann::json;
 
@@ -18,7 +21,7 @@ public:
 // For json serialization
 class iserializable {
 public:
-    virtual std::shared_ptr<json> serialize (serializers type) = 0;
+    virtual std::shared_ptr<json> serialize (serializers type) const = 0;
     virtual void deserialize (json& package) = 0;
     virtual ~iserializable () = default;
 };
