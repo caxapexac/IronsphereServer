@@ -2,7 +2,7 @@
 #define LOGIC_GAME_HPP
 
 #include "player.hpp"
-#include "tilemap.hpp"
+#include "../field/tilemap.hpp"
 #include "../base/interfaces.hpp"
 #include "../structs/transform.hpp"
 #include "../other/logger.hpp"
@@ -16,7 +16,7 @@ private:
     static std::shared_ptr<game> instance; //TODO no singleton cuz there are more than one sessions on the server
 
     std::shared_ptr<tilemap> map;
-    std::shared_ptr<std::vector<std::shared_ptr<player>>> players;
+    std::shared_ptr<std::vector<std::shared_ptr<player>>> players; //TODO player 0 holds neutral objects, TODO remove second shared_ptr
     std::shared_ptr<game_rules> rule; //TODO T rule;
     int next_id; //TODO maybe into player (optimizing search speed)
 

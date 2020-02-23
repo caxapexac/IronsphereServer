@@ -8,10 +8,10 @@
 #include "../structs/square_array.hpp"
 
 // L1
-class tilemap : public iserializable {
+//TODO foreach iterator on tiles
+class tilemap : public iserializable, public itilemap {
 private:
     std::shared_ptr<square_array<tile>> tiles;
-    //TODO are units there? No.
 
 public:
     explicit tilemap (const vector2<int>& scale); //TODO Changed seed to scale

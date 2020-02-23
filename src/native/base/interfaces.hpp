@@ -33,4 +33,10 @@ public:
     virtual ~ihashable () = default;
 };
 
+class itilemap {
+public:
+    //virtual std::shared_ptr<json> serialize (serializers type) const = 0;
+    virtual ~itilemap () = default;
+};
+
 #endif //LOGIC_INTERFACES_HPP

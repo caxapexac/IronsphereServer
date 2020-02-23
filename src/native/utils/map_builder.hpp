@@ -2,7 +2,7 @@
 #define LOGIC_TILEMAP_GENERATOR_H
 
 #include <random>
-#include "../game/tilemap.hpp"
+#include "../field/tilemap.hpp"
 
 //TODO Moved separated cuz this is frequently changing zone
 //TODO Made builder https://refactoring.guru/design-patterns/builder
