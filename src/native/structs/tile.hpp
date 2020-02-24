@@ -4,24 +4,29 @@
 #include <memory>
 #include "../base/interfaces.hpp"
 #include "../units/unit.hpp"
-#include "../game/game.hpp"
+#include "../game/game_arena.hpp"
+#include "id.hpp"
 
 // TODO Make it template?
 // L1
 class tile : public iserializable {
 private:
-    bool passable; // Ground TODO maybe change to type or use texture TODO remove
-    float height; // Ground TODO for custom pathfinding (neighbours heights' difference)
-    int texture; // Ground TODO enum
+    enum texture_types {
+        T_Default, T_Water, T_Ground, T_Hill //TODO? something more useful
+    };
 
-    int unit_id; // TODO what is it
-    int unit_pivot_anchor; // TODO what is it (maybe move to unit?) TODO vector2
+    float height; // Ground
+    texture_types texture; // Ground
+
+    id unit_id; // TODO what is it TODO? make it reference
+    vector2<int> unit_pivot_anchor; // Unit TODO upper-left?
 
 public:
-    explicit tile (bool npassable = true, float nheight = 1, int ntexture = T_Default);
+    explicit tile (float nheight = 0.5f, texture_types ntexture = T_Default);
     tile (const tile& copy);
     tile& operator= (const tile& copy);
-    std::shared_ptr<json> serialize (serializers type) const override;
+    ~tile () override = default;
+    void serialize (json& package, serializers type = serial_full) const override;
     void deserialize (json& package) override;
 
     int get_unit_id (); //TODO make all setters/getters const
@@ -32,18 +37,14 @@ public:
     int get_pivot_anchor ();
     void set_pivot_anchor (int anchor);
     int get_texture ();
-
-    enum textures {
-        T_Default, T_Water, T_Ground, T_Hill
-    };
 };
 
 
-tile::tile (bool npassable, float nheight, int ntexture)
-        : passable(npassable), height(nheight), texture(ntexture), unit_id(-1), unit_pivot_anchor(0) { }
+tile::tile (float nheight, texture_types ntexture)
+        : height(nheight), texture(ntexture), unit_id(-1), unit_pivot_anchor(0) { }
 
 tile::tile (const tile& copy) {
-    //TODO
+    *this = copy;
 }
 
 tile& tile::operator= (const tile& copy) {
@@ -53,16 +54,16 @@ tile& tile::operator= (const tile& copy) {
     return *this;
 }
 
-std::shared_ptr<json> tile::serialize (serializers type) const {
+void tile::serialize (json& package, serializers type) const {
     switch (type) {
         case serial_full: //TODO
-        case serial_own:
+        case serial_static:
             return std::make_shared<json>(json {{"passable",          passable},
                                                 {"height",            height},
                                                 {"texture",           texture},
                                                 {"unit_id",           unit_id},
                                                 {"unit_pivot_anchor", unit_pivot_anchor}});
-        case serial_enemy:
+        case serial_dynamic:
             return std::make_shared<json>(json {{"passable", passable},
                                                 {"height",   height},
                                                 {"texture",  texture}});

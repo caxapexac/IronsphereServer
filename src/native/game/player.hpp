@@ -7,8 +7,9 @@
 class player : public iserializable {
 private:
     int money; //TODO make it more complex
-    std::vector<std::shared_ptr<unit&>> units;
-    // TODO IMHO we don't need to store it there. Game class stores it all the way
+    std::vector<std::shared_ptr<unit>> units;
+    // TODO int friend_players_id[];
+
 
 public:
     explicit player (int nmoney = 100);
@@ -17,8 +18,6 @@ public:
     std::shared_ptr<json> serialize (serializers type) const override;
     void deserialize (json& package) override;
 
-    //TODO maybe store units there and access by player_id+unit_id
-    //TODO or id is unit_id << 8 + player_id (max players = 32)
     std::shared_ptr<std::vector<std::shared_ptr<unit>>>& get_units (); //TODO make logic inside?
 
     void process ();
@@ -29,7 +28,7 @@ player::player (int nmoney) : money(nmoney) {
 }
 
 player::player (const player& copy) {
-    //TODO
+    *this = copy;
 }
 
 player& player::operator= (const player& copy) {
@@ -41,12 +40,13 @@ player& player::operator= (const player& copy) {
 
 //TODO
 std::shared_ptr<json> player::serialize (serializers type) const {
+    // TODO view radiuses
     switch (type) {
         case serial_full:
-        case serial_own:
+        case serial_static:
             return std::make_shared<json>(json {{"money", money},
                                                 {"units", *json_tools::pack_vector<unit>(units, type)}});
-        case serial_enemy:
+        case serial_dynamic:
             return std::make_shared<json>(json {}); // TODO or exception
         default:
             break; //TODO exception

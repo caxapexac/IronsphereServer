@@ -46,11 +46,11 @@ unit& unit::operator= (const unit& copy) {
 std::shared_ptr<json> unit::serialize (serializers type) const {
     switch (type) {
         case serial_full:
-        case serial_own:
+        case serial_static:
             return std::make_shared<json>(json {{"id",             id},
                                                 {"health",         health},
                                                 {"transformation", *transformation->serialize(type)}});
-        case serial_enemy:
+        case serial_dynamic:
             return std::make_shared<json>(json {}); // TODO or exception
         default:
             break; //TODO exception

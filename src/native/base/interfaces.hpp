@@ -21,7 +21,7 @@ public:
 // For json serialization
 class iserializable {
 public:
-    virtual std::shared_ptr<json> serialize (serializers type) const = 0;
+    virtual void serialize (json& package, serializers type = serial_full) const = 0;
     virtual void deserialize (json& package) = 0;
     virtual ~iserializable () = default;
 };

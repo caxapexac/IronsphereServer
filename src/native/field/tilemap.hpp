@@ -17,7 +17,7 @@ public:
     explicit tilemap (const vector2<int>& scale); //TODO Changed seed to scale
     tilemap (const tilemap& copy);
     tilemap& operator= (const tilemap& copy);
-    std::shared_ptr<json> serialize (serializers type) const override;
+    void serialize (json& package, serializers type = serial_full) const override;
     void deserialize (json& package) override;
 
     tile& get_tile (const vector2<int>& position);
@@ -29,7 +29,7 @@ tilemap::tilemap (const vector2<int>& scale) {
 }
 
 tilemap::tilemap (const tilemap& copy) {
-//TODO
+    *this = copy;
 }
 
 tilemap& tilemap::operator= (const tilemap& copy) {
@@ -39,11 +39,11 @@ tilemap& tilemap::operator= (const tilemap& copy) {
     return *this;
 }
 
-std::shared_ptr<json> tilemap::serialize (serializers type) const {
+void tilemap::serialize (json& package, serializers type) const {
     switch (type) {
         case serial_full:
-        case serial_own:
-        case serial_enemy:
+        case serial_static:
+        case serial_dynamic:
             return std::make_shared<json>(json{{"tiles", *tiles->serialize(type)}});
         default:
             break; //TODO exception

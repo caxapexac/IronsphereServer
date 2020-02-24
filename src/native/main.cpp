@@ -74,11 +74,11 @@ int main () {
         std::cout << *e->serialize(serial_full) << '\t' << std::endl;
     }
 
-    std::vector<std::unique_ptr<Interface>> abstractObjects;
+    std::vector<std::shared_ptr<Interface>> abstractObjects;
     N = 5;
     for (int ii = 0; ii < N; ii++) {
-        abstractObjects.push_back(std::make_unique<Derived_A>(ii));
-        abstractObjects.push_back(std::make_unique<Derived_B>(ii));
+        abstractObjects.push_back(std::make_shared<Derived_A>(ii));
+        abstractObjects.push_back(std::make_shared<Derived_B>(ii));
     }
 
     std::cout << "s" << abstractObjects.size() << std::endl;

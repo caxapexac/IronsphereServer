@@ -1,7 +1,7 @@
 #ifndef LOGIC_GAME_SINGLEPLAYER_HPP
 #define LOGIC_GAME_SINGLEPLAYER_HPP
 
-#include "game.hpp"
+#include "game_arena.hpp"
 
 //TODO L6*
 //TODO Singleplayer

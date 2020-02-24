@@ -10,8 +10,8 @@ using json = nlohmann::json;
 enum serializers
 {
     serial_full,
-    serial_own,
-    serial_enemy
+    serial_static,
+    serial_dynamic
 };
 
 

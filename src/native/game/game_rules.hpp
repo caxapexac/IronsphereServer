@@ -19,8 +19,8 @@ public:
 std::shared_ptr<json> game_rules::serialize (serializers type) const {
     switch (type) {
         case serial_full:
-        case serial_own:
-        case serial_enemy:
+        case serial_static:
+        case serial_dynamic:
             return std::make_shared<json>(json {});
         default:
             break; //TODO exception
