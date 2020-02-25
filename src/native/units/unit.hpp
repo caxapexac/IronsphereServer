@@ -11,17 +11,20 @@ protected:
     int health;
     float view_radius; //used for war smoke and enemy visiblity TODO add into constructor/serialization
     std::shared_ptr<transform> transformation; //TODO rename
+    int width;
 
 public:
     explicit unit (int nid = 0, int nhealth = 10, const transform& ntransformation = transform());
     unit (const unit& copy);
     unit& operator= (const unit& copy);
-    std::shared_ptr<json> serialize (serializers type) const override;
+    void serialize (json& package, serializers type) const override;
     void deserialize (json& package) override;
     void dispose () override;
 
     int get_id ();
     int get_health ();
+    int get_width();
+    vector2<int> get_position();
     std::shared_ptr<transform>& get_transform ();
 
     virtual void update ();
@@ -43,15 +46,16 @@ unit& unit::operator= (const unit& copy) {
     return *this;
 }
 
-std::shared_ptr<json> unit::serialize (serializers type) const {
+void unit::serialize (json& package, serializers type) const {
     switch (type) {
         case serial_full:
         case serial_static:
-            return std::make_shared<json>(json {{"id",             id},
-                                                {"health",         health},
-                                                {"transformation", *transformation->serialize(type)}});
+            transformation->serialize(package["transformation"], type);
+            package["id"] = id;
+            package["health"] = health;
+
         case serial_dynamic:
-            return std::make_shared<json>(json {}); // TODO or exception
+            // TODO or exception
         default:
             break; //TODO exception
     }
@@ -74,6 +78,14 @@ int unit::get_id () {
 
 int unit::get_health () {
     return health;
+}
+
+int unit::get_width() {
+    return width;
+}
+
+vector2<int> unit::get_position() {
+    return vector2<int>();
 }
 
 std::shared_ptr<transform>& unit::get_transform () {
