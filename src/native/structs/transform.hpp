@@ -22,6 +22,9 @@ public:
 
     bool operator== (const transform& other) const;
     bool operator!= (const transform& other) const;
+
+    const vector2<int>& getPosition() const;
+    const void setPosition(const vector2<int>& pos) const;
 };
 
 transform::transform (const vector2<int>& pos, float rot, float size, const vector2<float>& off)
@@ -56,12 +59,24 @@ void transform::deserialize (json& package) {
     offset.deserialize(package["offset"]);
 }
 
+
+
 bool transform::operator== (const transform& other) const {
     return position == other.position;
 }
 
 bool transform::operator!= (const transform& other) const {
     return !operator==(other);
+}
+
+
+
+const vector2<int> &transform::getPosition() const {
+    return position;
+}
+
+const void transform::setPosition(const vector2<int>& pos) const {
+    position = pos; //FIXME: why not working????????? no idea........
 }
 
 #endif //LOGIC_TRANSFORM_H

@@ -32,6 +32,8 @@ public:
     ~game_arena () override;
     int get_unique_id ();
     std::shared_ptr<unit> get_unit_by_id (int id);
+
+    tilemap_proxy& get_proxy();
 };
 
 std::shared_ptr<game_arena> game_arena::instance = nullptr;
@@ -98,6 +100,10 @@ std::shared_ptr<unit> game_arena::get_unit_by_id (int id) {
         }
     }
     return nullptr; //warning/exception
+}
+
+tilemap_proxy &game_arena::get_proxy() {
+    return nullptr;
 }
 
 

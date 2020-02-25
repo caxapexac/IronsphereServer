@@ -26,6 +26,8 @@ struct vector2 : public iserializable {
     bool operator== (const vector2& other) const { return x == other.x && y == other.y; }
     bool operator!= (const vector2& other) const { return !(this == other); }
 
+    bool is_set();
+
     /// \return squared length of the vector
     T sqr_magnitude () { return x * x + y * y; }
 
@@ -58,6 +60,13 @@ template<typename T>
 void vector2<T>::deserialize (json& package) {
     x = package["x"].get<T>();
     y = package["y"].get<T>();
+}
+
+
+
+template<typename T>
+bool vector2<T>::is_set() {
+    return (x != -1) && (y != -1);
 }
 
 

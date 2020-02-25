@@ -10,7 +10,7 @@ protected:
     int id; // TODO maybe struct player+id
     int health;
     float view_radius; //used for war smoke and enemy visiblity TODO add into constructor/serialization
-    std::shared_ptr<transform> transformation; //TODO rename
+    transform transformation; //TODO rename
     int width;
 
 public:
@@ -24,15 +24,14 @@ public:
     int get_id ();
     int get_health ();
     int get_width();
-    vector2<int> get_position();
-    std::shared_ptr<transform>& get_transform ();
+    transform& get_transform ();
 
     virtual void update ();
     //virtual bool is_transparent() = 0; //TODO why?
 };
 
 unit::unit (int nid, int nhealth, const transform& ntransformation) : id(nid), health(nhealth) {
-    transformation = std::make_shared<transform>(ntransformation);
+    transformation = ntransformation;
 }
 
 unit::unit (const unit& copy) {
@@ -50,7 +49,7 @@ void unit::serialize (json& package, serializers type) const {
     switch (type) {
         case serial_full:
         case serial_static:
-            transformation->serialize(package["transformation"], type);
+            transformation.serialize(package["transformation"], type);
             package["id"] = id;
             package["health"] = health;
 
@@ -65,7 +64,7 @@ void unit::deserialize (json& package) {
     // TODO checking
     id = package["id"].get<int>();
     health = package["health"].get<int>();
-    transformation->deserialize(package["transformation"]);
+    transformation.deserialize(package["transformation"]);
 }
 
 void unit::dispose () {
@@ -84,11 +83,7 @@ int unit::get_width() {
     return width;
 }
 
-vector2<int> unit::get_position() {
-    return vector2<int>();
-}
-
-std::shared_ptr<transform>& unit::get_transform () {
+transform& unit::get_transform () {
     return transformation;
 }
 
