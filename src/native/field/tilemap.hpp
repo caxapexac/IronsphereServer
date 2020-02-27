@@ -9,9 +9,9 @@
 
 // L1
 //TODO foreach iterator on tiles
-class tilemap : public iserializable, public itilemap {
+class tilemap : public iserializable{
 private:
-    std::shared_ptr<square_array<tile>> tiles;
+    std::shared_ptr<square_array<itile>> tiles;
 
 public:
     explicit tilemap (const vector2<int>& scale); //TODO Changed seed to scale

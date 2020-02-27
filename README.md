@@ -68,11 +68,12 @@
 
 
 ## Other
-- [Firebase pros/cons](https://crisp.chat/blog/why-you-should-never-use-firebase-realtime-database/)
+- [Firebase pros/cons](https://crisp.write_chat/blog/why-you-should-never-use-firebase-realtime-database/)
 - [Webpack config](https://webpack.js.org/configuration/#options)
 - [Webpack online config](https://createapp.dev/webpack)
 - [GH REST API MySQL Generator](https://github.com/o1lab/xmysql/)
-- []()
+- [Networking in games 1](https://youtu.be/EU81tjgoKoI)
+- [Networking in games 2](https://youtu.be/K3Z1PY2vr3Q)
 
 
 # Todo #

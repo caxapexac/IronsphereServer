@@ -1,6 +1,7 @@
 #include "napi.h"
 #include <string>
-#include "game/game_main.hpp"
+#include "utils/json.hpp"
+#include "lobby/game_main.hpp"
 
 // Arg0 - Json string
 Napi::String Update(const Napi::CallbackInfo& info)
@@ -10,8 +11,9 @@ Napi::String Update(const Napi::CallbackInfo& info)
         Napi::TypeError::New(env, "Wrong number of arguments is Update()").ThrowAsJavaScriptException();
         return Napi::String::New(env, "Error");
     }
-    std::string data = info[0].ToString();
-    return Napi::String::New(env, game_loop::update());
+    json output;
+    game_main::update(output);
+    return Napi::String::New(env, output.dump());
 }
 
 // Arg0 - Json string
@@ -26,8 +28,10 @@ Napi::String Signal(const Napi::CallbackInfo& info)
         Napi::TypeError::New(env, "Argument isn't a string in Signal()").ThrowAsJavaScriptException();
         return Napi::String::New(env, "Error");
     }
-    std::string data = info[0].ToString();
-    return Napi::String::New(env, game_loop::signal(data));
+    json input = info[0].ToString();
+    json output;
+    game_main::signal(input, output)
+    return Napi::String::New(env, output.dump());
 }
 
 // Callback for registering module with node.js

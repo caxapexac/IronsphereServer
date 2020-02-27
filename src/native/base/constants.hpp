@@ -3,10 +3,12 @@
 
 //TODO add common constants (generic RTS)
 //TODO uint -> int ?
-
-const char game_title[] = "Ironsphere";
-const unsigned int player_units_limit = 100;
-const unsigned int neutral_units_limit = 25;
+namespace constants {
+    const int lobby_delta_time = 1000; // ms (start game loop delay)
+    const char game_title[] = "Ironsphere";
+    const unsigned int player_units_limit = 100;
+    const unsigned int neutral_units_limit = 25;
+}
 
 //TODO L4-5 without json ;(
 

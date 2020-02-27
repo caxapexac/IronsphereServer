@@ -4,7 +4,7 @@
 #include <memory>
 #include "../base/interfaces.hpp"
 #include "../units/unit.hpp"
-#include "../game/game_arena.hpp"
+#include "../rules/game_arena.hpp"
 #include "id.hpp"
 
 // TODO Make it template?

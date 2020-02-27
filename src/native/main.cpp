@@ -1,5 +1,5 @@
 #include <vector>
-#include "game/game_main.hpp"
+#include "lobby/game_main.hpp"
 #include "base/constants.hpp"
 #include "other/logger.hpp"
 #include "other/tester.hpp"

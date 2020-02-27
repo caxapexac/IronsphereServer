@@ -1,15 +1,16 @@
 #ifndef LOGIC_GAME_ARENA_HPP
 #define LOGIC_GAME_ARENA_HPP
 
-#include "player.hpp"
+#include "../game/player.hpp"
 #include "../field/tilemap.hpp"
 #include "../base/interfaces.hpp"
 #include "../structs/transform.hpp"
 #include "../other/logger.hpp"
-#include "../game/game_rules.hpp"
+#include "rules.hpp"
 
 
 //TODO template<int P, typename T> //Where P is player count, T : game_rules
+template <typename T>
 class game_arena : public iserializable {
 private:
     //static const int player_count = P; //TODO make something not so rubbish-like
@@ -17,7 +18,6 @@ private:
 
     std::shared_ptr<tilemap> map;
     std::shared_ptr<std::vector<std::shared_ptr<player>>> players; //TODO player 0 holds neutral objects, TODO remove second shared_ptr
-    std::shared_ptr<game_rules> rule; //TODO T rule;
     int next_id; //TODO maybe into player (optimizing search speed)
 
 public:

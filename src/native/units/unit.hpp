@@ -26,7 +26,10 @@ public:
     int get_width();
     transform& get_transform ();
 
-    virtual void update ();
+    virtual void update (); // Server ->Unit //TODO deltatime
+    virtual void signal (json& package); // User -> Unit
+    virtual void get ();
+
     //virtual bool is_transparent() = 0; //TODO why?
 };
 
@@ -89,6 +92,12 @@ transform& unit::get_transform () {
 
 void unit::update () {
     //if (health <= 0) choreographer::get()->kill(std::shared_ptr<unit>(this));
+}
+void unit::signal (json& package) {
+
+}
+void unit::get () {
+
 }
 
 

@@ -21,22 +21,26 @@ public:
 // For json serialization
 class iserializable {
 public:
-    virtual void serialize (json& package, serializers type = serial_full) const = 0;
+    virtual void serialize (json& package, serializers type) const = 0;
     virtual void deserialize (json& package) = 0;
     virtual ~iserializable () = default;
 };
 
-// TODO purposes?
-class ihashable {
+class itile {
 public:
-    virtual int get_hash () = 0;
-    virtual ~ihashable () = default;
+    virtual void update (json& output) = 0;
+    virtual ~itile () = default;
 };
 
-class itilemap {
-public:
-    //virtual std::shared_ptr<json> serialize (serializers type) const = 0;
-    virtual ~itilemap () = default;
-};
+
+// TODO purposes?
+// class ihashable {
+// public:
+//     virtual int get_hash () = 0;
+//     virtual ~ihashable () = default;
+// };
+
+
+
 
 #endif //LOGIC_INTERFACES_HPP
