@@ -31,7 +31,7 @@ void game_main::update (json& output) {
 
 void game_main::signal (json& input, json& output) {
     if (input["command"] == nullptr) {
-        output = {"error", "Input isn't correct"};
+        output = {{"error", "Input isn't correct"}};
     }
     else if (input["command"] == "get_info") {
         lobby.get_info(output);
@@ -49,7 +49,7 @@ void game_main::signal (json& input, json& output) {
         lobby.quit_session(input["data"], output);
     }
     else {
-        output = {"error", "Command isn't correct"};
+        output = {{"error", "Command isn't correct"}};
     }
 }
 

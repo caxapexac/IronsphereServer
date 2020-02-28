@@ -50,13 +50,13 @@ unit& unit::operator= (const unit& copy) {
 
 void unit::serialize (json& package, serializers type) const {
     switch (type) {
-        case serial_full:
-        case serial_static:
+        case serial_save:
+        case serial_info:
             transformation.serialize(package["transformation"], type);
             package["id"] = id;
             package["health"] = health;
 
-        case serial_dynamic:
+        case serial_gameplay:
             // TODO or exception
         default:
             break; //TODO exception

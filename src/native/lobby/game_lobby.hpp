@@ -64,10 +64,10 @@ void game_lobby::update (json& output) {
 
 void game_lobby::get_info (json& output) {
     output["status"] = "alive";
-    std::set<std::string> players_online;
+    std::set<int> players_online;
     for (const auto& item : sessions) {
         item.second->get_info(output["sessions"][item.first]);
-        for (const auto& player_id : output["sessions"][item.first]["players"]) {
+        for (const auto& player_id : output["sessions"][item.first]["players_id"]) {
             players_online.emplace(player_id);
         }
     }
@@ -82,6 +82,11 @@ void game_lobby::write_chat (json& input, json& output) {
 }
 
 void game_lobby::join_session (json& input, json& output) {
+    if (input["version"] == nullptr || input["version"].get<int>() != constants::version) {
+        output = {"error", "Please download the latest version of the game"};
+        return;
+    }
+
     if (sessions[input["session_id"]] == nullptr) {
         sessions[input["session_id"]] = std::make_shared<game_session>();
     }

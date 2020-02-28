@@ -1,7 +1,7 @@
 #ifndef LOGIC_TILEMAP_PROXY_HPP
 #define LOGIC_TILEMAP_PROXY_HPP
 
-#include "tilemap.hpp"
+#include "../field/tilemap.hpp"
 
 // TODO https://refactoring.guru/design-patterns/proxy/cpp/example
 class tilemap_proxy : public itilemap {

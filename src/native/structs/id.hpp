@@ -11,7 +11,7 @@ struct id : iserializable {
     id (const id& other);
     id& operator= (const id& other);
     ~id () override = default;
-    void serialize (json& package, serializers type = serial_full) const override;
+    void serialize (json& package, serializers type = serial_save) const override;
     void deserialize (json& package) override;
 };
 

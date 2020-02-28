@@ -16,7 +16,7 @@ struct vector2 : public iserializable {
     vector2 (const vector2& other);
     vector2& operator= (const vector2& other);
     ~vector2 () override = default;
-    void serialize (json& package, serializers type = serial_full) const override;
+    void serialize (json& package, serializers type = serial_save) const override;
     void deserialize (json& package) override;
 
     vector2 operator- () const { return vector2(-x, -y); }

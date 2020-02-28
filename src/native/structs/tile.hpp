@@ -26,7 +26,7 @@ public:
     tile (const tile& copy);
     tile& operator= (const tile& copy);
     ~tile () override = default;
-    void serialize (json& package, serializers type = serial_full) const override;
+    void serialize (json& package, serializers type = serial_save) const override;
     void deserialize (json& package) override;
 
     int get_unit_id (); //TODO make all setters/getters const
@@ -56,14 +56,14 @@ tile& tile::operator= (const tile& copy) {
 
 void tile::serialize (json& package, serializers type) const {
     switch (type) {
-        case serial_full: //TODO
-        case serial_static:
+        case serial_save: //TODO
+        case serial_info:
             return std::make_shared<json>(json {{"passable",          passable},
                                                 {"height",            height},
                                                 {"texture",           texture},
                                                 {"unit_id",           unit_id},
                                                 {"unit_pivot_anchor", unit_pivot_anchor}});
-        case serial_dynamic:
+        case serial_gameplay:
             return std::make_shared<json>(json {{"passable", passable},
                                                 {"height",   height},
                                                 {"texture",  texture}});

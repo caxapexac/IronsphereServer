@@ -8,17 +8,9 @@ class iserializable;
 #include "../utils/json.hpp"
 #include "../utils/json_tools.hpp"
 
-
 using json = nlohmann::json;
 
-// For flushing memory before returning into object pool
-class idisposable {
-public:
-    virtual void dispose () = 0;
-    virtual ~idisposable () = default;
-};
-
-// For json serialization
+///
 class iserializable {
 public:
     virtual void serialize (json& package, serializers type) const = 0;
@@ -26,10 +18,26 @@ public:
     virtual ~iserializable () = default;
 };
 
+/// For flushing memory before returning into object pool
+class idisposable {
+public:
+    virtual void dispose () = 0;
+    virtual ~idisposable () = default;
+};
+
+///
 class itile {
 public:
     virtual void update (json& output) = 0;
     virtual ~itile () = default;
+};
+
+
+/// Interface strategy
+class isignal {
+public:
+    virtual void execute (json& input, json& output) = 0;
+    virtual ~isignal () = default;
 };
 
 

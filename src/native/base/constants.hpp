@@ -4,6 +4,7 @@
 //TODO add common constants (generic RTS)
 //TODO uint -> int ?
 namespace constants {
+    const int version = 100; // Game version (Anti chEET)
     const int lobby_delta_time = 1000; // ms (start game loop delay)
     const char game_title[] = "Ironsphere";
     const unsigned int player_units_limit = 100;

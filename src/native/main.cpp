@@ -71,7 +71,7 @@ int main () {
     //json j = json{{"a", 2}};
     for (auto& e : abstractObjects2)  // ranged based for loop
     {
-        std::cout << *e->serialize(serial_full) << '\t' << std::endl;
+        std::cout << *e->serialize(serial_save) << '\t' << std::endl;
     }
 
     std::vector<std::shared_ptr<Interface>> abstractObjects;

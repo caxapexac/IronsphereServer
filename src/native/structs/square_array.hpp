@@ -20,7 +20,7 @@ public:
     square_array (const square_array& copy);
     square_array& operator= (const square_array& copy);
     ~square_array () override;
-    void serialize (json& package, serializers type = serial_full) const override;
+    void serialize (json& package, serializers type = serial_save) const override;
     void deserialize (json& package) override;
 
     T& operator[] (const vector2<int>& position) const; //TODO square_array : array AND hex_array : array with virtual indexer

@@ -1,23 +1,25 @@
 #ifndef LOGIC_GAME_SESSION_HPP
 #define LOGIC_GAME_SESSION_HPP
 
-#include <vector>
-#include "../rules/game_arena.hpp"
-#include "../managers/rules.hpp"
+#include "../base/interfaces.hpp"
+#include "../a_temp/strategies/abstract_strategy.hpp"
+#include "../game_states/abstract_state.hpp"
 
-class game_session {
+class game_session : iiserializable {
 private:
-    enum game_state {
-        g_choosing, g_play, g_pause, g_finished
-    };
+    std::vector<int> players_id; // For security
+    std::shared_ptr<abstract_state> state; // Game state
+    std::unique_ptr<abstract_strategy> strategy; // Game rules
+    std::unique_ptr<tilemap> map; // Field
+    std::unique_ptr<std::vector<player>> Players; //TODO player 0 holds neutral objects
 
-    game_state state;
-    std::vector<std::string> players;
-    std::unique_ptr<rules> rule;
+    friend class state_choose;
+    friend class state_play;
+    friend class state_pause;
+    friend class state_finish;
 
 public:
     game_session ();
-    // TODO? add more ctors/operators
 
     /// Checks if there is no players in session
     bool is_empty ();
@@ -25,6 +27,10 @@ public:
     /// Generic info about session
     /// \param output
     void get_info (json& output);
+
+    ///
+    /// \return current session state to interact with
+    std::shared_ptr<abstract_state> get_state ();
 
     /// Adds player to the session
     /// \param input
@@ -45,73 +51,133 @@ public:
     /// \param output
     void remove_player (json& input, json& output);
 
+private:
+    /// \param player_id
+    /// \return index of specified player. Returns -1 if not found
+    int get_player_index (int player_id);
+
+    /// Signal setup
+    /// \param input
+    /// \param output
+    void setup_game (json& input, json& output);
 };
 
 game_session::game_session () {
-    state = g_choosing;
-    players = std::vector<std::string>();
-    rule = rules();
+    //state = std::make_unique<state_choose>(this);
+    players_id = std::vector<int>();
+    game = nullptr;
 }
 
 bool game_session::is_empty () {
-    return players.empty();
+    return players_id.empty();
 }
 
 void game_session::get_info (json& output) {
-    output["state"] = state;
-    output["players"] = players;
-    // TODO add rules info
+    if (game != nullptr) {
+        game->serialize(output["game"], serial_info);
+    }
+    output["players_id"] = players_id;
 }
 
+std::shared_ptr<abstract_state> game_session::get_state () {
+    return state;
+}
+
+
 void game_session::add_player (json& input, json& output) {
-    for (const auto& player : players) {
-        if (player == input) {
-            output = {"error", "Player is already in the room"};
-            return;
-        }
+    int index = get_player_index(input.get<int>());
+    if (index == -1) {
+        players_id.push_back(input);
+        output = {{"success", "Player was added into the room"}};
     }
-    players.push_back(input);
-    output = {"success", "Player was added into the room"};
+    else {
+        output = {{"error", "Player is already in the room"}};
+        return;
+    }
 }
 
 void game_session::update (json& output) {
-    rule->update(output);
+    if (game != nullptr) {
+        game->update(output);
+    }
 }
 
 void game_session::signal (json& input, json& output) {
-    if (input["command"] == nullptr) {
-        output = {"error", "Input isn't correct"};
+    if (input["signal"] == nullptr || input["sender"] == nullptr) {
+        output = {{"error", "Input isn't correct"}};
+        return;
     }
-    else if (input["command"] == "get_info") {
-        lobby.get_info(output);
+
+    int player_index = get_player_index(input["sender"]); // TODO admin permissions
+    if (player_index == -1) {
+        output = {{"error", "Player isn't in session"}};
+        return;
     }
-    else if (input["command"] == "write_chat") {
-        lobby.write_chat(input["data"], output);
+
+    if (input["signal"] == "setup") {
+        setup_game(input, output);
+        if (game != nullptr && (game->get_state() == g_play || game->get_state() == g_pause)) {
+
+        }
+        else {
+            output = {{"error", "Session was already started"}};
+        }
     }
-    else if (input["command"] == "join_session") {
-        lobby.join_session(input["data"], output);
+    else if (input["signal"] == "start") {
+        if (state == g_choosing || state == g_finished) {
+            state = g_choosing;
+        }
+        else {
+            output = {{"error", "Session was already started"}};
+        }
     }
-    else if (input["command"] == "input_session") {
-        lobby.input_session(input["data"], output);
+    else if (input["signal"] == "pause") {
+        if (state == g_choosing || state == g_finished) {
+            state = g_choosing;
+        }
+        else {
+            output = {{"error", "Session was already started"}};
+        }
     }
-    else if (input["command"] == "quit_session") {
-        lobby.quit_session(input["data"], output);
+    else if (input["signal"] == "stop") {
+        if (state == g_choosing || state == g_finished) {
+            state = g_choosing;
+        }
+        else {
+            output = {{"error", "Session was already started"}};
+        }
+    }
+    else if (input["signal"] == "input") {
+
     }
     else {
-        output = {"error", "Command isn't correct"};
+        output = {{"error", "Command isn't correct"}};
     }
 }
 
 void game_session::remove_player (json& input, json& output) {
-    for (auto it = players.begin(); it != players.end(); ++it) {
-        if (*it == input.get<std::string>()) {
-            players.erase(it);
-            output = {"success", "Player was removed from the room"};
-            return;
-        }
+    int index = get_player_index(input.get<int>());
+    if (index == -1) {
+        output = {{"error", "Player is not in this room"}};
     }
-    output = {"error", "Player is not in this room"};
+    else {
+        players_id.erase(players_id.begin() + index);
+        output = {{"success", "Player was removed from the room"}};
+    }
+
 }
+
+int game_session::get_player_index (int player_id) {
+    for (int i = 0; i < players_id.size(); ++i) {
+        if (players_id[i] == player_id) return i;
+    }
+    return -1;
+}
+
+void game_session::setup_game (json& input, json& output) {
+
+}
+
 
 
 #endif //LOGIC_GAME_SESSION_HPP

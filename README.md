@@ -64,8 +64,9 @@
 - [GH NAPI Examples](https://github.com/nodejs/node-addon-examples)
 - [GH acutest unit tests](https://github.com/mity/acutest/tree/master/include)
 - [GH Modern cpp guide](https://github.com/AnthonyCalandra/modern-cpp-features)
+- [GH String pool](https://github.com/GiovanniDicanio/StringPool)
+- [String allocating](https://stackoverflow.com/questions/26130941/stdstring-allocations-are-my-current-bottleneck-how-can-i-optimize-with-a)
 - []()
-
 
 ## Other
 - [Firebase pros/cons](https://crisp.write_chat/blog/why-you-should-never-use-firebase-realtime-database/)

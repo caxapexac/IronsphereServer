@@ -58,7 +58,7 @@ template<class... Args> void logger::log (log_flags flags, Args... args) {
 
 void logger::log (log_flags flags, iserializable& obj) {
     // TODO
-    std::cout << obj.serialize(serializers::serial_full)->dump(2) << std::endl;
+    std::cout << obj.serialize(serializers::serial_save)->dump(2) << std::endl;
 }
 
 #endif //LOGIC_LOGGER_HPP

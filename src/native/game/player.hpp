@@ -9,6 +9,8 @@ private:
     int money; //TODO make it more complex
     std::vector<std::shared_ptr<unit>> units;
     // TODO int friend_players_id[];
+    // TODO L1 max_id TODO not on the tilemap?
+    int next_id; // Unique Unit ID
 
 
 public:
@@ -42,11 +44,11 @@ player& player::operator= (const player& copy) {
 std::shared_ptr<json> player::serialize (serializers type) const {
     // TODO view radiuses
     switch (type) {
-        case serial_full:
-        case serial_static:
+        case serial_save:
+        case serial_info:
             return std::make_shared<json>(json {{"money", money},
                                                 {"units", *json_tools::pack_vector<unit>(units, type)}});
-        case serial_dynamic:
+        case serial_gameplay:
             return std::make_shared<json>(json {}); // TODO or exception
         default:
             break; //TODO exception

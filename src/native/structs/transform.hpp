@@ -17,7 +17,7 @@ public:
     transform (const transform& copy);
     transform& operator= (const transform& copy);
     ~transform () override = default;
-    void serialize (json& package, serializers type = serial_full) const override;
+    void serialize (json& package, serializers type = serial_save) const override;
     void deserialize (json& package) override;
 
     bool operator== (const transform& other) const;
