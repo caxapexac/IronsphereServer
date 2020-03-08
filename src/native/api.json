@@ -66,11 +66,11 @@
       6,
       13
     ],
-    "command": "move/attack/build/etc",
+    "command": "move/attack/build/etc сюда пихаем enum/int", 
     "args": {
-      "position" : "serialized_vector2<int>",
-      "type" : "building_warehouse",
-      "etc" : "etc"
+      "position": "serialized_vector2<int>",
+      "type": "building_warehouse",
+      "etc": "etc"
     }
   },
   "!signal_return": {

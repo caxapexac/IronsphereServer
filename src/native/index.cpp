@@ -1,7 +1,7 @@
 #include "napi.h"
 #include <string>
 #include "utils/json.hpp"
-#include "lobby/game_main.hpp"
+#include "lobby/game_lobby.hpp"
 
 // Arg0 - Json string
 Napi::String Update(const Napi::CallbackInfo& info)
@@ -12,7 +12,7 @@ Napi::String Update(const Napi::CallbackInfo& info)
         return Napi::String::New(env, "Error");
     }
     json output;
-    game_main::update(output);
+    game_lobby::get().update(output);
     return Napi::String::New(env, output.dump());
 }
 
@@ -30,7 +30,7 @@ Napi::String Signal(const Napi::CallbackInfo& info)
     }
     json input = info[0].ToString();
     json output;
-    game_main::signal(input, output)
+    game_lobby::get().signal(input, output)
     return Napi::String::New(env, output.dump());
 }
 

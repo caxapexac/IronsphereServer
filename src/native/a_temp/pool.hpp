@@ -5,7 +5,7 @@
 #include <memory>
 #include "../base/errors.hpp"
 
-template<typename T> // Where T : new(), object, idisposable (?)
+template<typename T> // Where T : new(), idisposable (?)
 class pool {
 private:
     std::stack<std::shared_ptr<T>> items;
@@ -38,7 +38,7 @@ template<typename T> std::shared_ptr<T> pool<T>::get () {
 template<typename T> void pool<T>::recycle (std::shared_ptr<T> item) {
     // Recycle only items without other references
     if (static_cast<int>(item.use_count) > 1)
-        throw shared_pointer_exception(item->stringify());
+        throw ;//shared_pointer_exception("pool error");
     // TODO maybe item.dispose()
     items.push(item);
 }

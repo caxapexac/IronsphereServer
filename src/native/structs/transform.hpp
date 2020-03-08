@@ -24,7 +24,7 @@ public:
     bool operator!= (const transform& other) const;
 
     const vector2<int>& getPosition() const;
-    const void setPosition(const vector2<int>& pos) const;
+    const void setPosition(const vector2<int>& pos);
 };
 
 transform::transform (const vector2<int>& pos, float rot, float size, const vector2<float>& off)
@@ -75,7 +75,7 @@ const vector2<int> &transform::getPosition() const {
     return position;
 }
 
-const void transform::setPosition(const vector2<int>& pos) const {
+const void transform::setPosition(const vector2<int>& pos) {
     position = pos; //FIXME: why not working????????? no idea........
 }
 

@@ -18,19 +18,19 @@ struct id : iserializable {
 id::id (const id& other) : player_id(other.player_id), unit_id(other.unit_id) { }
 
 id& id::operator= (const id& other) {
-    if (*this != other) {
+    if (this != &other) {
         player_id = other.player_id;
         unit_id = other.unit_id;
     }
     return *this;
 }
 void id::serialize (json& package, serializers type) const {
-    package["x"] = x;
-    package["y"] = y;
+    package["player_id"] = player_id;
+    package["unit_id"] = unit_id;
 }
 void id::deserialize (json& package) {
-    x = package["x"].get<T>();
-    y = package["y"].get<T>();
+    player_id = package["player_id"].get<int>();
+    unit_id = package["unit_id"].get<int>();
 }
 
 #endif //LOGIC_ID_HPP

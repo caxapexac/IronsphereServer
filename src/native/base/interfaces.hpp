@@ -5,12 +5,13 @@ class iserializable;
 
 #include <string>
 #include <memory>
+#include <list>
 #include "../utils/json.hpp"
 #include "../utils/json_tools.hpp"
 
 using json = nlohmann::json;
 
-///
+/// TODO setdirty
 class iserializable {
 public:
     virtual void serialize (json& package, serializers type) const = 0;

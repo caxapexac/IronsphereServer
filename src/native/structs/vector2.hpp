@@ -20,13 +20,26 @@ struct vector2 : public iserializable {
     void deserialize (json& package) override;
 
     vector2 operator- () const { return vector2(-x, -y); }
+
     vector2 operator+ (const vector2& other) const { return vector2(x + other.x, y + other.y); }
+
     vector2 operator- (const vector2& other) const { return vector2(x - other.x, y - other.y); }
+
     T operator* (const vector2& other) const { return x * other.x + y * other.y; }
+
     bool operator== (const vector2& other) const { return x == other.x && y == other.y; }
+
     bool operator!= (const vector2& other) const { return !(this == other); }
 
-    bool is_set();
+    friend std::ostream& operator<< (std::ostream& os, const vector2& vec) {
+        json j;
+        vec.serialize(j, serial_save);
+        return os << j;
+        // TODO is needed?
+    }
+
+
+    bool is_set ();
 
     /// \return squared length of the vector
     T sqr_magnitude () { return x * x + y * y; }
@@ -62,10 +75,8 @@ void vector2<T>::deserialize (json& package) {
     y = package["y"].get<T>();
 }
 
-
-
 template<typename T>
-bool vector2<T>::is_set() {
+bool vector2<T>::is_set () {
     return (x != -1) && (y != -1);
 }
 

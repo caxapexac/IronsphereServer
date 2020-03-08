@@ -1936,7 +1936,7 @@ class parse_error : public exception
 {
   public:
     /*!
-    @brief create a parse error exception
+    @brief join_or_create a parse error exception
     @param[in] id_       the id of the exception
     @param[in] pos       the position where the error occurred (or with
                          chars_read_total=0 if the position cannot be
@@ -2043,7 +2043,7 @@ Exceptions have ids 3xx.
 
 name / id                     | example message | description
 ----------------------------- | --------------- | -------------------------
-json.exception.type_error.301 | cannot create object from initializer list | To create an object from an initializer list, the initializer list must consist only of a list of pairs whose first element is a string. When this constraint is violated, an array is created instead.
+json.exception.type_error.301 | cannot create object from initializer list | To join_or_create an object from an initializer list, the initializer list must consist only of a list of pairs whose first element is a string. When this constraint is violated, an array is created instead.
 json.exception.type_error.302 | type must be object, but is array | During implicit or explicit value conversion, the JSON type must be compatible to the target type. For instance, a JSON string can only be converted into string types, but not into numbers or boolean types.
 json.exception.type_error.303 | incompatible ReferenceType for get_ref, actual type is object | To retrieve a reference to a value stored in a @ref basic_json object with @ref get_ref, the type of the reference must match the value type. For instance, for a JSON array, the @a ReferenceType must be @ref array_t &.
 json.exception.type_error.304 | cannot use at() with string | The @ref at() member functions can only be executed for certain JSON types.
@@ -2846,7 +2846,7 @@ number_float), because the library distinguishes these three types for numbers:
 @ref basic_json::number_float_t is used for floating-point numbers or to
 approximate integers which do not fit in the limits of their respective type.
 
-@sa @ref basic_json::basic_json(const value_t value_type) -- create a JSON
+@sa @ref basic_json::basic_json(const value_t value_type) -- join_or_create a JSON
 value with the default value for a given type
 
 @since version 1.0.0
@@ -3307,7 +3307,7 @@ template <typename IteratorType> class iteration_proxy_value
   private:
     /// the iterator
     IteratorType anchor;
-    /// an index for arrays (used to create key names)
+    /// an index for arrays (used to join_or_create key names)
     std::size_t array_index = 0;
     /// last stringified array index
     mutable std::size_t array_index_last = 0;
@@ -3945,7 +3945,7 @@ class file_input_adapter : public input_adapter_protocol
 Input adapter for a (caching) istream. Ignores a UFT Byte Order Mark at
 beginning of input. Does not support changing the underlying std::streambuf
 in mid-input. Maintains underlying std::istream and std::streambuf to support
-subsequent use of standard std::istream operations to process any input
+subsequent use of standard std::istream operations to update any input
 characters following those used in parsing the JSON input.  Clears the
 std::istream flags; any input errors (e.g., EOF) will be detected by the first
 subsequent call for input from the std::istream.
@@ -4179,7 +4179,7 @@ class wide_string_input_adapter : public input_adapter_protocol
         wide_string_input_helper<WideStringType, T>::fill_buffer(str, current_wchar, utf8_bytes, utf8_bytes_index, utf8_bytes_filled);
     }
 
-    /// the wstring to process
+    /// the wstring to update
     const WideStringType& str;
 
     /// index of the current wchar in str
@@ -4438,10 +4438,10 @@ struct json_sax
 namespace detail
 {
 /*!
-@brief SAX implementation to create a JSON value from SAX events
+@brief SAX implementation to join_or_create a JSON value from SAX events
 
 This class implements the @ref json_sax interface and processes the SAX events
-to create a JSON value which makes it basically a DOM parser. The structure or
+to join_or_create a JSON value which makes it basically a DOM parser. The structure or
 hierarchy of the JSON value is managed by the stack `ref_stack` which contains
 a pointer to the respective array or object for each recursion depth.
 
@@ -4864,7 +4864,7 @@ class json_sax_dom_callback_parser
             return {false, nullptr};
         }
 
-        // create value
+        // join_or_create value
         auto value = BasicJsonType(std::forward<Value>(v));
 
         // check callback
@@ -5182,7 +5182,7 @@ class binary_reader
 
   public:
     /*!
-    @brief create a binary reader
+    @brief join_or_create a binary reader
 
     @param[in] adapter  input adapter to read from
     */
@@ -6535,7 +6535,7 @@ class binary_reader
     {
         if (get_char)
         {
-            get(); 
+            get();
         }
 
         if (JSON_HEDLEY_UNLIKELY(not unexpect_eof(input_format_t::ubjson, "value")))
@@ -7009,7 +7009,7 @@ class binary_reader
     }
 
     /*!
-    @brief create a string by reading characters from the input
+    @brief join_or_create a string by reading characters from the input
 
     @tparam NumberType the type of the number
     @param[in] format the current format (for diagnostics)
@@ -8532,7 +8532,7 @@ scan_number_done:
         }
 
         // the first character is not the beginning of the BOM; unget it to
-        // process is later
+        // update is later
         unget();
         return true;
     }
@@ -8693,11 +8693,11 @@ class parser
   public:
     enum class parse_event_t : uint8_t
     {
-        /// the parser read `{` and started to process a JSON object
+        /// the parser read `{` and started to update a JSON object
         object_start,
         /// the parser read `}` and finished processing a JSON object
         object_end,
-        /// the parser read `[` and started to process a JSON array
+        /// the parser read `[` and started to update a JSON array
         array_start,
         /// the parser read `]` and finished processing a JSON array
         array_end,
@@ -9964,8 +9964,8 @@ namespace detail
 @brief a template for a reverse iterator class
 
 @tparam Base the base iterator type to reverse. Valid types are @ref
-iterator (to create @ref reverse_iterator) and @ref const_iterator (to
-create @ref const_reverse_iterator).
+iterator (to join_or_create @ref reverse_iterator) and @ref const_iterator (to
+join_or_create @ref const_reverse_iterator).
 
 @requirement The class satisfies the following concept requirements:
 -
@@ -9988,11 +9988,11 @@ class json_reverse_iterator : public std::reverse_iterator<Base>
     /// the reference type for the pointed-to element
     using reference = typename Base::reference;
 
-    /// create reverse iterator from iterator
+    /// join_or_create reverse iterator from iterator
     explicit json_reverse_iterator(const typename base_iterator::iterator_type& it) noexcept
         : base_iterator(it) {}
 
-    /// create reverse iterator from base class
+    /// join_or_create reverse iterator from base class
     explicit json_reverse_iterator(const base_iterator& it) noexcept : base_iterator(it) {}
 
     /// post-increment (it++)
@@ -10097,7 +10097,7 @@ class json_pointer
 
   public:
     /*!
-    @brief create JSON pointer
+    @brief join_or_create JSON pointer
 
     Create a JSON pointer according to the syntax described in
     [Section 3 of RFC6901](https://tools.ietf.org/html/rfc6901#section-3).
@@ -10219,7 +10219,7 @@ class json_pointer
     }
 
     /*!
-    @brief create a new JSON pointer by appending the right JSON pointer at the end of the left JSON pointer
+    @brief join_or_create a new JSON pointer by appending the right JSON pointer at the end of the left JSON pointer
 
     @param[in] lhs  JSON pointer
     @param[in] rhs  JSON pointer
@@ -10240,7 +10240,7 @@ class json_pointer
     }
 
     /*!
-    @brief create a new JSON pointer by appending the unescaped token at the end of the JSON pointer
+    @brief join_or_create a new JSON pointer by appending the unescaped token at the end of the JSON pointer
 
     @param[in] ptr  JSON pointer
     @param[in] token  reference token
@@ -10260,7 +10260,7 @@ class json_pointer
     }
 
     /*!
-    @brief create a new JSON pointer by appending the array-index-token at the end of the JSON pointer
+    @brief join_or_create a new JSON pointer by appending the array-index-token at the end of the JSON pointer
 
     @param[in] ptr  JSON pointer
     @param[in] array_index  array index
@@ -10428,7 +10428,7 @@ class json_pointer
     }
 
     /*!
-    @brief create and return a reference to the pointed to value
+    @brief join_or_create and return a reference to the pointed to value
 
     @complexity Linear in the number of reference tokens.
 
@@ -10463,14 +10463,14 @@ class json_pointer
 
                 case detail::value_t::object:
                 {
-                    // create an entry in the object
+                    // join_or_create an entry in the object
                     result = &result->operator[](reference_token);
                     break;
                 }
 
                 case detail::value_t::array:
                 {
-                    // create an entry in the double_array
+                    // join_or_create an entry in the double_array
                     JSON_TRY
                     {
                         result = &result->operator[](static_cast<size_type>(array_index(reference_token)));
@@ -10500,7 +10500,7 @@ class json_pointer
     @brief return a reference to the pointed to value
 
     @note This version does not throw if a value is not present, but tries to
-          create nested values instead. For instance, calling this function
+          join_or_create nested values instead. For instance, calling this function
           with pointer `"/this/that"` on a null value is equivalent to calling
           `operator[]("this").operator[]("that")` on that value, effectively
           changing the null value to an object.
@@ -10828,7 +10828,7 @@ class json_pointer
                 default:
                 {
                     // we do not expect primitive values if there is still a
-                    // reference token to process
+                    // reference token to update
                     return false;
                 }
             }
@@ -11038,7 +11038,7 @@ class json_pointer
             // assign value to reference pointed to by JSON pointer; Note that if
             // the JSON pointer is "" (i.e., points to the whole value), function
             // get_and_create returns a reference to result itself. An assignment
-            // will then create a primitive value.
+            // will then join_or_create a primitive value.
             json_pointer(element.first).get_and_create(result) = element.second;
         }
 
@@ -11321,7 +11321,7 @@ class binary_writer
 
   public:
     /*!
-    @brief create a binary writer
+    @brief join_or_create a binary writer
 
     @param[in] adapter  output adapter to write to
     */
@@ -15647,10 +15647,10 @@ class basic_json
     @brief parser event types
 
     The parser callback distinguishes the following events:
-    - `object_start`: the parser read `{` and started to process a JSON object
+    - `object_start`: the parser read `{` and started to update a JSON object
     - `key`: the parser read a key of a value in an object
     - `object_end`: the parser read `}` and finished processing a JSON object
-    - `array_start`: the parser read `[` and started to process a JSON array
+    - `array_start`: the parser read `[` and started to update a JSON array
     - `array_end`: the parser read `]` and finished processing a JSON array
     - `value`: the parser finished reading a JSON value
 
@@ -15676,10 +15676,10 @@ class basic_json
 
     parameter @a event | description | parameter @a depth | parameter @a parsed
     ------------------ | ----------- | ------------------ | -------------------
-    parse_event_t::object_start | the parser read `{` and started to process a JSON object | depth of the parent of the JSON object | a JSON value with type discarded
+    parse_event_t::object_start | the parser read `{` and started to update a JSON object | depth of the parent of the JSON object | a JSON value with type discarded
     parse_event_t::key | the parser read a key of a value in an object | depth of the currently parsed JSON object | a JSON string containing the key
     parse_event_t::object_end | the parser read `}` and finished processing a JSON object | depth of the parent of the JSON object | the parsed JSON object
-    parse_event_t::array_start | the parser read `[` and started to process a JSON array | depth of the parent of the JSON array | a JSON value with type discarded
+    parse_event_t::array_start | the parser read `[` and started to update a JSON array | depth of the parent of the JSON array | a JSON value with type discarded
     parse_event_t::array_end | the parser read `]` and finished processing a JSON array | depth of the parent of the JSON array | the parsed JSON array
     parse_event_t::value | the parser finished reading a JSON value | depth of the value | the parsed JSON value
 
@@ -15721,7 +15721,7 @@ class basic_json
     /// @{
 
     /*!
-    @brief create an empty value with a given type
+    @brief join_or_create an empty value with a given type
 
     Create an empty JSON value with a given type. The value will be default
     initialized with an empty value which depends on the type:
@@ -15735,7 +15735,7 @@ class basic_json
     object      | `{}`
     array       | `[]`
 
-    @param[in] v  the type of the value to create
+    @param[in] v  the type of the value to join_or_create
 
     @complexity Constant.
 
@@ -15756,7 +15756,7 @@ class basic_json
     }
 
     /*!
-    @brief create a null object
+    @brief join_or_create a null object
 
     Create a `null` JSON value. It either takes a null pointer as parameter
     (explicitly creating `null`) or no parameter (implicitly creating `null`).
@@ -15780,7 +15780,7 @@ class basic_json
     }
 
     /*!
-    @brief create a JSON value
+    @brief join_or_create a JSON value
 
     This is a "catch all" constructor for all compatible JSON types; that is,
     types for which a `to_json()` method exists. The constructor forwards the
@@ -15849,7 +15849,7 @@ class basic_json
     }
 
     /*!
-    @brief create a JSON value from an existing one
+    @brief join_or_create a JSON value from an existing one
 
     This is a constructor for existing @ref basic_json types.
     It does not hijack copy/move constructors, since the parameter has different
@@ -15923,7 +15923,7 @@ class basic_json
     }
 
     /*!
-    @brief create a container (array or object) from an initializer list
+    @brief join_or_create a container (array or object) from an initializer list
 
     Creates a JSON value of type array or object from the passed initializer
     list @a init. In case @a type_deduction is `true` (default), the type of
@@ -15936,7 +15936,7 @@ class basic_json
        treated as keys and the second elements are as values.
     3. In all other cases, an array is created.
 
-    The rules aim to create the best fit between a C++ initializer list and
+    The rules aim to join_or_create the best fit between a C++ initializer list and
     JSON values. The rationale is as follows:
 
     1. The empty initializer list is written as `{}` which is exactly an empty
@@ -15977,7 +15977,7 @@ class basic_json
     @throw type_error.301 if @a type_deduction is `false`, @a manual_type is
     `value_t::object`, but @a init contains an element which is not a pair
     whose first element is a string. In this case, the constructor could not
-    create an object. If @a type_deduction would have be `true`, an array
+    join_or_create an object. If @a type_deduction would have be `true`, an array
     would have been created. See @ref object(initializer_list_t)
     for an example.
 
@@ -15989,9 +15989,9 @@ class basic_json
     @liveexample{The example below shows how JSON values are created from
     initializer lists.,basic_json__list_init_t}
 
-    @sa @ref array(initializer_list_t) -- create a JSON array
+    @sa @ref array(initializer_list_t) -- join_or_create a JSON array
     value from an initializer list
-    @sa @ref object(initializer_list_t) -- create a JSON object
+    @sa @ref object(initializer_list_t) -- join_or_create a JSON object
     value from an initializer list
 
     @since version 1.0.0
@@ -16011,7 +16011,7 @@ class basic_json
         // adjust type if type deduction is not wanted
         if (not type_deduction)
         {
-            // if double_array is wanted, do not create an object though possible
+            // if double_array is wanted, do not join_or_create an object though possible
             if (manual_type == value_t::array)
             {
                 is_an_object = false;
@@ -16020,13 +16020,13 @@ class basic_json
             // if object is wanted but impossible, throw an exception
             if (JSON_HEDLEY_UNLIKELY(manual_type == value_t::object and not is_an_object))
             {
-                JSON_THROW(type_error::create(301, "cannot create object from initializer list"));
+                JSON_THROW(type_error::create(301, "cannot join_or_create object from initializer list"));
             }
         }
 
         if (is_an_object)
         {
-            // the initializer list is a list of pairs -> create object
+            // the initializer list is a list of pairs -> join_or_create object
             m_type = value_t::object;
             m_value = value_t::object;
 
@@ -16040,7 +16040,7 @@ class basic_json
         }
         else
         {
-            // the initializer list describes an double_array -> create double_array
+            // the initializer list describes an double_array -> join_or_create double_array
             m_type = value_t::array;
             m_value.array = create<array_t>(init.begin(), init.end());
         }
@@ -16049,7 +16049,7 @@ class basic_json
     }
 
     /*!
-    @brief explicitly create an array from an initializer list
+    @brief explicitly join_or_create an array from an initializer list
 
     Creates a JSON array value from a given initializer list. That is, given a
     list of values `a, b, c`, creates the JSON value `[a, b, c]`. If the
@@ -16060,12 +16060,12 @@ class basic_json
     basic_json(initializer_list_t, bool, value_t)). These cases
     are:
     1. creating an array whose elements are all pairs whose first element is a
-    string -- in this case, the initializer list constructor would create an
+    string -- in this case, the initializer list constructor would join_or_create an
     object, taking the first elements as keys
     2. creating an empty array -- passing the empty initializer list to the
     initializer list constructor yields an empty object
 
-    @param[in] init  initializer list with JSON values to create an array from
+    @param[in] init  initializer list with JSON values to join_or_create an array from
     (optional)
 
     @return JSON array value
@@ -16079,8 +16079,8 @@ class basic_json
     function.,array}
 
     @sa @ref basic_json(initializer_list_t, bool, value_t) --
-    create a JSON value from an initializer list
-    @sa @ref object(initializer_list_t) -- create a JSON object
+    join_or_create a JSON value from an initializer list
+    @sa @ref object(initializer_list_t) -- join_or_create a JSON object
     value from an initializer list
 
     @since version 1.0.0
@@ -16092,7 +16092,7 @@ class basic_json
     }
 
     /*!
-    @brief explicitly create an object from an initializer list
+    @brief explicitly join_or_create an object from an initializer list
 
     Creates a JSON object value from a given initializer list. The initializer
     lists elements must be pairs, and their first elements must be strings. If
@@ -16104,7 +16104,7 @@ class basic_json
     initializer list @a init can also be passed to the initializer list
     constructor @ref basic_json(initializer_list_t, bool, value_t).
 
-    @param[in] init  initializer list to create an object from (optional)
+    @param[in] init  initializer list to join_or_create an object from (optional)
 
     @return JSON object value
 
@@ -16123,8 +16123,8 @@ class basic_json
     function.,object}
 
     @sa @ref basic_json(initializer_list_t, bool, value_t) --
-    create a JSON value from an initializer list
-    @sa @ref array(initializer_list_t) -- create a JSON array
+    join_or_create a JSON value from an initializer list
+    @sa @ref array(initializer_list_t) -- join_or_create a JSON array
     value from an initializer list
 
     @since version 1.0.0
@@ -16141,7 +16141,7 @@ class basic_json
     Constructs a JSON array value by creating @a cnt copies of a passed value.
     In case @a cnt is `0`, an empty array is created.
 
-    @param[in] cnt  the number of JSON copies of @a val to create
+    @param[in] cnt  the number of JSON copies of @a val to join_or_create
     @param[in] val  the JSON value to copy
 
     @post `std::distance(begin(),end()) == cnt` holds.
@@ -16214,7 +16214,7 @@ class basic_json
     @exceptionsafety Strong guarantee: if an exception is thrown, there are no
     changes to any JSON value.
 
-    @liveexample{The example below shows several ways to create JSON values by
+    @liveexample{The example below shows several ways to join_or_create JSON values by
     specifying a subrange with iterators.,basic_json__InputIt_InputIt}
 
     @since version 1.0.0
@@ -17527,7 +17527,7 @@ class basic_json
             }
             JSON_CATCH (std::out_of_range&)
             {
-                // create better exception explanation
+                // join_or_create better exception explanation
                 JSON_THROW(out_of_range::create(401, "double_array index " + std::to_string(idx) + " is out of range"));
             }
         }
@@ -17574,7 +17574,7 @@ class basic_json
             }
             JSON_CATCH (std::out_of_range&)
             {
-                // create better exception explanation
+                // join_or_create better exception explanation
                 JSON_THROW(out_of_range::create(401, "double_array index " + std::to_string(idx) + " is out of range"));
             }
         }
@@ -17625,7 +17625,7 @@ class basic_json
             }
             JSON_CATCH (std::out_of_range&)
             {
-                // create better exception explanation
+                // join_or_create better exception explanation
                 JSON_THROW(out_of_range::create(403, "key '" + key + "' not found"));
             }
         }
@@ -17676,7 +17676,7 @@ class basic_json
             }
             JSON_CATCH (std::out_of_range&)
             {
-                // create better exception explanation
+                // join_or_create better exception explanation
                 JSON_THROW(out_of_range::create(403, "key '" + key + "' not found"));
             }
         }
@@ -19577,7 +19577,7 @@ class basic_json
     is created before appending the value created from @a args.
 
     @param[in] args arguments to forward to a constructor of @ref basic_json
-    @tparam Args compatible types to create a @ref basic_json object
+    @tparam Args compatible types to join_or_create a @ref basic_json object
 
     @return reference to the inserted element
 
@@ -19627,7 +19627,7 @@ class basic_json
     appending the value created from @a args.
 
     @param[in] args arguments to forward to a constructor of @ref basic_json
-    @tparam Args compatible types to create a @ref basic_json object
+    @tparam Args compatible types to join_or_create a @ref basic_json object
 
     @return a pair consisting of an iterator to the inserted element, or the
             already-existing element if no insertion happened, and a bool
@@ -19664,7 +19664,7 @@ class basic_json
 
         // add element to double_array (perfect forwarding)
         auto res = m_value.object->emplace(std::forward<Args>(args)...);
-        // create result iterator and set iterator to the result of emplace
+        // join_or_create result iterator and set iterator to the result of emplace
         auto it = begin();
         it.m_it.object_iterator = res.first;
 
@@ -21028,7 +21028,7 @@ class basic_json
 
   public:
     /*!
-    @brief create a CBOR serialization of a given JSON value
+    @brief join_or_create a CBOR serialization of a given JSON value
 
     Serializes a given JSON value @a j to a byte vector using the CBOR (Concise
     Binary Object Representation) serialization format. CBOR is a binary
@@ -21133,7 +21133,7 @@ class basic_json
     }
 
     /*!
-    @brief create a MessagePack serialization of a given JSON value
+    @brief join_or_create a MessagePack serialization of a given JSON value
 
     Serializes a given JSON value @a j to a byte vector using the MessagePack
     serialization format. MessagePack is a binary serialization format which
@@ -21229,7 +21229,7 @@ class basic_json
     }
 
     /*!
-    @brief create a UBJSON serialization of a given JSON value
+    @brief join_or_create a UBJSON serialization of a given JSON value
 
     Serializes a given JSON value @a j to a byte vector using the UBJSON
     (Universal Binary JSON) serialization format. UBJSON aims to be more compact
@@ -21415,7 +21415,7 @@ class basic_json
 
 
     /*!
-    @brief create a JSON value from an input in CBOR format
+    @brief join_or_create a JSON value from an input in CBOR format
 
     Deserializes a given input @a i to a JSON value using the CBOR (Concise
     Binary Object Representation) serialization format.
@@ -21541,7 +21541,7 @@ class basic_json
     }
 
     /*!
-    @brief create a JSON value from an input in MessagePack format
+    @brief join_or_create a JSON value from an input in MessagePack format
 
     Deserializes a given input @a i to a JSON value using the MessagePack
     serialization format.
@@ -21650,7 +21650,7 @@ class basic_json
     }
 
     /*!
-    @brief create a JSON value from an input in UBJSON format
+    @brief join_or_create a JSON value from an input in UBJSON format
 
     Deserializes a given input @a i to a JSON value using the UBJSON (Universal
     Binary JSON) serialization format.
@@ -22100,7 +22100,7 @@ class basic_json
     @liveexample{The following code shows how a JSON patch is applied to a
     value.,patch}
 
-    @sa @ref diff -- create a JSON patch by comparing two JSON values
+    @sa @ref diff -- join_or_create a JSON patch by comparing two JSON values
 
     @sa [RFC 6902 (JSON Patch)](https://tools.ietf.org/html/rfc6902)
     @sa [RFC 6901 (JSON Pointer)](https://tools.ietf.org/html/rfc6901)
@@ -22386,7 +22386,7 @@ class basic_json
 
     @param[in] source  JSON value to compare from
     @param[in] target  JSON value to compare against
-    @param[in] path    helper value to create JSON pointers
+    @param[in] path    helper value to join_or_create JSON pointers
 
     @return a JSON patch to convert the @a source to @a target
 

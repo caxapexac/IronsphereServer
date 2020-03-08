@@ -30,6 +30,9 @@ public:
     // template<typename T> //TODO T : iserializable not good
     // static std::shared_ptr<std::vector<std::shared_ptr<T>>> unpack_vector(const json& package);
 
+    template<typename T>
+    static void pack_vector (const std::vector<T>& vec, json& package, serializers type);
+
     ~json_tools();
 };
 //
@@ -66,6 +69,16 @@ public:
 
 json_tools::~json_tools () {
 
+}
+
+template<typename T>
+void json_tools::pack_vector (const std::vector<T>& vec, json& package, serializers type) {
+    package = json::array();
+    for (auto i : vec) {
+        json j;
+        i.serialize(j, type);
+        package.push_back(j); //TODO remove alloc (use index)
+    }
 }
 
 

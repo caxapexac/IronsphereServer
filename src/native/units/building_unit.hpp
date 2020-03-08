@@ -3,9 +3,11 @@
 
 #include "unit.hpp"
 
-class building_unit : public unit {
+class unit_placeable;
+
+class building_unit {
 protected:
-    std::shared_ptr<std::vector<std::shared_ptr<unit>>> children; // TODO vector of units inside base L2 composite
+    std::list<std::shared_ptr<unit_placeable>> children; // TODO vector of units inside base L2 composite
 
 public:
 

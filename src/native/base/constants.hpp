@@ -1,6 +1,7 @@
 #ifndef LOGIC_CONSTANTS_HPP
 #define LOGIC_CONSTANTS_HPP
 
+//TODO all strings into enum constants
 //TODO add common constants (generic RTS)
 //TODO uint -> int ?
 namespace constants {
@@ -14,22 +15,23 @@ namespace constants {
 //TODO L4-5 without json ;(
 
 /*Patterns
- * L1 Unit arrtibutes, abilities (components(?)) (?)
+ * L1 Unit attributes, abilities (components(?)) (?)
  * L1 Create Unit (factory/abstract factory)
- * L2 Store unit info (composite) is json legal?
- * L2 Get unit (observer)
+ * L2 Store unit get_info (composite) is json legal?
+ * L2 Get unit in base (observer) events subscribe
  * L2 Tilemap - Unit (proxy)
  * L2 Neutral - Unit (strategy)
- * L3 Input (facade)
+ * STARTED L3 Input (facade)
  * L3 Unit - Unit (mediator)
  * L3 Input - Unit (command)
  * L3 User - Unit (chain of responsibility)
- * L4 Logging level (proxy)
+ * STARTED L4 Logging level (proxy)
  * L4 Logging format (adapter)
- * L5 Save/Load (memento) is json legal?
+ * STARTED L5 Save/Load (memento) is json legal?
  * L6 Player1 - Player2 - Player1 (State) idk how cuz we have RTS
  * L6 Game class (singleton)
  * L7
  * Other
  */
+
 #endif //LOGIC_CONSTANTS_HPP
