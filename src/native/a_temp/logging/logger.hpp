@@ -45,7 +45,7 @@ public:
         return static_cast<abstract_logger::log_flags>(static_cast<unsigned>(a) | static_cast<unsigned>(b));
     }
 
-    // template<class... Args> void log (log_flags flags, Args... args);
+     //template<class... Args> void log (log_flags flags, Args... args);
     // void log (log_flags flags, iserializable& obj);
 };
 

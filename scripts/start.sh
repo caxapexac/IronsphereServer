@@ -1,1 +1,1 @@
-node src/index.js
+set DEBUG=socket.io* && ts-node-dev --respawn --transpileOnly src/index.ts

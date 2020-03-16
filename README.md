@@ -21,13 +21,22 @@
 1. `npm install -g node-gyp`
 2. Install `Python 2.7`
 3. `npm install -g --production windows-build-tools` OR `npm install --global --production windows-build-tools --vs2019`
-4. INSTEAD OF steps 2-3 you can install [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools) then `npm config set msvs_version 2019`
+4. INSTEAD OF step 3 you can install [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools) then `npm config set msvs_version 2019`
 5. [Full guide](https://spin.atomicobject.com/2019/03/27/node-gyp-windows/)
+6. OR [another guide](https://futurestud.io/tutorials/how-to-build-nodegyp-to-run-bcrypt-on-windows)
 
 # Importand (development) #
 
 1. `npm run build` to rebuild server
 2. OR `npm run build-logic` (change inside for linux) to rebuild logic as terminal executable
+
+# Important (deploy) #
+1. `nano /etc/ssh/sshd_config` edit port (security)
+2. Restart the server
+2. `npm install -g forever`
+3. 
+
+99. npm run start-prod
 
 # Линки #
 
