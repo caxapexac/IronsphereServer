@@ -1,10 +1,9 @@
 #include "state_play.hpp"
 #include "../lobby/game_session.hpp"
 
-state_play::state_play (game_session& context) : abstract_state(context) {
-    if (session.map == nullptr) {
-        //session.strategy->generate()
-        //TODO generate tilemap/players
+state_play::state_play (game_session& context) : a_state(context) {
+    if (session.storage == nullptr) {
+        session.storage = session.strategy->generate();
     }
 }
 
@@ -13,7 +12,7 @@ void state_play::join (json& input, json& output) {
 }
 
 void state_play::quit (json& input, json& output) {
-    //Todo idk what to do
+    output = {{"warning", "[play.quit] connection lost. You can rejoin"}};
 }
 
 void state_play::play (json& output) {

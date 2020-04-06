@@ -2,8 +2,6 @@
 #define LOGIC_CHOREOGRAPHER_HPP
 
 #include <memory>
-#include "../field/tilemap.hpp"
-
 
 //
 // class choreographer {

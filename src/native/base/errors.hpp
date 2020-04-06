@@ -6,6 +6,7 @@
 
 // TODO add more generic exceptions
 // TODO make it more complex and useful
+// TODO tryso
 // L7
 struct shared_pointer_exception : public std::exception {
     std::string info;

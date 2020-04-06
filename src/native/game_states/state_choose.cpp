@@ -1,9 +1,10 @@
 #include "state_choose.hpp"
 #include "../lobby/game_session.hpp"
+#include "../game_strategies/strategy_realtime.hpp"
+#include "../game_strategies/strategy_stepped.hpp"
 
-state_choose::state_choose (game_session& context) : abstract_state(context) {
-    session.map = nullptr;
-    session.players = nullptr;
+state_choose::state_choose (game_session& context) : a_state(context) {
+    session.storage = nullptr;
 }
 
 void state_choose::join (json& input, json& output) {
@@ -18,11 +19,12 @@ void state_choose::quit (json& input, json& output) {
 
 void state_choose::play (json& output) {
     if (session.strategy == nullptr) {
-        output = {{"error", "[choose.pause] cant start without strategy"}};
+        // TODO all the errors into exceptions
+        output = {{"error", "[choose.pause] can't start without strategy"}};
         return;
     }
     session.transition_to(std::make_unique<state_play>(session));
-    session.map->serialize(output["map"], serial_save); //TODO check working
+    session.storage->map->serialize(output["map"], serial_save); //TODO check working
 }
 
 void state_choose::pause (json& output) {
@@ -34,13 +36,19 @@ void state_choose::stop (json& output) {
 }
 
 void state_choose::setup (json& input, json& output) {
-
-    //Setup strategy
+    session.strategy = json_tools::unpack_strategy(input);
+    if (session.strategy == nullptr) {
+        // TODO exception
+        output = {{"error", "[choose.setup] unknown strategy"}};
+    }
+    session.strategy->serialize(output, serial_save);
 }
 
 void state_choose::update (json& output) {
-    //Return strategy
-    if (session.strategy != nullptr) {
+    if (session.strategy == nullptr) {
+        output["strategy"] = "null"; //TODO
+    }
+    else {
         session.strategy->serialize(output["strategy"], serial_info);
     }
 }

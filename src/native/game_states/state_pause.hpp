@@ -1,9 +1,9 @@
 #ifndef LOGIC_STATE_PAUSE_HPP
 #define LOGIC_STATE_PAUSE_HPP
 
-#include "abstract_state.hpp"
+#include "a_state.hpp"
 
-class state_pause : public abstract_state {
+class state_pause : public a_state {
 public:
     explicit state_pause (game_session& context);
     void join (json& input, json& output) override;

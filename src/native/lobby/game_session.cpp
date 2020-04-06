@@ -11,7 +11,7 @@ bool game_session::is_empty () {
     return players_id.empty();
 }
 
-abstract_state& game_session::get_state () {
+a_state& game_session::get_state () {
     return *state;
 }
 
@@ -22,8 +22,9 @@ int game_session::get_player_index (int player_id) {
     return -1; //TODO const
 }
 
-void game_session::transition_to (std::unique_ptr<abstract_state> nstate) {
+void game_session::transition_to (std::unique_ptr<a_state> nstate) {
     state = std::move(nstate);
+    //TODO log?
 }
 
 void game_session::serialize (json& package, serializers type) const {
@@ -36,7 +37,6 @@ void game_session::serialize (json& package, serializers type) const {
             break;
         case serial_gameplay:
             if (state != nullptr) state->serialize(package["state"], type);
-            //if (map != nullptr) map->serialize(package["map"], type); only start
             if (storage != nullptr) storage->serialize(package["storage"], type);
             break;
         case serial_save:
@@ -48,10 +48,8 @@ void game_session::serialize (json& package, serializers type) const {
 }
 
 void game_session::deserialize (json& package) {
-    // Load game
-    //state = state(package["state"]); etc TODO
-    //strategy
-    //map
-    //players pack vector
+    state = package.contains("state") ? json_tools::unpack_state(package["state"], *this) : std::make_unique<state_choose>(*this);
+    strategy = package.contains("strategy") ? json_tools::unpack_strategy(package["strategy"]) : nullptr;
+    storage = package.contains("storage") ? std::make_unique<game_storage>(package["storage"]) : nullptr;
 }
 

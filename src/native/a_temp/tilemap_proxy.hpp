@@ -6,17 +6,17 @@
 // TODO https://refactoring.guru/design-patterns/proxy/cpp/example
 class tilemap_proxy : public itilemap {
 private:
-    tilemap subject;
+    a_tilemap subject;
 
 public:
-    explicit tilemap_proxy(tilemap& ntilemap);
+    explicit tilemap_proxy(a_tilemap& ntilemap);
 
-    bool move(unit_moving& mover);
+    bool move(unit_mr_proper& mover);
 };
 
-tilemap_proxy::tilemap_proxy (tilemap& ntilemap) : subject(ntilemap) {}
+tilemap_proxy::tilemap_proxy (a_tilemap& ntilemap) : subject(ntilemap) {}
 
-bool tilemap_proxy::move(unit_moving &mover) {
+bool tilemap_proxy::move(unit_mr_proper &mover) {
     vector2<int> desired_position = mover.get_transform().getPosition();
 
     bool is_occupied = false;

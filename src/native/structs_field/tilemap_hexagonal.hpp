@@ -1,0 +1,60 @@
+#ifndef LOGIC_TILEMAP_HEXAGONAL_HPP
+#define LOGIC_TILEMAP_HEXAGONAL_HPP
+
+#include "a_tilemap.hpp"
+
+class tilemap_hexagonal : public a_tilemap {
+protected:
+
+public:
+    explicit tilemap_hexagonal (json& package);
+    void serialize (json& package, serializers type) const override;
+    void deserialize (json& package) override;
+
+    tile& operator[] (const vector2<int>& position) const override;
+    bool is_valid (const vector2<int>& position) const override;
+    tile& get_tile (const vector2<int>& position) override;
+    std::shared_ptr<a_unit> get_unit (const vector2<int>& position) override;
+
+    int size () const override;
+
+    std::shared_ptr<vector2<int>> get_path (vector2<int> source, vector2<int> destination) override;
+};
+
+tilemap_hexagonal::tilemap_hexagonal (json& package) : a_tilemap(package) {
+
+}
+
+void tilemap_hexagonal::serialize (json& package, serializers type) const {
+    a_tilemap::serialize(package, type);
+}
+
+void tilemap_hexagonal::deserialize (json& package) {
+    a_tilemap::deserialize(package);
+}
+
+tile& tilemap_hexagonal::operator[] (const vector2<int>& position) const {
+    return a_tilemap::operator[](position);
+}
+
+bool tilemap_hexagonal::is_valid (const vector2<int>& position) const {
+    return a_tilemap::is_valid(position);
+}
+
+tile& tilemap_hexagonal::get_tile (const vector2<int>& position) {
+    return a_tilemap::get_tile(position);
+}
+
+std::shared_ptr<a_unit> tilemap_hexagonal::get_unit (const vector2<int>& position) {
+    return a_tilemap::get_unit(position);
+}
+
+int tilemap_hexagonal::size () const {
+    return a_tilemap::size();
+}
+
+std::shared_ptr<vector2<int>> tilemap_hexagonal::get_path (vector2<int> source, vector2<int> destination) {
+    return a_tilemap::get_path(source, destination);
+}
+
+#endif //LOGIC_TILEMAP_HEXAGONAL_HPP

@@ -1,14 +1,14 @@
 #include "state_pause.hpp"
 #include "../lobby/game_session.hpp"
 
-state_pause::state_pause (game_session& context) : abstract_state(context) { }
+state_pause::state_pause (game_session& context) : a_state(context) { }
 
 void state_pause::join (json& input, json& output) {
     output = {{"error", "[pause.join] wrong transition"}};
 }
 
 void state_pause::quit (json& input, json& output) {
-    //Todo idk what to do
+    output = {{"warning", "[pause.quit] connection lost. You can rejoin"}};
 }
 
 void state_pause::play (json& output) {

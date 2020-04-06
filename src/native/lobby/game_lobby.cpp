@@ -10,6 +10,7 @@ game_lobby::game_lobby () noexcept {
 void game_lobby::update (json& output) {
     output["delta_time"] = delta_time;
     output["chat_buffer"] = chat_buffer;
+    // TODO maybe output["log"] = logger_client::get().log();
     chat_buffer.clear();
     for (const auto& item : sessions) {
         item.second->get_state().update(output["sessions"][item.first]);
@@ -103,7 +104,7 @@ void game_lobby::session (json& input, json& output) {
         return;
     }
     // Algorithm
-    abstract_state& state = current->get_state();
+    a_state& state = current->get_state();
     if (input["method"] == "quit") {
         state.quit(input, output);
     }

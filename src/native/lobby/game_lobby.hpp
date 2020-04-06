@@ -15,7 +15,8 @@ class game_lobby  : public singleton<game_lobby> {
 private:
     float delta_time;
     std::map<int, std::shared_ptr<game_session>> sessions;
-    json chat_buffer;
+    json chat_buffer; // TODO chat class
+    json log_buffer; // TODO connect with logger TODO into chat
 
 public:
     game_lobby () noexcept;

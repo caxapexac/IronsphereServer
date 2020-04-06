@@ -1,11 +1,10 @@
 #ifndef LOGIC_INTERFACES_HPP
 #define LOGIC_INTERFACES_HPP
 
-class iserializable;
-
 #include <string>
 #include <memory>
 #include <list>
+#include "constants.hpp"
 #include "../utils/json.hpp"
 #include "../utils/json_tools.hpp"
 
@@ -40,15 +39,6 @@ public:
     virtual void execute (json& input, json& output) = 0;
     virtual ~isignal () = default;
 };
-
-
-// TODO purposes?
-// class ihashable {
-// public:
-//     virtual int get_hash () = 0;
-//     virtual ~ihashable () = default;
-// };
-
 
 
 

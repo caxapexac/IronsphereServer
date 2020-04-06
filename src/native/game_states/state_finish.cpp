@@ -1,7 +1,9 @@
 #include "state_finish.hpp"
 #include "../lobby/game_session.hpp"
 
-state_finish::state_finish (game_session& context) : abstract_state(context) { }
+state_finish::state_finish (game_session& context) : a_state(context) {
+    //TODO throw records
+}
 
 void state_finish::join (json& input, json& output) {
     output = {{"error", "[finish.join] wrong transition"}};
@@ -31,7 +33,7 @@ void state_finish::setup (json& input, json& output) {
 }
 
 void state_finish::update (json& output) {
-    //TODO throw records
+
 }
 
 void state_finish::action (json& input, json& output) {

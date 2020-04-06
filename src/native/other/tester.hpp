@@ -9,18 +9,15 @@
 #include "../lobby/game_lobby.hpp"
 #include "../structs/player.hpp"
 #include "../structs/transform.hpp"
-#include "../field/tile.hpp"
 #include "../structs/vector2.hpp"
 #include "../a_temp/id.hpp"
 #include "../a_temp/logging/logger.hpp"
 #include "../a_temp/command.hpp"
 #include "../a_temp/pool.hpp"
-#include "../units/unit.hpp"
-#include "../unit_abilities/ability.hpp"
-#include "../units/building_unit.hpp"
-#include "../units/unit_factory.hpp"
-#include "../units/unit_moving.hpp"
-#include "../field/tilemap.hpp"
+#include "../units/a_unit.hpp"
+#include "../units_abilities/a_ability.hpp"
+#include "../a_temp/unit_factory.hpp"
+#include "../units_temp/unit_mr_proper.hpp"
 #include "../a_temp/tilemap_proxy.hpp"
 #include "../utils/map_builder.hpp"
 #include "../utils/map_miles_builder.hpp"
@@ -61,14 +58,14 @@ int tester::test_lr1 () {
     /// Test:
     /// Разработать и реализовать набор классов:
     /// - Класс игрового поля
-    tilemap tm_orig = tilemap(vector2<int>(10, 15));
+    a_tilemap tm_orig = a_tilemap(vector2<int>(10, 15));
     tm_orig.serialize(j["tm"]);
     std::cout << j["tm"] << std::endl;
     /// - Набор классов юнитов
     //TODO
     /// Игровое поле является контейнером для объектов представляющим прямоугольную сетку. Основные требования к классу игрового поля:
     /// - Создание поля произвольного размера
-    tilemap tm_rand = tilemap(vector2<int>(rand() % 100, rand() & 100));
+    a_tilemap tm_rand = a_tilemap(vector2<int>(rand() % 100, rand() & 100));
     tm_rand.serialize(j["tmr"]);
     std::cout << j["tmr"] << std::endl;
     /// - Контроль максимального количества объектов на поле
@@ -77,7 +74,7 @@ int tester::test_lr1 () {
     //player p = player(); //TODO no storage
     //player.add_unit(new unit); //TODO
     /// - Возможность копирования поля (включая объекты на нем)
-    tilemap tm_copy = tilemap(tm_orig); //TODO won't copy units
+    a_tilemap tm_copy = a_tilemap(tm_orig); //TODO won't copy units
     /// - Для хранения запрещается использовать контейнеры из stl
     tile** tiles = tm_orig.data;
     /// Юнит является объектов, размещаемым на поля боя. Один юнит представляет собой отряд.
