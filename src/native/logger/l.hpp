@@ -14,7 +14,10 @@
 #include "user_logger.hpp"
 #include "file_logger.hpp"
 
-class log {
+#include "../utils/json_tools.hpp"
+#include "../lobby/game_lobby.hpp"
+
+class l {
 private:
     bool subduce();
     void send(std::string& verbal);
@@ -28,30 +31,31 @@ private:
     user_logger* usr;
 
 public:
-    explicit log();
-    ~log() = default;
+    explicit l();
+    ~l() = default;
 
     void set_logger(logger* log, loggers type);
     void set_user_logger(user_logger* log);
 
-    static log& say(streams str = message, unsigned int logs = 7);
-    static log& say_to(std::string& addressee, streams str = message);
+    static l& say(streams str = message, unsigned int logs = 7);
+    static l& say_to(std::string& addressee, streams str = message);
 
     template <typename T>
-    friend log& operator<< (log &out, const T &value);
-    friend log& operator<< (log &out, log& (*f) (log&));
-    friend void operator<< (log &out, void (*f) (log&));
+    friend l& operator<< (l &out, const T &value);
+    friend l& operator<< (l &out, json& object);
+    friend l& operator<< (l &out, l& (*f) (l&));
+    friend void operator<< (l &out, void (*f) (l&));
     //TODO: for iSerializable,  any object to say
 
-    static log& over(log& out);
-    static void out(log& out);
+    static l& over(l& out);
+    static void out(l& out);
     //....
 };
 
 
 
 template<typename T>
-log &operator<<(log &out, const T &value) {
+l &operator<<(l & out, const T &value) {
     out.alpha << value;
     return out;
 }
