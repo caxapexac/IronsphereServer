@@ -30,9 +30,10 @@ public:
     virtual std::shared_ptr<a_unit> get_unit (const vector2<int>& position);
 
     virtual int size () const;
+    virtual vector2<int> get_scale();
 
     virtual std::shared_ptr<vector2<int>> get_path(vector2<int> source, vector2<int> destination);
-    virtual std::vector<tile*> get_neighbours (vector2<int> point) = 0;
+    virtual std::vector<vector2<int>*>& get_neighbours (vector2<int> point) = 0; // if cell outside of the field returns nullptr!!!
     virtual float get_euristic_distance (vector2<int> source, vector2<int> destination) = 0;
 };
 
