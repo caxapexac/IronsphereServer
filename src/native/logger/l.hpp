@@ -1,22 +1,23 @@
-#ifndef UNTITLED_LOG_HPP
-#define UNTITLED_LOG_HPP
+#ifndef LOGIC_LOG_HPP
+#define LOGIC_LOG_HPP
 
 
 #include <vector>
 #include <sstream>
 
-#include "logger.hpp"
+#include "abstract_logger.hpp"
 #include "loggers.hpp"
 #include "streams.hpp"
 
-#include "server_logger.hpp"
-#include "client_logger.hpp"
-#include "user_logger.hpp"
-#include "file_logger.hpp"
+#include "logger_server.hpp"
+#include "logger_client.hpp"
+#include "logger_user.hpp"
+#include "logger_file.hpp"
 
 #include "../utils/json_tools.hpp"
 #include "../lobby/game_lobby.hpp"
 
+// TODO rename please) maybe out
 class l {
 private:
     bool subduce();
@@ -27,15 +28,15 @@ private:
     std::ostringstream alpha;
     bool to;
 
-    logger* log_arr [3];
-    user_logger* usr;
+    abstract_logger* log_arr [3];
+    logger_user* usr;
 
 public:
     explicit l();
     ~l() = default;
 
-    void set_logger(logger* log, loggers type);
-    void set_user_logger(user_logger* log);
+    void set_logger(abstract_logger* log, loggers type);
+    void set_user_logger(logger_user* log);
 
     static l& say(streams str = message, unsigned int logs = 7);
     static l& say_to(std::string& addressee, streams str = message);
@@ -52,8 +53,6 @@ public:
     //....
 };
 
-
-
 template<typename T>
 l &operator<<(l & out, const T &value) {
     out.alpha << value;
@@ -61,4 +60,4 @@ l &operator<<(l & out, const T &value) {
 }
 
 
-#endif //UNTITLED_LOG_HPP
+#endif //LOGIC_LOG_HPP

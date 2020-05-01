@@ -1,10 +1,10 @@
 #ifndef LOGIC_STRATEGY_STEPPED_HPP
 #define LOGIC_STRATEGY_STEPPED_HPP
 
-#include "a_strategy.hpp"
+#include "abstract_strategy.hpp"
 
 //TODO template <typename T> ?
-class strategy_stepped : public a_strategy {
+class strategy_stepped : public abstract_strategy {
 private:
     strategy_stepped() = default;
 

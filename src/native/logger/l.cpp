@@ -9,12 +9,12 @@ l::l() {
 
 
 
-void l::set_logger(logger* log, loggers type) {
+void l::set_logger(abstract_logger* log, loggers type) {
     unsigned int logger_num = log2(type);
     log_arr[logger_num] = log;
 }
 
-void l::set_user_logger(user_logger* log) {
+void l::set_user_logger(logger_user* log) {
     usr = log;
 }
 
@@ -45,19 +45,21 @@ void l::send(std::string& verbal) {
 
 
 l& l::say(streams str, unsigned int logs) {
-    l logger = game_lobby::get().log; //TODO: add object!
-    logger.stream = str;
-    logger.logs = logs;
-    logger.to = false;
-    return logger;
+    // l logger = game_lobby::get().log; //TODO: add object!
+    // logger.stream = str;
+    // logger.logs = logs;
+    // logger.to = false;
+    // return logger;
+    // FIXME
 }
 
 l& l::say_to(std::string &addressee, streams str) {
-    l logger = game_lobby::get().log; //TODO: add object!
-    logger.usr->change_addressee(addressee);
-    logger.stream = str;
-    logger.to = true;
-    return logger;
+    // l logger = game_lobby::get().log; //TODO: add object!
+    // logger.usr->change_addressee(addressee);
+    // logger.stream = str;
+    // logger.to = true;
+    // return logger;
+    // FIXME
 }
 
 
@@ -75,8 +77,6 @@ l &operator<<(l & out, json & object) {
     return out;
 }
 
-
-
 l &l::over(l &out) {
     std::string verbal = out.alpha.str();
     out.send(verbal);
@@ -84,7 +84,7 @@ l &l::over(l &out) {
 }
 
 void l::out(l &out) {
-    std::string timed_verbal = "! " + logger::get_time_name(true) + ": " + out.alpha.str();
+    std::string timed_verbal = "! " + abstract_logger::get_time_name(true) + ": " + out.alpha.str();
     timed_verbal.insert(timed_verbal.begin(), (char) out.stream);
     out.send(timed_verbal);
 }

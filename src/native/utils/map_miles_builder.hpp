@@ -45,7 +45,7 @@ map_miles_builder::map_miles_builder (int nseed) : seed(nseed) {
 }
 
 map_builder& map_miles_builder::generate_ground () {
-    result = std::make_shared<a_tilemap>(scale);
+    result = std::make_shared<abstract_tilemap>(scale);
 
     //Test generation
     //vector2<int> i = vector2<int>(0, 0); //TODO Change to iterator (L1)

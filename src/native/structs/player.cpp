@@ -63,6 +63,7 @@ void player::update () {
     for (const auto& i : units) {
         i.second->update();
     }
+    // TODO war tuman
 }
 
 void player::signal (json& input, json& output) {

@@ -103,8 +103,9 @@ void game_lobby::session (json& input, json& output) {
         output = {{"error", "Player is not in this room"}};
         return;
     }
+
     // Algorithm
-    a_state& state = current->get_state();
+    abstract_state& state = current->get_state();
     if (input["method"] == "quit") {
         state.quit(input, output);
     }

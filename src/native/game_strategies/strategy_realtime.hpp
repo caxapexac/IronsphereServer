@@ -1,10 +1,10 @@
 #ifndef LOGIC_STRATEGY_REALTIME_HPP
 #define LOGIC_STRATEGY_REALTIME_HPP
 
-#include "a_strategy.hpp"
+#include "abstract_strategy.hpp"
 
 //TODO template <typename T> ?
-class strategy_realtime : public a_strategy {
+class strategy_realtime : public abstract_strategy {
 private:
 
 

@@ -1,7 +1,7 @@
 #include "state_play.hpp"
 #include "../lobby/game_session.hpp"
 
-state_play::state_play (game_session& context) : a_state(context) {
+state_play::state_play (game_session& context) : abstract_state(context) {
     if (session.storage == nullptr) {
         session.storage = session.strategy->generate();
     }

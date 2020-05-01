@@ -1,9 +1,9 @@
 #ifndef LOGIC_TILEMAP_SQUARE_HPP
 #define LOGIC_TILEMAP_SQUARE_HPP
 
-#include "a_tilemap.hpp"
+#include "abstract_tilemap.hpp"
 
-class tilemap_square : public a_tilemap {
+class tilemap_square : public abstract_tilemap {
 protected:
 
 public:
@@ -22,40 +22,40 @@ public:
 
 };
 
-tilemap_square::tilemap_square (json& package) : a_tilemap(package) {
+tilemap_square::tilemap_square (json& package) : abstract_tilemap(package) {
 
 }
 
 void tilemap_square::serialize (json& package, serializers type) const {
-    a_tilemap::serialize(package, type);
+    abstract_tilemap::serialize(package, type);
 }
 
 void tilemap_square::deserialize (json& package) {
-    a_tilemap::deserialize(package);
+    abstract_tilemap::deserialize(package);
 }
 
 tile& tilemap_square::operator[] (const vector2<int>& position) const {
-    return a_tilemap::operator[](position);
+    return abstract_tilemap::operator[](position);
 }
 
 bool tilemap_square::is_valid (const vector2<int>& position) const {
-    return a_tilemap::is_valid(position);
+    return abstract_tilemap::is_valid(position);
 }
 
 tile& tilemap_square::get_tile (const vector2<int>& position) {
-    return a_tilemap::get_tile(position);
+    return abstract_tilemap::get_tile(position);
 }
 
 std::shared_ptr<a_unit> tilemap_square::get_unit (const vector2<int>& position) {
-    return a_tilemap::get_unit(position);
+    return abstract_tilemap::get_unit(position);
 }
 
 int tilemap_square::size () const {
-    return a_tilemap::size();
+    return abstract_tilemap::size();
 }
 
 std::shared_ptr<vector2<int>> tilemap_square::get_path (vector2<int> source, vector2<int> destination) {
-    return a_tilemap::get_path(source, destination);
+    return abstract_tilemap::get_path(source, destination);
 }
 
 #endif //LOGIC_TILEMAP_SQUARE_HPP

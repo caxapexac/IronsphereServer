@@ -1,9 +1,9 @@
 #ifndef LOGIC_STATE_FINISH_HPP
 #define LOGIC_STATE_FINISH_HPP
 
-#include "a_state.hpp"
+#include "abstract_state.hpp"
 
-class state_finish : public a_state {
+class state_finish : public abstract_state {
 public:
     explicit state_finish (game_session& context);
     void join (json& input, json& output) override;

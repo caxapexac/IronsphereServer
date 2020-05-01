@@ -3,7 +3,7 @@
 #include "../game_strategies/strategy_realtime.hpp"
 #include "../game_strategies/strategy_stepped.hpp"
 
-state_choose::state_choose (game_session& context) : a_state(context) {
+state_choose::state_choose (game_session& context) : abstract_state(context) {
     session.storage = nullptr;
 }
 

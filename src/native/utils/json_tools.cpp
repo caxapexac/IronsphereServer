@@ -1,7 +1,7 @@
 #include "json_tools.hpp"
 #include <memory>
 #include "../structs/game_storage.hpp"
-#include "../game_strategies/a_strategy.hpp"
+#include "../game_strategies/abstract_strategy.hpp"
 #include "../game_strategies/strategy_realtime.hpp"
 #include "../game_strategies/strategy_stepped.hpp"
 #include "../game_states/state_play.hpp"
@@ -10,13 +10,8 @@
 #include "../game_states/state_finish.hpp"
 #include "../structs_field/tilemap_hexagonal.hpp"
 #include "../structs_field/tilemap_square.hpp"
-#include "../structs_field/tile.hpp"
-#include "../structs_field/tile_money.hpp"
-#include "../structs_field/tile_damage.hpp"
-#include "../units_temp/unit_gunner.hpp"
-#include "../units_temp/unit_walker.hpp"
 
-std::unique_ptr<a_strategy> json_tools::unpack_strategy (json& package) {
+std::unique_ptr<abstract_strategy> json_tools::unpack_strategy (json& package) {
     std::string type = package["type"]; //TODO enum
     if (type == "realtime") return std::make_unique<strategy_realtime>(package);
     else if (type == "stepped") return std::make_unique<strategy_stepped>(package);
@@ -24,7 +19,7 @@ std::unique_ptr<a_strategy> json_tools::unpack_strategy (json& package) {
     return nullptr;
 }
 
-std::unique_ptr<a_state> json_tools::unpack_state (json& package, game_session& session) {
+std::unique_ptr<abstract_state> json_tools::unpack_state (json& package, game_session& session) {
     if (package == "choose") return std::make_unique<state_choose>(session);
     else if (package == "play") return std::make_unique<state_play>(session);
     else if (package == "pause") return std::make_unique<state_pause>(session);
@@ -33,21 +28,7 @@ std::unique_ptr<a_state> json_tools::unpack_state (json& package, game_session& 
     return nullptr;
 }
 
-std::shared_ptr<a_unit> json_tools::unpack_unit (json& package, game_storage& storage) {
-    std::string type = package["type"];
-    if (type == "gunner") return std::make_shared<unit_gunner>(storage, package);
-    else if (type == "walker") return std::make_shared<unit_walker>(storage, package);
-    //throw; or log
-    return nullptr;
-}
-
-std::shared_ptr<a_effect> json_tools::unpack_effect (json& package) {
-    //TODO
-    //throw; or log
-    return nullptr;
-}
-
-std::unique_ptr<a_tilemap> json_tools::unpack_tilemap (json& package) {
+std::unique_ptr<abstract_tilemap> json_tools::unpack_tilemap (json& package) {
     std::string type = package["type"];
     if (type == "hexagonal") return std::make_unique<tilemap_hexagonal>(package);
     else if (type == "square") return std::make_unique<tilemap_square>(package);
@@ -75,29 +56,38 @@ void json_tools::pack_vector (const std::vector<T>& vec, json& package, serializ
 }
 
 template<typename T>
-std::unique_ptr<std::vector<T>> json_tools::unpack_vector (const json& package) {
+std::vector<T> json_tools::unpack_vector (const json& package) {
     static_assert(std::is_convertible<T*, iserializable*>::value, "vector class may only contain serializable objects");
     if (package.type() != json::value_t::array) {
         // TODO exception
     }
-    std::unique_ptr<std::vector<T>> vec = std::make_unique<std::vector<T>>();
+    std::vector<T> vec = std::vector<T>();
     for (auto& i : package) { //TODO check is it working
         T item;
         item.deserialize(i); //TODO json constructor
-        vec->push_back(item);
+        vec.push_back(item);
     }
     return vec;
 }
 
+template<typename T>
+void json_tools::pack_map (const std::map<std::string, T>& map, json& package, serializers type) {
+    package = {};
+    for (auto const& i : map) {
+        json j;
+        i.second.serialize(j, type);
+        package[i.first] = j; //TODO check
+    }
+}
 
-//
-// template<typename T>
-// std::shared_ptr<json> json_tools::pack_vector(const std::vector<std::shared_ptr<T>>& vec, serializers type) {
-//     static_assert(std::is_convertible<T*, iserializable*>::value, "vector class may only contain serializable objects");
-//     std::shared_ptr<json> package = std::make_shared<json>();
-//     for (int i = 0; i < vec.size(); ++i) {
-//         package->push_back(*vec[i]->serialize(type));
-//     }
-//     return package;
-// }
-//
+template<typename T>
+std::map<std::string, T> json_tools::unpack_map (const json& package) {
+    std::map<std::string, T> map = std::map<std::string, T>(); //TODO no alloc
+    for (auto const& i : package.items()) {
+        T element = T();
+        element.deserialize(i.value());
+        map[i.key()] = element; //TODO check
+    }
+    return map;
+}
+

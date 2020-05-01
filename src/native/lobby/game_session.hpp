@@ -3,12 +3,12 @@
 
 #include "../base/interfaces.hpp"
 #include "../structs/game_storage.hpp"
-#include "../game_states/a_state.hpp"
+#include "../game_states/abstract_state.hpp"
 #include "../game_states/state_choose.hpp"
 #include "../game_states/state_play.hpp"
 #include "../game_states/state_pause.hpp"
 #include "../game_states/state_finish.hpp"
-#include "../game_strategies/a_strategy.hpp"
+#include "../game_strategies/abstract_strategy.hpp"
 
 class game_session : public iserializable {
     friend class tester;
@@ -20,8 +20,8 @@ class game_session : public iserializable {
 
 private:
     N_S std::vector<int> players_id; // For security
-    std::unique_ptr<a_state> state; // Game state
-    std::unique_ptr<a_strategy> strategy; // Game rules
+    std::unique_ptr<abstract_state> state; // Game state
+    std::unique_ptr<abstract_strategy> strategy; // Game rules
     std::unique_ptr<game_storage> storage;
 
 public:
@@ -32,7 +32,7 @@ public:
 
     /// The most important part of the session
     /// \return current session state to interact with
-    a_state& get_state ();
+    abstract_state& get_state ();
 
     /// \param player_id
     /// \return index of specified player. Returns -1 if not found
@@ -50,7 +50,7 @@ public:
 private:
     /// Changes state
     /// \param state is new state
-    void transition_to (std::unique_ptr<a_state> nstate);
+    void transition_to (std::unique_ptr<abstract_state> nstate);
 };
 
 #endif //LOGIC_GAME_SESSION_HPP

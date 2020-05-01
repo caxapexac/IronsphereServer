@@ -71,6 +71,13 @@
       "position": "serialized_vector2<int>",
       "type": "building_warehouse",
       "etc": "etc"
+    },
+    "args2": {
+      "command": "attack",
+      "who_p": "1234",
+      "who_u": "1234",
+      "type": "building_warehouse",
+      "etc": "etc"
     }
   },
   "!signal_return": {
@@ -98,5 +105,26 @@
         "etc": "etc"
       }
     ]
-  }
+  },
+  "prototypes" : [
+    {
+      "name": "gunner",
+      "components" : ["attackable"],
+      "prototype" : "runner",
+      "parameters" : {
+        "damage" : 4000
+      },
+    },
+    {
+      "name": "swimmer",
+      "components" : ["swimming"],
+      "prototype" : "runner",
+      "speed" : "30"
+    },
+    {
+      "name" : "runner",
+      "components" : ["movable"],
+      "speed" : "10"
+    }
+  ]
 }

@@ -18,6 +18,8 @@ private:
     json chat_buffer; // TODO chat class
     json log_buffer; // TODO connect with logger TODO into chat
 
+    // std::map<std::string, icomponent> components =
+
 public:
     game_lobby () noexcept;
 

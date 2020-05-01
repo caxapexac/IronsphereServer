@@ -13,6 +13,8 @@
 /// Delet yuself
 /// Epik vin
 
+#define OBSOLETE /*Obsolete*/
+
 //TODO all strings into enum constants
 //TODO add common constants (generic RTS)
 //TODO uint -> int ?

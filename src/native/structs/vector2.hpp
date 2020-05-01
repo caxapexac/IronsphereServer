@@ -6,7 +6,7 @@
 #include "../utils/json.hpp"
 
 /// https://docs.unity3d.com/ScriptReference/Vector2.html
-/// \tparam T : vaalue number
+/// \tparam T : value number
 template<typename T>
 struct vector2 : public iserializable {
     T x;

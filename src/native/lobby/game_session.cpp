@@ -11,7 +11,7 @@ bool game_session::is_empty () {
     return players_id.empty();
 }
 
-a_state& game_session::get_state () {
+abstract_state& game_session::get_state () {
     return *state;
 }
 
@@ -22,7 +22,7 @@ int game_session::get_player_index (int player_id) {
     return -1; //TODO const
 }
 
-void game_session::transition_to (std::unique_ptr<a_state> nstate) {
+void game_session::transition_to (std::unique_ptr<abstract_state> nstate) {
     state = std::move(nstate);
     //TODO log?
 }
