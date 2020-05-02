@@ -10,7 +10,7 @@ private:
     std::map<std::string, icomponent*> components; //TODO make private with iterator
 
 public:
-    explicit unit_prototype (game_storage& nstorage, const std::string& nname = "");
+    explicit unit_prototype (abstract_game& nstorage, const std::string& nname = "");
     void serialize (json& package, serializers type) const override;
     void deserialize (json& package) override;
 

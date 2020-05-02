@@ -1,9 +1,11 @@
 #ifndef LOGIC_STATE_PLAY_HPP
 #define LOGIC_STATE_PLAY_HPP
 
-#include "abstract_state.hpp"
+#include "ihandler.hpp"
 
-class state_play : public abstract_state {
+class state_play : public ihandler {
+private:
+    game_session& session;
 public:
     explicit state_play (game_session& context);
     void join (json& input, json& output) override;
@@ -13,8 +15,7 @@ public:
     void stop (json& output) override;
     void setup (json& input, json& output) override;
     void update (json& output) override;
-    void action (json& input, json& output) override;
-    void serialize (json& package, serializers type) const override;
+    void signal (json& input, json& output) override;
 };
 
 #endif //LOGIC_STATE_PLAY_HPP

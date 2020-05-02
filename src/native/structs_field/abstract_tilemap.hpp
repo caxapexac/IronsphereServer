@@ -5,6 +5,7 @@
 #include "tile.hpp"
 #include "tile_money.hpp"
 #include "tile_damage.hpp"
+#include "../structs/vector2.hpp"
 
 //TODO foreach iterator on tiles
 class abstract_tilemap : public iserializable {
@@ -25,7 +26,7 @@ public:
     virtual tile& operator[] (const vector2<int>& position) const;
     virtual bool is_valid(const vector2<int>& position) const;
     virtual tile& get_tile (const vector2<int>& position);
-    virtual std::shared_ptr<a_unit> get_unit (const vector2<int>& position);
+    virtual std::shared_ptr<unit> get_unit (const vector2<int>& position);
 
     virtual int size () const;
     virtual vector2<int> get_scale();
@@ -110,7 +111,7 @@ tile& abstract_tilemap::get_tile (const vector2<int>& position) {
     return (*this)[position];
 }
 
-std::shared_ptr<a_unit> abstract_tilemap::get_unit (const vector2<int>& position) {
+std::shared_ptr<unit> abstract_tilemap::get_unit (const vector2<int>& position) {
     return get_tile(position).get_unit();
 }
 
@@ -121,7 +122,5 @@ int abstract_tilemap::size () const {
 std::shared_ptr<vector2<int>> abstract_tilemap::get_path (vector2<int> source, vector2<int> destination) {
     // ^ < > V
 }
-
-
 
 #endif //LOGIC_ABSTRACT_TILEMAP_HPP

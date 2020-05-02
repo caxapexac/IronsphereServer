@@ -1,9 +1,12 @@
 #ifndef LOGIC_STATE_CHOOSE_HPP
 #define LOGIC_STATE_CHOOSE_HPP
 
-#include "abstract_state.hpp"
+#include "ihandler.hpp"
 
-class state_choose : public abstract_state {
+// TODO state : abstract_state : ihandler (for common session field)
+class state_choose : public ihandler {
+private:
+    game_session& session;
 public:
     explicit state_choose (game_session& context);
     void join (json& input, json& output) override;
@@ -13,8 +16,8 @@ public:
     void stop (json& output) override;
     void setup (json& input, json& output) override;
     void update (json& output) override;
-    void action (json& input, json& output) override;
-    void serialize (json& package, serializers type) const override;
+    void signal (json& input, json& output) override;
 };
+
 
 #endif //LOGIC_STATE_CHOOSE_HPP

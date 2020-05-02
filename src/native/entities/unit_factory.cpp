@@ -17,7 +17,7 @@ int unit_factory::get_id () {
     return next_id++;
 }
 
-unit_factory::unit_factory (game_storage& nstorage) : storage(nstorage) {
+unit_factory::unit_factory (abstract_game& nstorage) : storage(nstorage) {
     next_id = 1;
     prototypes = std::map<std::string, unit_prototype*>();
 }
@@ -45,9 +45,9 @@ unit_prototype* unit_factory::get_prototype (const std::string& prototype_name) 
     return prototypes[prototype_name];
 }
 
-unit* unit_factory::make_unit (const std::string& prototype_name, int player_id) {
+unit unit_factory::make_unit (const std::string& prototype_name, int player_id) {
     // TODO check json
     // and throw exception
-    return new unit(storage, get_prototype(prototype_name), player_id, get_id());
+    return unit(storage, get_prototype(prototype_name), player_id, get_id());
 }
 

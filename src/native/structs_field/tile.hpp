@@ -3,12 +3,10 @@
 
 #include <memory>
 #include "../base/interfaces.hpp"
-#include "../units/a_unit.hpp"
-#include "../a_temp/id.hpp"
 
 class tile : public iserializable {
 private:
-    N_S std::shared_ptr<a_unit> occupier; // Not serializable
+    N_S std::shared_ptr<unit> occupier; // Not serializable
     float height; // Ground
     int texture; // Ground
 
@@ -22,8 +20,8 @@ public:
 
     float get_height ();
     bool is_empty ();
-    std::shared_ptr<a_unit> get_unit ();
-    void set_unit (std::shared_ptr<a_unit> nunit);
+    std::shared_ptr<unit> get_unit ();
+    void set_unit (std::shared_ptr<unit> nunit);
 
     /// Action on occupier
     virtual void update ();
@@ -64,11 +62,11 @@ bool tile::is_empty () {
     return occupier == nullptr;
 }
 
-std::shared_ptr<a_unit> tile::get_unit () {
+std::shared_ptr<unit> tile::get_unit () {
     return occupier;
 }
 
-void tile::set_unit (std::shared_ptr<a_unit> nunit) {
+void tile::set_unit (std::shared_ptr<unit> nunit) {
     occupier = nunit;
     //TODO optional log
 }

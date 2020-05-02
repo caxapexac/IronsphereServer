@@ -7,6 +7,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <set>
 #include "constants.hpp"
 #include "../utils/json.hpp"
 #include "../utils/json_tools.hpp"
@@ -43,6 +44,19 @@ public:
     virtual void signal (unit& sender, json& input) = 0;
     virtual void update (unit& sender) = 0;
     virtual ~icomponent () = default;
+};
+
+class ihandler {
+public:
+    virtual void join (json& input, json& output) = 0;
+    virtual void quit (json& input, json& output) = 0;
+    virtual void play (json& output) = 0;
+    virtual void pause (json& output) = 0;
+    virtual void stop (json& output) = 0;
+    virtual void setup (json& input, json& output) = 0;
+    virtual void update (json& output) = 0;
+    virtual void signal (json& input, json& output) = 0;
+    ~ihandler () = default;
 };
 
 

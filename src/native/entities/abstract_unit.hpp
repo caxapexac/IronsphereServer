@@ -12,9 +12,9 @@ protected:
     parameter_map parameters;
 
 public:
-    N_S game_storage& storage;
+    N_S abstract_game& storage;
 
-    explicit abstract_unit (game_storage& nstorage);
+    explicit abstract_unit (abstract_game& nstorage);
     void serialize (json& package, serializers type) const override;
     void deserialize (json& package) override;
 

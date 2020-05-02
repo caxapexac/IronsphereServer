@@ -1,6 +1,6 @@
 #include "unit.hpp"
 
-unit::unit (game_storage& nstorage, unit_prototype* nprototype, int nplayer_id, int nid) : abstract_unit(nstorage) {
+unit::unit (abstract_game& nstorage, unit_prototype* nprototype, int nplayer_id, int nid) : abstract_unit(nstorage) {
     set_prototype(nprototype);
     player_id = nplayer_id;
     id = nid;

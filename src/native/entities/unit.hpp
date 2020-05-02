@@ -2,7 +2,7 @@
 #define LOGIC_UNIT_HPP
 
 #include "../base/interfaces.hpp"
-#include "../structs/game_storage.hpp"
+#include "../game/abstract_game.hpp"
 #include "unit_prototype.hpp"
 
 
@@ -12,7 +12,7 @@ private:
     int id;
 
 public:
-    unit (game_storage& nstorage, unit_prototype* nprototype, int nplayer_id = -1, int nid = -1);
+    unit (abstract_game& nstorage, unit_prototype* nprototype, int nplayer_id = -1, int nid = -1);
     void serialize (json& package, serializers type) const override;
     void deserialize (json& package) override;
 

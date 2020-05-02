@@ -1,11 +1,7 @@
 #include "state_play.hpp"
 #include "../lobby/game_session.hpp"
 
-state_play::state_play (game_session& context) : abstract_state(context) {
-    if (session.storage == nullptr) {
-        session.storage = session.strategy->generate();
-    }
-}
+state_play::state_play (game_session& context) : session(context) { }
 
 void state_play::join (json& input, json& output) {
     output = {{"error", "[play.join] wrong transition"}};
@@ -25,7 +21,7 @@ void state_play::pause (json& output) {
 }
 
 void state_play::stop (json& output) {
-    session.transition_to(std::make_unique<state_finish>(session));
+    session.transition_to(std::make_unique<state_choose>(session));
     output = {{"success", "[play.stop] The game was stopped"}};
 }
 
@@ -34,17 +30,9 @@ void state_play::setup (json& input, json& output) {
 }
 
 void state_play::update (json& output) {
-    //TODO throw play
-    //session.strategy->
-    for (int i = 0; i < session.players->size(); ++i) {
-        //session.players->at(i).update();
-    }
+    session.game->update(output);
 }
 
-void state_play::action (json& input, json& output) {
-
-}
-
-void state_play::serialize (json& package, serializers type) const {
-    package = "state_play";
+void state_play::signal (json& input, json& output) {
+    session.game->signal(input, output);
 }

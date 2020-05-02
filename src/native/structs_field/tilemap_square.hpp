@@ -7,6 +7,8 @@ class tilemap_square : public abstract_tilemap {
 protected:
 
 public:
+    static const std::string type;
+
     explicit tilemap_square(json& package);
     void serialize (json& package, serializers type) const override;
     void deserialize (json& package) override;
@@ -14,13 +16,15 @@ public:
     tile& operator[] (const vector2<int>& position) const override;
     bool is_valid (const vector2<int>& position) const override;
     tile& get_tile (const vector2<int>& position) override;
-    std::shared_ptr<a_unit> get_unit (const vector2<int>& position) override;
+    std::shared_ptr<unit> get_unit (const vector2<int>& position) override;
 
     int size () const override;
 
     std::shared_ptr<vector2<int>> get_path (vector2<int> source, vector2<int> destination) override;
 
 };
+
+const std::string tilemap_square::type = "square";
 
 tilemap_square::tilemap_square (json& package) : abstract_tilemap(package) {
 
@@ -46,7 +50,7 @@ tile& tilemap_square::get_tile (const vector2<int>& position) {
     return abstract_tilemap::get_tile(position);
 }
 
-std::shared_ptr<a_unit> tilemap_square::get_unit (const vector2<int>& position) {
+std::shared_ptr<unit> tilemap_square::get_unit (const vector2<int>& position) {
     return abstract_tilemap::get_unit(position);
 }
 

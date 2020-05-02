@@ -3,13 +3,10 @@
 
 #include "json.hpp"
 
-class a_unit;
 class tile;
 class abstract_tilemap;
-class abstract_strategy;
-class abstract_state;
-class a_effect;
-class game_storage;
+class ihandler;
+class abstract_game;
 class game_session;
 
 using json = nlohmann::json;
@@ -26,10 +23,8 @@ private:
     json_tools () = default;
 public:
     /// Abstract unpackers
-    // FIXME after creating new strategy
-    static std::unique_ptr<abstract_strategy> unpack_strategy (json& package);
-    // FIXME after creating new state
-    static std::unique_ptr<abstract_state> unpack_state (json& package, game_session& session);
+    // FIXME after creating new game
+    static std::unique_ptr<abstract_game> unpack_game (json& package);
     // FIXME after creating new tilemap
     static std::unique_ptr<abstract_tilemap> unpack_tilemap (json& package);
     // FIXME after creating new type
@@ -41,11 +36,11 @@ public:
     template<typename T>
     static std::vector<T> unpack_vector (const json& package);
 
-    template<typename T>
-    static void pack_map (const std::map<std::string, T>& map, json& package, serializers type);
+    template<typename K, typename V>
+    static void pack_map (const std::map<K, V>& map, json& package, serializers type);
 
-    template<typename T>
-    static std::map<std::string, T> unpack_map (const json& package);
+    template<typename K, typename V>
+    static std::map<K, V> unpack_map (const json& package);
 };
 
 #endif //LOGIC_JSON_TOOLS_H

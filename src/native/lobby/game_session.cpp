@@ -1,55 +1,61 @@
 #include "game_session.hpp"
 
-game_session::game_session () {
-    players_id = std::vector<int>();
-    storage = nullptr;
-    strategy = nullptr;
-    transition_to(std::make_unique<state_choose>(*this));
+game_session::game_session (const std::string& nsession_name) {
+    session_name = nsession_name;
+    players_uid = std::set<int>();
+    state = std::make_unique<state_choose>(*this);
+    game = nullptr;
 }
 
-bool game_session::is_empty () {
-    return players_id.empty();
+std::string game_session::get_session_name () {
+    return session_name;
 }
 
-abstract_state& game_session::get_state () {
-    return *state;
+int game_session::get_player_count () {
+    return players_uid.size();
 }
 
-int game_session::get_player_index (int player_id) {
-    for (int i = 0; i < players_id.size(); ++i) {
-        if (players_id[i] == player_id) return i;
-    }
-    return -1; //TODO const
+void game_session::get_info (json& output) {
+    output["session_name"] = session_name;
+    output["players_uid"] = players_uid;
+    if (game) game->serialize(output["game"], serial_save);
 }
 
-void game_session::transition_to (std::unique_ptr<abstract_state> nstate) {
+void game_session::join (json& input, json& output) {
+    state->join(input, output);
+}
+
+void game_session::quit (json& input, json& output) {
+    state->quit(input, output);
+}
+
+void game_session::play (json& output) {
+    state->play(output);
+}
+
+void game_session::pause (json& output) {
+    state->pause(output);
+}
+
+void game_session::stop (json& output) {
+    state->stop(output);
+}
+
+void game_session::setup (json& input, json& output) {
+    state->setup(input, output);
+}
+
+void game_session::update (json& output) {
+    state->update(output);
+}
+
+void game_session::signal (json& input, json& output) {
+    state->signal(input, output);
+}
+
+void game_session::transition_to (std::unique_ptr<ihandler> nstate) {
     state = std::move(nstate);
     //TODO log?
 }
 
-void game_session::serialize (json& package, serializers type) const {
-    // TODO maybe remove (logic in the state)
-    switch (type) {
-        case serial_info:
-            // TODO players_id
-            if (state != nullptr) state->serialize(package["state"], type);
-            if (strategy != nullptr) strategy->serialize(package["strategy"], type);
-            break;
-        case serial_gameplay:
-            if (state != nullptr) state->serialize(package["state"], type);
-            if (storage != nullptr) storage->serialize(package["storage"], type);
-            break;
-        case serial_save:
-            if (state != nullptr) state->serialize(package["state"], type);
-            if (strategy != nullptr) strategy->serialize(package["strategy"], type);
-            if (storage != nullptr) storage->serialize(package["storage"], type);
-            break;
-    }
-}
-
-void game_session::deserialize (json& package) {
-    state = package.contains("state") ? json_tools::unpack_state(package["state"], *this) : std::make_unique<state_choose>(*this);
-    strategy = package.contains("strategy") ? json_tools::unpack_strategy(package["strategy"]) : nullptr;
-    storage = package.contains("storage") ? std::make_unique<game_storage>(package["storage"]) : nullptr;
-}
 

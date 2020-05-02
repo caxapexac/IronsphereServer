@@ -1,7 +1,7 @@
 #include "abstract_unit.hpp"
-#include "../structs/game_storage.hpp"
+#include "../game/abstract_game.hpp"
 
-abstract_unit::abstract_unit (game_storage& nstorage) : storage(nstorage) {
+abstract_unit::abstract_unit (abstract_game& nstorage) : storage(nstorage) {
     prototype = nullptr;
     parameters = parameter_map();
 }

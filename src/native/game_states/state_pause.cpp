@@ -1,7 +1,7 @@
 #include "state_pause.hpp"
 #include "../lobby/game_session.hpp"
 
-state_pause::state_pause (game_session& context) : abstract_state(context) { }
+state_pause::state_pause (game_session& context) : session(context) { }
 
 void state_pause::join (json& input, json& output) {
     output = {{"error", "[pause.join] wrong transition"}};
@@ -21,7 +21,7 @@ void state_pause::pause (json& output) {
 }
 
 void state_pause::stop (json& output) {
-    session.transition_to(std::make_unique<state_finish>(session));
+    session.transition_to(std::make_unique<state_choose>(session));
     output = {{"success", "[pause.stop] The game was stopped"}};
 }
 
@@ -30,14 +30,9 @@ void state_pause::setup (json& input, json& output) {
 }
 
 void state_pause::update (json& output) {
-    //TODO throw pause state
-    output = {{"success", "[pause.update] Press play to continue"}};
+    // TODO needed?
 }
 
-void state_pause::action (json& input, json& output) {
-    output = {{"error", "[pause.action] wrong transition"}};
-}
-
-void state_pause::serialize (json& package, serializers type) const {
-    package = "state_pause";
+void state_pause::signal (json& input, json& output) {
+    output = {{"error", "[pause.signal] wrong transition"}};
 }

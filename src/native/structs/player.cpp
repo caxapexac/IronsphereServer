@@ -1,11 +1,11 @@
 #include "player.hpp"
-#include "game_storage.hpp"
+#include "../game/abstract_game.hpp"
 
-player::player (game_storage& nstorage, int nteam) : storage(nstorage), team(nteam), next_id(1) {
-    units = std::map<int, std::shared_ptr<a_unit>>();
+player::player (abstract_game& nstorage, int nteam) : storage(nstorage), team(nteam), next_id(1) {
+    units = std::map<int, unit>();
 }
 
-player::player (game_storage& nstorage, json& package) : storage(nstorage) {
+player::player (abstract_game& nstorage, json& package) : storage(nstorage) {
     deserialize(package);
 }
 
@@ -16,7 +16,6 @@ player::player (const player& copy) : storage(copy.storage) {
 player& player::operator= (const player& copy) {
     if (this != &copy) {
         team = copy.team;
-        next_id = copy.next_id;
         units = copy.units; // TODO copy constuctor call (its map)
         // TODO optional (map too)
     }
@@ -41,17 +40,17 @@ void player::serialize (json& package, serializers type) const {
 void player::deserialize (json& package) {
     // TODO
     int team; //For friend serialization
-    std::map<int, std::shared_ptr<a_unit>> units; // Units by ID
+    std::map<int, std::shared_ptr<unit>> units; // Units by ID
     std::map<std::string, int> optional; // Money etc
     int next_id; // Unique next created Unit ID
     //json_tools::unpack_vector<unit>(package["units"]); //TODO memory leak (need move constructor)
 }
 
-std::shared_ptr<a_unit> player::get_unit (int id) {
+std::shared_ptr<unit> player::get_unit (int id) {
     return units[id]; //TODO checking
 }
 
-void player::add_unit (std::shared_ptr<a_unit> nunit) { //TODO use factory/builder
+void player::add_unit (std::shared_ptr<unit> nunit) { //TODO use factory/builder
     units[get_id()] = std::move(nunit);
 }
 
@@ -76,6 +75,3 @@ void player::signal (json& input, json& output) {
     }
 }
 
-int player::get_id () {
-    return next_id++;
-}

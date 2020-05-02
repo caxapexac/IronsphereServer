@@ -1,7 +1,7 @@
 #include "unit_prototype.hpp"
-#include "../structs/game_storage.hpp"
+#include "../game/abstract_game.hpp"
 
-unit_prototype::unit_prototype (game_storage& nstorage, const std::string& nname) : abstract_unit(nstorage) {
+unit_prototype::unit_prototype (abstract_game& nstorage, const std::string& nname) : abstract_unit(nstorage) {
     name = nname;
     components = std::map<std::string, icomponent*>();
 }
