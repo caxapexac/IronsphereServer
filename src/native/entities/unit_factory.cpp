@@ -1,17 +1,15 @@
 #include "unit_factory.hpp"
-#include "../entity_components/com_attack.hpp"
-#include "../entity_components/com_mortal.hpp"
-#include "../entity_components/com_moving.hpp"
-#include "../entity_components/com_storage.hpp"
+#include "../components/com_attack.hpp"
+#include "../components/com_mortal.hpp"
+#include "../components/com_moving.hpp"
+#include "../components/com_storage.hpp"
 
 // TODO add new components
 // TODO use static get_name instead of constant strings
-std::map<std::string, icomponent*> unit_factory::components = {
-        {"com_attack", new com_attack()},
-        {"com_mortal", new com_mortal()},
-        {"com_moving", new com_moving()},
-        {"com_storage", new com_storage()}
-};
+std::map<std::string, icomponent*> unit_factory::components = {{"com_attack",  new com_attack()},
+                                                               {"com_mortal",  new com_mortal()},
+                                                               {"com_moving",  new com_moving()},
+                                                               {"com_storage", new com_storage()}};
 
 int unit_factory::get_id () {
     return next_id++;
@@ -22,8 +20,8 @@ unit_factory::unit_factory (abstract_game& nstorage) : storage(nstorage) {
     prototypes = std::map<std::string, unit_prototype*>();
 }
 
-void unit_factory::serialize (json& package, serializers type) const {
-    json_tools::pack_map(prototypes, package["prototypes"], serial_save);
+void unit_factory::serialize (json& package) const {
+    //json_tools::pack_map(prototypes, package["prototypes"]); FIXME
 }
 
 void unit_factory::deserialize (json& package) {
@@ -45,9 +43,9 @@ unit_prototype* unit_factory::get_prototype (const std::string& prototype_name) 
     return prototypes[prototype_name];
 }
 
-unit unit_factory::make_unit (const std::string& prototype_name, int player_id) {
+unit* unit_factory::make_unit (const std::string& prototype_name, int player_uid) {
     // TODO check json
     // and throw exception
-    return unit(storage, get_prototype(prototype_name), player_id, get_id());
+    return new unit(storage, get_prototype(prototype_name), player_uid, get_id());
 }
 

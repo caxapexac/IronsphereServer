@@ -23,8 +23,8 @@
   },
   "!update_return": {
     "game_state": "maybe",
-    "players_data": [
-      {
+    "players_data": {
+      "8658765": {
         "money": 100,
         "// we also need to store player_id into unit": "//",
         "units": [
@@ -40,7 +40,7 @@
         ],
         "other_important_data_such_as_enemy's_score": "maybe"
       },
-      {
+      "5476": {
         "units": [
           {
             "serialized_unit": "serialized_unit"
@@ -54,29 +54,24 @@
         ],
         "other_important_data_such_as_enemy's_score": "maybe"
       },
-      {
+      "7658": {
         "etc": "etc"
       }
-    ]
+    }
   },
   "!signal_argument": {
-    "player_id": 2,
+    "player_uid": 252334,
     "selected_units": [
       24,
       6,
       13
     ],
-    "args": {
-      "command": "move/attack/build/etc сюда пихаем enum/int",
+    "command": {
+      "component": "move/attack/build/etc сюда пихаем enum/int",
       "position": "serialized_vector2<int>",
       "type": "building_warehouse",
-      "etc": "etc"
-    },
-    "args2": {
-      "command": "attack",
       "who_p": "1234",
       "who_u": "1234",
-      "type": "building_warehouse",
       "etc": "etc"
     }
   },
@@ -113,7 +108,7 @@
       "prototype" : "runner",
       "parameters" : {
         "damage" : 4000
-      },
+      }
     },
     {
       "name": "swimmer",

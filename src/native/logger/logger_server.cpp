@@ -1,4 +1,3 @@
-#include <iostream>
 #include "logger_server.hpp"
 
 void logger_server::let(std::string &verbal, streams stream) {

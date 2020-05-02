@@ -11,12 +11,6 @@ class game_session;
 
 using json = nlohmann::json;
 
-enum serializers {
-    serial_save, //For saving
-    serial_info, //For getting lobby information
-    serial_gameplay //For
-};
-
 /// Static helper serialization class
 class json_tools {
 private:
@@ -31,13 +25,13 @@ public:
     static tile* unpack_tile (json& package); // TODO Спросить Тимура про массив умных указателей
 
     template<typename T>
-    static void pack_vector (const std::vector<T>& vec, json& package, serializers type);
+    static void pack_vector (const std::vector<T>& vec, json& package);
 
     template<typename T>
     static std::vector<T> unpack_vector (const json& package);
 
     template<typename K, typename V>
-    static void pack_map (const std::map<K, V>& map, json& package, serializers type);
+    static void pack_map (const std::map<K, V>& map, json& package);
 
     template<typename K, typename V>
     static std::map<K, V> unpack_map (const json& package);

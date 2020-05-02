@@ -17,12 +17,12 @@ private:
 
 public:
     explicit unit_factory (abstract_game& nstorage);
-    void serialize (json& package, serializers type) const override;
+    void serialize (json& package) const override;
     void deserialize (json& package) override;
 
     static icomponent* get_component(const std::string& component_name);
     unit_prototype* get_prototype(const std::string& prototype_name);
-    unit make_unit(const std::string& prototype_name, int player_id);
+    unit* make_unit(const std::string& prototype_name, int player_uid);
 };
 
 #endif //LOGIC_UNIT_FACTORY_HPP

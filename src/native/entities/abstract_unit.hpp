@@ -15,7 +15,7 @@ public:
     N_S abstract_game& storage;
 
     explicit abstract_unit (abstract_game& nstorage);
-    void serialize (json& package, serializers type) const override;
+    void serialize (json& package) const override;
     void deserialize (json& package) override;
 
     template<typename P>

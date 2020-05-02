@@ -6,8 +6,8 @@ unit_prototype::unit_prototype (abstract_game& nstorage, const std::string& nnam
     components = std::map<std::string, icomponent*>();
 }
 
-void unit_prototype::serialize (json& package, serializers type) const {
-    abstract_unit::serialize(package, type);
+void unit_prototype::serialize (json& package) const {
+    abstract_unit::serialize(package);
     package["name"] = name;
     package["components"] = json::array();
     for (const auto& i : components) package["components"].push_back(i.second->get_name());

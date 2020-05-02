@@ -6,12 +6,12 @@ abstract_unit::abstract_unit (abstract_game& nstorage) : storage(nstorage) {
     parameters = parameter_map();
 }
 
-void abstract_unit::serialize (json& package, serializers type) const {
+void abstract_unit::serialize (json& package) const {
     package["prototype"] = prototype->get_name();
-    parameters.serialize(package["parameters"], serial_save);
+    parameters.serialize(package["parameters"]);
 }
 
 void abstract_unit::deserialize (json& package) {
-    prototype = storage.factory.get_prototype(package["prototype"]); //TODO bad
+    prototype = storage.get_prototype(package["prototype"]); //TODO bad
     parameters.deserialize(package["parameters"]);
 }

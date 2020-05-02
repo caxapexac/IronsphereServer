@@ -1,7 +1,7 @@
 #ifndef LOGIC_STATE_PAUSE_HPP
 #define LOGIC_STATE_PAUSE_HPP
 
-#include "ihandler.hpp"
+#include "../base/interfaces.hpp"
 
 class state_pause : public ihandler {
 private:

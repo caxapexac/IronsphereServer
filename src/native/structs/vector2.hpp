@@ -1,7 +1,6 @@
 #ifndef LOGIC_VECTORS_H
 #define LOGIC_VECTORS_H
 
-#include <numeric>
 #include "../base/interfaces.hpp"
 #include "../utils/json.hpp"
 
@@ -16,7 +15,7 @@ struct vector2 : public iserializable {
     vector2 (const vector2& other);
     vector2& operator= (const vector2& other);
     ~vector2 () override = default;
-    void serialize (json& package, serializers type = serial_save) const override;
+    void serialize (json& package) const override;
     void deserialize (json& package) override;
 
     vector2 operator- () const { return vector2(-x, -y); }
@@ -33,7 +32,7 @@ struct vector2 : public iserializable {
 
     friend std::ostream& operator<< (std::ostream& os, const vector2& vec) {
         json j;
-        vec.serialize(j, serial_save);
+        vec.serialize(j);
         return os << j;
         // TODO is needed?
     }
@@ -64,7 +63,7 @@ vector2<T>& vector2<T>::operator= (const vector2& other) {
 }
 
 template<typename T>
-void vector2<T>::serialize (json& package, serializers type) const {
+void vector2<T>::serialize (json& package) const {
     package["x"] = x;
     package["y"] = y;
 }

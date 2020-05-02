@@ -1,13 +1,15 @@
 #include "unit.hpp"
 
+#include <utility>
+
 unit::unit (abstract_game& nstorage, unit_prototype* nprototype, int nplayer_id, int nid) : abstract_unit(nstorage) {
-    set_prototype(nprototype);
+    prototype = nprototype;
     player_id = nplayer_id;
     id = nid;
 }
 
-void unit::serialize (json& package, serializers type) const {
-    abstract_unit::serialize(package, type);
+void unit::serialize (json& package) const {
+    abstract_unit::serialize(package);
     package["player_id"] = player_id;
     package["id"] = id;
 }
@@ -32,5 +34,13 @@ void unit::update () {
 
 void unit::signal (json& input) {
     prototype->signal(this, input);
+}
+
+std::vector<vector2<int>>& unit::get_path () {
+    return parameters.get_path();
+}
+
+void unit::set_path (std::vector<vector2<int>> data) {
+    parameters.set_path(std::move(data));
 }
 

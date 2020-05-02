@@ -3,15 +3,11 @@
 
 #include "../base/interfaces.hpp"
 #include "../game/abstract_game.hpp"
-#include "../game_states/ihandler.hpp"
 #include "../game_states/state_choose.hpp"
 #include "../game_states/state_play.hpp"
 #include "../game_states/state_pause.hpp"
-#include "../game_states/state_finish.hpp"
-#include "../game_strategies/abstract_strategy.hpp"
 
 class game_session : ihandler {
-    friend class tester;
     friend class state_choose;
     friend class state_play;
     friend class state_pause;
@@ -28,7 +24,7 @@ public:
 
     std::string get_session_name ();
     int get_player_count ();
-    void get_info(json& output);
+    void get_info (json& output);
 
     void join (json& input, json& output) override;
     void quit (json& input, json& output) override;

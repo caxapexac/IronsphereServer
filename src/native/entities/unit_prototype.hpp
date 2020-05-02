@@ -11,7 +11,7 @@ private:
 
 public:
     explicit unit_prototype (abstract_game& nstorage, const std::string& nname = "");
-    void serialize (json& package, serializers type) const override;
+    void serialize (json& package) const override;
     void deserialize (json& package) override;
 
     std::string get_name();

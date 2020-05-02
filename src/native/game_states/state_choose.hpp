@@ -1,7 +1,7 @@
 #ifndef LOGIC_STATE_CHOOSE_HPP
 #define LOGIC_STATE_CHOOSE_HPP
 
-#include "ihandler.hpp"
+#include "../base/interfaces.hpp"
 
 // TODO state : abstract_state : ihandler (for common session field)
 class state_choose : public ihandler {

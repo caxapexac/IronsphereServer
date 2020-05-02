@@ -5,6 +5,7 @@
 #include "../utils/singleton.hpp"
 #include "../base/constants.hpp"
 #include "../base/interfaces.hpp"
+#include "../logger/l.hpp"
 
 /// TODO json structures of commands
 /// Facade of the game
@@ -16,6 +17,8 @@ private:
     json log_buffer; // TODO connect with logger TODO into chat
 
 public:
+    OBSOLETE l log;
+
     game_lobby () noexcept; //TODO make private (its singleton)
 
     /// One server frame

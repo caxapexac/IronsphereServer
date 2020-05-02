@@ -7,7 +7,7 @@
 
 class logger_client : public abstract_logger {
 public:
-    void let(std::string& verbal, streams stream) override;
+    void let (std::string& verbal, streams stream) override;
 };
 
 #endif //LOGIC_LOGGER_CLIENT_HPP

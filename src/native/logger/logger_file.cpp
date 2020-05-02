@@ -1,6 +1,6 @@
 #include "logger_file.hpp"
 
-void logger_file::write_to_file(std::string &filename, std::string &verbal) {
+void logger_file::write_to_file (std::string& filename, std::string& verbal) {
     std::ofstream out;
     out.open(filename, std::ofstream::out | std::fstream::app);
     out << verbal << std::endl;
@@ -8,7 +8,7 @@ void logger_file::write_to_file(std::string &filename, std::string &verbal) {
     out.close();
 }
 
-void logger_file::let(std::string &verbal, streams stream) {
+void logger_file::let (std::string& verbal, streams stream) {
     std::string PATH = std::string(R"(C:\Users\miles\Documents\untitled\)");
 
     std::string this_file_name = PATH + get_time_name(false);

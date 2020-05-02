@@ -26,6 +26,16 @@ namespace constants {
     const unsigned int neutral_units_limit = 25;
 }
 
+enum loggers {
+    server_console_logger = 1, all_clients_logger = 2, server_file_logger = 4
+};
+
+enum streams : char {
+    error = 'E', warning = 'W', debug = 'D', message = 'M', special = 'S'
+};
+
+// TODO into class
+
 //TODO L4-5 without json ;(
 
 /*Patterns

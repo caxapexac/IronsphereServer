@@ -10,8 +10,8 @@ private:
     std::string addressee;
 
 public:
-    void change_addressee(std::string& newcomer);
-    void let(std::string& verbal, streams stream) override;
+    void change_addressee (std::string& newcomer);
+    void let (std::string& verbal, streams stream) override;
 };
 
 #endif //LOGIC_LOGGER_USER_HPP

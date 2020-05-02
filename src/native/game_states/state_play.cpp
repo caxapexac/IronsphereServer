@@ -31,6 +31,9 @@ void state_play::setup (json& input, json& output) {
 
 void state_play::update (json& output) {
     session.game->update(output);
+    if (session.game->check_end_game(output["records"])) {
+        session.transition_to(std::make_unique<state_choose>(session));
+    }
 }
 
 void state_play::signal (json& input, json& output) {

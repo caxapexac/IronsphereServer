@@ -17,7 +17,7 @@ public:
     transform (const transform& copy);
     transform& operator= (const transform& copy);
     ~transform () override = default;
-    void serialize (json& package, serializers type = serial_save) const override;
+    void serialize (json& package) const override;
     void deserialize (json& package) override;
 
     bool operator== (const transform& other) const;
@@ -45,11 +45,11 @@ transform& transform::operator= (const transform& copy) {
     return *this;
 }
 
-void transform::serialize (json& package, serializers type) const {
-    position.serialize(package["position"], type);
+void transform::serialize (json& package) const {
+    position.serialize(package["position"]);
     package["rotation"] = rotation;
     package["scale"] = scale;
-    offset.serialize(package["offset"], type);
+    offset.serialize(package["offset"]);
 }
 
 void transform::deserialize (json& package) {
@@ -59,8 +59,6 @@ void transform::deserialize (json& package) {
     offset.deserialize(package["offset"]);
 }
 
-
-
 bool transform::operator== (const transform& other) const {
     return position == other.position;
 }
@@ -68,8 +66,6 @@ bool transform::operator== (const transform& other) const {
 bool transform::operator!= (const transform& other) const {
     return !operator==(other);
 }
-
-
 
 const vector2<int> &transform::getPosition() const {
     return position;

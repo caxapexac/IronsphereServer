@@ -1,77 +1,29 @@
 #include "player.hpp"
 #include "../game/abstract_game.hpp"
 
-player::player (abstract_game& nstorage, int nteam) : storage(nstorage), team(nteam), next_id(1) {
-    units = std::map<int, unit>();
+player::player (int nteam) : team(nteam) {
+    parameters = parameter_map();
 }
 
-player::player (abstract_game& nstorage, json& package) : storage(nstorage) {
-    deserialize(package);
-}
-
-player::player (const player& copy) : storage(copy.storage) {
+player::player (const player& copy) {
     *this = copy;
 }
 
 player& player::operator= (const player& copy) {
     if (this != &copy) {
         team = copy.team;
-        units = copy.units; // TODO copy constuctor call (its map)
-        // TODO optional (map too)
+        parameters = parameter_map();
     }
     return *this;
 }
 
-void player::serialize (json& package, serializers type) const {
-    // for each optional add it to package
-    // TODO view radiuses
-    switch (type) {
-        case serial_save:
-            break;
-        case serial_info:
-            break;
-        case serial_gameplay:
-            break;
-        default:
-            break; //TODO exception
-    }
+void player::serialize (json& package) const {
+    package["team"] = team;
+    parameters.serialize(package["parameters"]);
 }
 
 void player::deserialize (json& package) {
-    // TODO
-    int team; //For friend serialization
-    std::map<int, std::shared_ptr<unit>> units; // Units by ID
-    std::map<std::string, int> optional; // Money etc
-    int next_id; // Unique next created Unit ID
-    //json_tools::unpack_vector<unit>(package["units"]); //TODO memory leak (need move constructor)
-}
-
-std::shared_ptr<unit> player::get_unit (int id) {
-    return units[id]; //TODO checking
-}
-
-void player::add_unit (std::shared_ptr<unit> nunit) { //TODO use factory/builder
-    units[get_id()] = std::move(nunit);
-}
-
-void player::remove_unit (int id) {
-    units.erase(id); //TODO checking
-}
-
-void player::update () {
-    for (const auto& i : units) {
-        i.second->update();
-    }
-    // TODO war tuman
-}
-
-void player::signal (json& input, json& output) {
-    if (input["selected_units"].type() != json::value_t::array) {
-        // TODO exception
-    }
-    for (auto& i : input["selected_units"]) { //TODO check is it working
-        int id = i.get<int>(); // TODO type checking
-        units[id]->signal(input["args"], output[std::to_string(id)]);
-    }
+    team = package["team"].get<int>();
+    parameters.deserialize(package["parameters"]);
 }
 

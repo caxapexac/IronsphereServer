@@ -1,8 +1,7 @@
 #ifndef LOGIC_ERRORS_HPP
 #define LOGIC_ERRORS_HPP
 
-#include <exception>
-#include <string>
+#include "interfaces.hpp"
 
 // TODO add more generic exceptions
 // TODO make it more complex and useful
