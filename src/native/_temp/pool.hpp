@@ -11,13 +11,13 @@ private:
     std::stack<std::shared_ptr<T>> items;
 
 public:
-    explicit pool (int start_capacity = 8); //TODO there is no capacity in stl ;(
+    explicit pool ();
     std::shared_ptr<T> get ();
     void recycle (std::shared_ptr<T> item);
     ~pool ();
 };
 
-template<typename T> pool<T>::pool (int start_capacity) {
+template<typename T> pool<T>::pool () {
     items = std::stack<std::shared_ptr<T>>();
 }
 

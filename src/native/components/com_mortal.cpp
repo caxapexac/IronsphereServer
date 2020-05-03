@@ -1,7 +1,9 @@
 #include "com_mortal.hpp"
 
+const std::string com_mortal::type = "com_mortal";
+
 std::string com_mortal::get_name () {
-    return "com_mortal";
+    return type;
 }
 
 void com_mortal::signal (unit& sender, json& input) {

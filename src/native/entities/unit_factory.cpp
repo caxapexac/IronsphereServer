@@ -1,15 +1,14 @@
 #include "unit_factory.hpp"
 #include "../components/com_attack.hpp"
 #include "../components/com_mortal.hpp"
-#include "../components/com_moving.hpp"
+#include "../components/com_move.hpp"
 #include "../components/com_storage.hpp"
 
 // TODO add new components
-// TODO use static get_name instead of constant strings
-std::map<std::string, icomponent*> unit_factory::components = {{"com_attack",  new com_attack()},
-                                                               {"com_mortal",  new com_mortal()},
-                                                               {"com_moving",  new com_moving()},
-                                                               {"com_storage", new com_storage()}};
+std::map<std::string, icomponent*> unit_factory::components = {{com_attack::type,  new com_attack()},
+                                                               {com_mortal::type,  new com_mortal()},
+                                                               {com_move::type,    new com_move()},
+                                                               {com_storage::type, new com_storage()}};
 
 int unit_factory::get_id () {
     return next_id++;
@@ -21,7 +20,7 @@ unit_factory::unit_factory (abstract_game& nstorage) : storage(nstorage) {
 }
 
 void unit_factory::serialize (json& package) const {
-    //json_tools::pack_map(prototypes, package["prototypes"]); FIXME
+    json_tools::pack_map(prototypes, package["prototypes"]);
 }
 
 void unit_factory::deserialize (json& package) {

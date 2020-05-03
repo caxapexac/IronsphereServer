@@ -3,7 +3,7 @@
 
 #include "../base/interfaces.hpp"
 #include "../structs/player.hpp"
-#include "../structs_field/abstract_tilemap.hpp"
+#include "../field/abstract_tilemap.hpp"
 #include "../entities/unit_factory.hpp"
 
 class abstract_game : iserializable {
@@ -48,7 +48,7 @@ private:
     /// What actions to do in the update
     virtual void frame() = 0;
 
-    /// What
+    /// How to calculate visibility
     virtual void calculate_client_data(int player_uid, json& output) = 0;
 };
 

@@ -12,6 +12,6 @@ void abstract_unit::serialize (json& package) const {
 }
 
 void abstract_unit::deserialize (json& package) {
-    prototype = storage.get_prototype(package["prototype"]); //TODO bad
+    prototype = storage.get_prototype(package["prototype"]);
     parameters.deserialize(package["parameters"]);
 }

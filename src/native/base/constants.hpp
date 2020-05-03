@@ -8,22 +8,22 @@
 /// Break up with a girl
 /// Make useless define
 #define N_S /*Non serialized*/
+#define OBSOLETE /*Obsolete*/
 /// *You are here*
 /// <doctype=html />
 /// Delet yuself
 /// Epik vin
 
-#define OBSOLETE /*Obsolete*/
 
 //TODO all strings into enum constants
 //TODO add common constants (generic RTS)
 //TODO uint -> int ?
 namespace constants {
-    const int version = 100; // Game version (Anti chEET)
+    const int version = 101; // Game version (Anti chEET)
     const int lobby_delta_time = 1000; // ms (start game loop delay)
     const char game_title[] = "Ironsphere";
-    const unsigned int player_units_limit = 100;
-    const unsigned int neutral_units_limit = 25;
+    //const unsigned int player_units_limit = 100;
+    //const unsigned int neutral_units_limit = 25;
 }
 
 enum loggers {
@@ -34,7 +34,7 @@ enum streams : char {
     error = 'E', warning = 'W', debug = 'D', message = 'M', special = 'S'
 };
 
-// TODO into class
+//TODO into class
 
 //TODO L4-5 without json ;(
 

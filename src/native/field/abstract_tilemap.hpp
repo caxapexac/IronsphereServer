@@ -3,9 +3,9 @@
 
 #include "../base/interfaces.hpp"
 #include "../structs/vector2.hpp"
-#include "tile.hpp"
-#include "tile_money.hpp"
-#include "tile_damage.hpp"
+#include "../field_tiles/tile.hpp"
+#include "../field_tiles/tile_money.hpp"
+#include "../field_tiles/tile_damage.hpp"
 
 //TODO foreach iterator on tiles
 class abstract_tilemap : public iserializable {

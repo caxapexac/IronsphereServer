@@ -5,6 +5,7 @@
 
 class com_mortal : public icomponent {
 public:
+    static const std::string type;
     std::string get_name () override;
     void signal (unit& sender, json& input) override;
     void update (unit& sender) override;

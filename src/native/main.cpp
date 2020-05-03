@@ -1,9 +1,8 @@
-#include "lobby/game_lobby.hpp"
+#include "tests/main.test.hpp"
+#include "base/interfaces.hpp"
 
 int main () {
-    // ******************START******************
-
-    // ******************END******************
-
+    //unit_testing::unit_test_all();
+    unit_testing::test_lr_all();
     return 0;
 }

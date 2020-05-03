@@ -9,7 +9,7 @@ class abstract_game;
 class player : public iserializable {
 private:
     int team;
-    parameter_map parameters;
+    OBSOLETE parameter_map parameters;
 
 public:
     explicit player (int nteam = 0);

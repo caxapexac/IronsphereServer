@@ -15,7 +15,7 @@ void abstract_game::serialize (json& package) const {
 void abstract_game::deserialize (json& package) {
     factory.deserialize(package["factory"]);
     //units = json_tools::unpack_map<int, unit*>(package["units"]); FIXME
-    // players = json_tools::unpack_map<int, player*>(package["players"]); FIXME
+    //players = json_tools::unpack_map<int, player*>(package["players"]); FIXME
     field = json_tools::unpack_tilemap(package["field"]);
 }
 
@@ -73,6 +73,7 @@ void abstract_game::signal (json& input, json& output) {
             output = {{"error", "[game.signal] This unit is not yours"}};
             continue;
         }
+        // TODO is command normal
         target->signal(input["command"]);
         output = {{"success", "[game.signal] Your command was sent"}};
     }

@@ -1,8 +1,10 @@
 #include "com_attack.hpp"
 #include "../entities/unit.hpp"
 
+const std::string com_attack::type = "com_attack";
+
 std::string com_attack::get_name () {
-    return "com_attack";
+    return type;
 }
 
 void com_attack::signal (unit& sender, json& input) {
