@@ -35,6 +35,12 @@ public:
 
     template<typename K, typename V>
     static std::map<K, V> unpack_map (const json& package);
+
+    template<typename K, typename V>
+    static void pack_map_of_ptrs (const std::map<K, V*>& map, json& package);
+
+    template<typename K, typename V>
+    static std::map<K, V*> unpack_map_of_ptrs (const json& package);
 };
 
 // Really
@@ -76,7 +82,7 @@ void json_tools::pack_map (const std::map<K, V>& map, json& package) {
     package = {};
     for (auto const& i : map) {
         json j;
-        i.second->serialize(j);
+        i.second.serialize(j);
         package[i.first] = j; //TODO check
     }
 }
@@ -87,6 +93,27 @@ std::map<K, V> json_tools::unpack_map (const json& package) {
     for (auto const& i : package.items()) {
         V element = V();
         element.deserialize(i.value());
+        map[i.key()] = element; //TODO check
+    }
+    return map;
+}
+
+template<typename K, typename V>
+void json_tools::pack_map_of_ptrs (const std::map<K, V*>& map, json& package) {
+    package = {};
+    for (auto const& i : map) {
+        json j;
+        i.second->serialize(j);
+        package[i.first] = j; //TODO check
+    }
+}
+
+template<typename K, typename V>
+std::map<K, V*> json_tools::unpack_map_of_ptrs (const json& package) {
+    std::map<K, V*> map = std::map<K, V*>(); //TODO no alloc
+    for (auto const& i : package.items()) {
+        V* element = new V();
+        element->deserialize(i.value());
         map[i.key()] = element; //TODO check
     }
     return map;

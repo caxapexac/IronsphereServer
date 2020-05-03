@@ -3,7 +3,8 @@
 #include <utility>
 
 unit::unit (abstract_game& nstorage, unit_prototype* nprototype, int nplayer_id, int nid) : abstract_unit(nstorage) {
-    prototype = nprototype;
+    prototype = nprototype; // TODO prototype can't be null cuz it will crash if we forget to init it
+    // TODO I think it shold be (storage + json) constructor
     player_id = nplayer_id;
     id = nid;
 }

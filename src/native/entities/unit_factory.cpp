@@ -20,13 +20,18 @@ unit_factory::unit_factory (abstract_game& nstorage) : storage(nstorage) {
 }
 
 void unit_factory::serialize (json& package) const {
-    json_tools::pack_map(prototypes, package["prototypes"]);
+    package["next_id"] = next_id;
+    for (const auto& i : prototypes) {
+        i.second->serialize(package["prototypes"][i.first]);
+    }
 }
 
 void unit_factory::deserialize (json& package) {
-    for (auto& i : package) {
-        auto* element = get_prototype(i["name"]);
-        element->deserialize(i);
+    next_id = package["next_id"].get<int>();
+    for (auto& i : package["prototypes"].items()) {
+        unit_prototype* item = new unit_prototype(storage);
+        item->deserialize(i.value());
+        prototypes[i.key()] = item;
     }
 }
 

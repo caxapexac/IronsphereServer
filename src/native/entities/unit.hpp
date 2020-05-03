@@ -12,7 +12,7 @@ private:
     int id;
 
 public:
-    unit (abstract_game& nstorage, unit_prototype* nprototype, int nplayer_id = -1, int nid = -1);
+    explicit unit (abstract_game& nstorage, unit_prototype* nprototype = nullptr, int nplayer_id = -1, int nid = -1);
     void serialize (json& package) const override;
     void deserialize (json& package) override;
 

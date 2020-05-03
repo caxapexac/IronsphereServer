@@ -7,15 +7,23 @@ abstract_game::abstract_game () : factory(unit_factory(*this)) {
 
 void abstract_game::serialize (json& package) const {
     factory.serialize(package["factory"]);
-    //json_tools::pack_map(units, package["units"]); FIXME
-    //json_tools::pack_map(players, package["players"]); FIXME
+    json_tools::pack_map_of_ptrs(units, package["units"]);
+    json_tools::pack_map_of_ptrs(players, package["players"]);
     field->serialize(package["field"]);
 }
 
 void abstract_game::deserialize (json& package) {
     factory.deserialize(package["factory"]);
-    //units = json_tools::unpack_map<int, unit*>(package["units"]); FIXME
-    //players = json_tools::unpack_map<int, player*>(package["players"]); FIXME
+    for (const auto& i : package["units"].items()) {
+        unit* item = new unit(*this);
+        item->deserialize(i.value());
+        units[std::stoi(i.key())] = item; //TODO very bad (need to check at least)
+    }
+    for (const auto& i : package["players"].items()) {
+        player* item = new player();
+        item->deserialize(i.value());
+        players[std::stoi(i.key())] = item; //TODO very bad (need to check at least)
+    }
     field = json_tools::unpack_tilemap(package["field"]);
 }
 
