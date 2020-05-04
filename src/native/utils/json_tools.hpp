@@ -6,7 +6,7 @@
 class tile;
 class abstract_tilemap;
 class ihandler;
-class abstract_game;
+class base_game;
 class game_session;
 
 using json = nlohmann::json;
@@ -18,7 +18,7 @@ private:
 public:
     /// Abstract unpackers
     // FIXME after creating new game
-    static std::unique_ptr<abstract_game> unpack_game (json& package);
+    static std::unique_ptr<base_game> unpack_game (json& package);
     // FIXME after creating new tilemap
     static std::unique_ptr<abstract_tilemap> unpack_tilemap (json& package);
     // FIXME after creating new type

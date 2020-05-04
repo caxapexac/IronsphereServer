@@ -2,7 +2,7 @@
 #define LOGIC_GAME_SESSION_HPP
 
 #include "../base/interfaces.hpp"
-#include "../game/abstract_game.hpp"
+#include "../game/base_game.hpp"
 #include "../game_states/state_choose.hpp"
 #include "../game_states/state_play.hpp"
 #include "../game_states/state_pause.hpp"
@@ -17,7 +17,7 @@ private:
     std::string session_name;
     std::set<int> players_uid; // For security
     std::unique_ptr<ihandler> state; // Game state
-    std::unique_ptr<abstract_game> game; // Game & game rules
+    std::unique_ptr<base_game> game; // Game & game rules
 
 public:
     explicit game_session (const std::string& nsession_name);

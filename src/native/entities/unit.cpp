@@ -2,7 +2,7 @@
 
 #include <utility>
 
-unit::unit (abstract_game& nstorage, unit_prototype* nprototype, int nplayer_id, int nid) : abstract_unit(nstorage) {
+unit::unit (base_game& ngame, unit_prototype* nprototype, int nplayer_id, int nid) : abstract_unit(ngame) {
     prototype = nprototype; // TODO prototype can't be null cuz it will crash if we forget to init it
     // TODO I think it shold be (storage + json) constructor
     player_id = nplayer_id;
@@ -30,11 +30,11 @@ int unit::get_id () {
 }
 
 void unit::update () {
-    prototype->update(this);
+    if (prototype) prototype->update(this); //FIXME
 }
 
 void unit::signal (json& input) {
-    prototype->signal(this, input);
+    if (prototype) prototype->signal(this, input); //FIXME
 }
 
 std::vector<vector2<int>>& unit::get_path () {

@@ -1,9 +1,13 @@
 #include "abstract_tilemap.hpp"
 
 
-abstract_tilemap::abstract_tilemap () {
-    scale = vector2<int>();
-    data = nullptr;
+abstract_tilemap::abstract_tilemap (const vector2<int>& nscale) {
+    scale = nscale;
+    data = new tile*[size()];
+    for (int i = 0; i < size(); ++i) {
+        data[i] = new tile();
+    }
+
 }
 
 abstract_tilemap::abstract_tilemap (const abstract_tilemap& copy) {
@@ -38,12 +42,16 @@ void abstract_tilemap::serialize (json& package) const {
 
 void abstract_tilemap::deserialize (json& package) {
     scale.deserialize(package["scale"]);
+    json j_data = package["data"];
+    delete [] data;
+    data = new tile*[size()];
     for (int i = 0; i < size(); ++i) {
-        data[i] = json_tools::unpack_tile(package["data"][i]);
+        // TODO delete old tiles
+        data[i] = json_tools::unpack_tile(j_data[i]);
     }
 }
 
-tile& abstract_tilemap::operator[] (const vector2<int>& position) const {
+const tile& abstract_tilemap::operator[] (const vector2<int>& position) const {
     //if (!is_valid(position)) throw; TODO
     return *get_tile(position);
 }
@@ -52,10 +60,17 @@ bool abstract_tilemap::is_valid (const vector2<int>& position) const {
     return !(position.x < 0 || position.x >= scale.x || position.y < 0 || position.y >= scale.y);
 }
 
-tile* abstract_tilemap::get_tile (const vector2<int>& position) const {
+const tile* abstract_tilemap::get_tile (const vector2<int>& position) const {
     return data[position.y * scale.y + position.x];
 }
+
+void abstract_tilemap::set_tile (const vector2<int>& position, tile* item) {
+    delete get_tile(position);
+    data[position.y * scale.y + position.x] = item;
+}
+
 
 int abstract_tilemap::size () const {
     return scale.x * scale.y;
 }
+

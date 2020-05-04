@@ -1,5 +1,5 @@
 #include "player.hpp"
-#include "../game/abstract_game.hpp"
+#include "../game/base_game.hpp"
 
 player::player (int nteam) : team(nteam) {
     parameters = parameter_map();

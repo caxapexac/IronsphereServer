@@ -4,7 +4,7 @@
 #include "../base/interfaces.hpp"
 #include "unit_prototype.hpp"
 
-class abstract_game;
+class base_game;
 
 class unit : public abstract_unit {
 private:
@@ -12,7 +12,7 @@ private:
     int id;
 
 public:
-    explicit unit (abstract_game& nstorage, unit_prototype* nprototype = nullptr, int nplayer_id = -1, int nid = -1);
+    explicit unit (base_game& ngame, unit_prototype* nprototype = nullptr, int nplayer_id = -1, int nid = -1);
     void serialize (json& package) const override;
     void deserialize (json& package) override;
 

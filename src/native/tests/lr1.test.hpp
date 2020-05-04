@@ -5,6 +5,9 @@
 #include "../field/abstract_tilemap.hpp"
 #include "../field/tilemap_square.hpp"
 #include "../field/tilemap_hexagonal.hpp"
+#include "tilemap_square.test.hpp"
+#include "unit_prototype.test.hpp"
+#include "unit.test.hpp"
 
 namespace unit_testing {
     void test_lr1() {
@@ -15,14 +18,11 @@ namespace unit_testing {
         /// Test:
         /// Разработать и реализовать набор классов:
         /// - Класс игрового поля
-        abstract_tilemap* t_square = new tilemap_square();
-        t_square->serialize(j);
-        std::cout << j.dump(2) << std::endl;
-        //t_square->deserialize() TODO
-        //abstract_tilemap* t_haxagonal = new tilemap_hexagonal(); TODO TBD
-
+        test_tilemap_square();
+        // test_tilemap_hexagonal();
         /// - Набор классов юнитов
-        //TODO
+        test_unit_prototype();
+        test_unit();
         /// Игровое поле является контейнером для объектов представляющим прямоугольную сетку. Основные требования к классу игрового поля:
         /// - Создание поля произвольного размера
 

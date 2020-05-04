@@ -14,7 +14,7 @@ int unit_factory::get_id () {
     return next_id++;
 }
 
-unit_factory::unit_factory (abstract_game& nstorage) : storage(nstorage) {
+unit_factory::unit_factory (base_game& nstorage) : game(nstorage) {
     next_id = 1;
     prototypes = std::map<std::string, unit_prototype*>();
 }
@@ -29,7 +29,7 @@ void unit_factory::serialize (json& package) const {
 void unit_factory::deserialize (json& package) {
     next_id = package["next_id"].get<int>();
     for (auto& i : package["prototypes"].items()) {
-        unit_prototype* item = new unit_prototype(storage);
+        unit_prototype* item = new unit_prototype(game);
         item->deserialize(i.value());
         prototypes[i.key()] = item;
     }
@@ -42,7 +42,7 @@ icomponent* unit_factory::get_component (const std::string& component_name) {
 
 unit_prototype* unit_factory::get_prototype (const std::string& prototype_name) {
     if (prototypes[prototype_name] == nullptr) {
-        prototypes[prototype_name] = new unit_prototype(storage, prototype_name); //TODO fix memory leak
+        prototypes[prototype_name] = new unit_prototype(game, prototype_name); //TODO fix memory leak
     }
     return prototypes[prototype_name];
 }
@@ -50,6 +50,6 @@ unit_prototype* unit_factory::get_prototype (const std::string& prototype_name) 
 unit* unit_factory::make_unit (const std::string& prototype_name, int player_uid) {
     // TODO check json
     // and throw exception
-    return new unit(storage, get_prototype(prototype_name), player_uid, get_id());
+    return new unit(game, get_prototype(prototype_name), player_uid, get_id());
 }
 

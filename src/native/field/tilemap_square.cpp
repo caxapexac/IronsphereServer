@@ -2,13 +2,13 @@
 
 const std::string tilemap_square::type = "square";
 
-tilemap_square::tilemap_square () : abstract_tilemap() { }
+tilemap_square::tilemap_square (const vector2<int>& nscale) : abstract_tilemap(nscale) { }
 
-tile& tilemap_square::operator[] (const vector2<int>& position) const {
+const tile& tilemap_square::operator[] (const vector2<int>& position) const {
     return abstract_tilemap::operator[](position);
 }
 
-tile* tilemap_square::get_tile (const vector2<int>& position) const {
+const tile* tilemap_square::get_tile (const vector2<int>& position) const {
     return abstract_tilemap::get_tile(position);
 }
 

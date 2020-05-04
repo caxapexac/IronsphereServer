@@ -1,9 +1,9 @@
 #ifndef LOGIC_GAME_STEPPED_HPP
 #define LOGIC_GAME_STEPPED_HPP
 
-#include "abstract_game.hpp"
+#include "base_game.hpp"
 
-class game_stepped : public abstract_game {
+class game_stepped : public base_game {
 public:
     static const std::string type;
 

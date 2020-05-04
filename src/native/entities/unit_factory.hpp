@@ -8,7 +8,7 @@
 class unit_factory : iserializable {
 private:
     N_S static std::map<std::string, icomponent*> components;
-    N_S abstract_game& storage;
+    N_S base_game& game;
     std::map<std::string, unit_prototype*> prototypes;
     int next_id;
 
@@ -16,7 +16,7 @@ private:
     int get_id();
 
 public:
-    explicit unit_factory (abstract_game& nstorage);
+    explicit unit_factory (base_game& nstorage);
     void serialize (json& package) const override;
     void deserialize (json& package) override;
 

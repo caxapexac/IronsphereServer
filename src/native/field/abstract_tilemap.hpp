@@ -14,15 +14,16 @@ protected:
     tile** data;
 
 public:
-    explicit abstract_tilemap ();
+    explicit abstract_tilemap (const vector2<int>& nscale = vector2<int>(0, 0));
     abstract_tilemap (const abstract_tilemap& copy);
     abstract_tilemap& operator= (const abstract_tilemap& copy);
     ~abstract_tilemap () override;
     void serialize (json& package) const override;
     void deserialize (json& package) override;
 
-    virtual tile& operator[] (const vector2<int>& position) const;
-    virtual tile* get_tile (const vector2<int>& position) const;
+    virtual const tile& operator[] (const vector2<int>& position) const;
+    virtual const tile* get_tile (const vector2<int>& position) const; //TODO is legal?
+    virtual void set_tile (const vector2<int>& position, tile* item);
     virtual std::vector<vector2<int>> get_path(vector2<int> source, vector2<int> destination) = 0;
 
 protected:

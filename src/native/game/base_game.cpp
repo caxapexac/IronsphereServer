@@ -1,18 +1,19 @@
-#include "abstract_game.hpp"
+#include "base_game.hpp"
 
-abstract_game::abstract_game () : factory(unit_factory(*this)) {
+base_game::base_game () : factory(unit_factory(*this)) {
     units = std::map<int, unit*>();
     players = std::map<int, player*>();
+    // TODO create field
 }
 
-void abstract_game::serialize (json& package) const {
+void base_game::serialize (json& package) const {
     factory.serialize(package["factory"]);
     json_tools::pack_map_of_ptrs(units, package["units"]);
     json_tools::pack_map_of_ptrs(players, package["players"]);
     field->serialize(package["field"]);
 }
 
-void abstract_game::deserialize (json& package) {
+void base_game::deserialize (json& package) {
     factory.deserialize(package["factory"]);
     for (const auto& i : package["units"].items()) {
         unit* item = new unit(*this);
@@ -27,34 +28,34 @@ void abstract_game::deserialize (json& package) {
     field = json_tools::unpack_tilemap(package["field"]);
 }
 
-void abstract_game::get_field (json& output) {
+void base_game::get_field (json& output) {
     field->serialize(output);
 }
 
-unit& abstract_game::make_unit (const std::string& prototype_name, int player_id) {
+unit& base_game::make_unit (const std::string& prototype_name, int player_id) {
     unit* result = factory.make_unit(prototype_name, player_id);
     units[result->get_id()] = result;
     return *units[result->get_id()];
     // TODO simplify
 }
 
-unit_prototype* abstract_game::get_prototype (const std::string& prototype_name) {
+unit_prototype* base_game::get_prototype (const std::string& prototype_name) {
     return factory.get_prototype(prototype_name);
 }
 
-unit* abstract_game::get_unit (int id) {
+unit* base_game::get_unit (int id) {
     return units[id];
 }
 
-player* abstract_game::get_player (int uid) {
+player* base_game::get_player (int uid) {
     return players[uid];
 }
 
-tile* abstract_game::get_tile (const vector2<int>& position) {
+const tile* base_game::get_tile (const vector2<int>& position) {
     return field->get_tile(position);
 }
 
-void abstract_game::update (json& output) {
+void base_game::update (json& output) {
     frame();
     // TODO send messages from frame (signals queue)
     for (const auto& i : players) {
@@ -62,7 +63,11 @@ void abstract_game::update (json& output) {
     }
 }
 
-void abstract_game::signal (json& input, json& output) {
+bool base_game::check_end_game (json& output) {
+    return false; //TODO
+}
+
+void base_game::signal (json& input, json& output) {
     if (input["selected_units"].type() != json::value_t::array) {
         // TODO exception
         // TODO more checkings
@@ -86,4 +91,13 @@ void abstract_game::signal (json& input, json& output) {
         output = {{"success", "[game.signal] Your command was sent"}};
     }
 }
+
+void base_game::frame () {
+    //TODO
+}
+
+void base_game::calculate_client_data(int player_uid, json& output) {
+    //TODO
+}
+
 

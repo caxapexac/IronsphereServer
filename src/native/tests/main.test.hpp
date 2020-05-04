@@ -11,14 +11,19 @@
 
 #include "vector2.test.hpp"
 #include "transform.test.hpp"
+#include "unit.test.hpp"
+#include "unit_prototype.test.hpp"
 
 namespace unit_testing {
     //TODO output string/count passed/exception with a problem
     void unit_test_all() {
         std::cout << "***STARTING UNIT TESTING***" << std::endl;
         // TODO test logger
-        test_vector2();
+        test_tilemap_square();
         test_transform();
+        test_unit();
+        test_unit_prototype();
+        test_vector2();
         // TODO
         std::cout << "***UNIT TESTING SUCCESS***" << std::endl;
     }

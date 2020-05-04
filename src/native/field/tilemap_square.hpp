@@ -7,10 +7,10 @@ class tilemap_square : public abstract_tilemap {
 public:
     static const std::string type;
 
-    explicit tilemap_square ();
+    explicit tilemap_square (const vector2<int>& nscale = vector2<int>(0, 0));
 
-    tile& operator[] (const vector2<int>& position) const override;
-    tile* get_tile (const vector2<int>& position) const override;
+    const tile& operator[] (const vector2<int>& position) const override;
+    const tile* get_tile (const vector2<int>& position) const override;
     std::vector<vector2<int>> get_path (vector2<int> source, vector2<int> destination) override;
 
 protected:

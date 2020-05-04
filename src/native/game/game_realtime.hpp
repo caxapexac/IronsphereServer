@@ -1,10 +1,10 @@
 #ifndef LOGIC_GAME_REALTIME_HPP
 #define LOGIC_GAME_REALTIME_HPP
 
-#include "abstract_game.hpp"
+#include "base_game.hpp"
 
 // template <int PlayerCount>
-class game_realtime : public abstract_game {
+class game_realtime : public base_game {
 public:
     static const std::string type;
 

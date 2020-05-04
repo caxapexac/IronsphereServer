@@ -4,7 +4,7 @@
 #include "../base/interfaces.hpp"
 #include "parameter_map.hpp"
 
-class abstract_game;
+class base_game;
 
 class player : public iserializable {
 private:

@@ -1,13 +1,13 @@
 #include "json_tools.hpp"
-#include "../game/abstract_game.hpp"
+#include "../game/base_game.hpp"
 #include "../game/game_realtime.hpp"
 #include "../game/game_stepped.hpp"
 #include "../field/tilemap_hexagonal.hpp"
 #include "../field/tilemap_square.hpp"
 
-std::unique_ptr<abstract_game> json_tools::unpack_game (json& package) {
+std::unique_ptr<base_game> json_tools::unpack_game (json& package) {
     std::string type = package["type"]; //TODO enum
-    std::unique_ptr<abstract_game> result;
+    std::unique_ptr<base_game> result;
 
     if (type == game_realtime::type) result = std::make_unique<game_realtime>();
     else if (type == game_stepped::type) result = std::make_unique<game_stepped>();
@@ -30,12 +30,17 @@ std::unique_ptr<abstract_tilemap> json_tools::unpack_tilemap (json& package) {
 }
 
 tile* json_tools::unpack_tile (json& package) {
-    std::string type = package["type"];
     tile* result;
 
-    if (type == tile_damage::type) result = new tile_damage();
-    else if (type == tile_money::type) result = new tile_money();
-    else result = new tile();
+    if  (!package.contains("type")) {
+        result = new tile();
+    }
+    else {
+        std::string type = package["type"];
+        if (type == tile_damage::type) result = new tile_damage();
+        else if (type == tile_money::type) result = new tile_money();
+        // else throw; TODO
+    }
 
     result->deserialize(package);
     return result;
