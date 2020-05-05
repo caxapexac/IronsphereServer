@@ -4,7 +4,7 @@ game_lobby::game_lobby () noexcept {
     delta_time = constants::lobby_delta_time;
     sessions = std::map<int, std::shared_ptr<game_session>>();
     chat_buffer = json::array();
-    // TODO log it
+    //TODO log it
 }
 
 void game_lobby::update (json& output) {

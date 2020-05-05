@@ -2,6 +2,7 @@
     "files.associations": {
         "*.asmdef": "yaml",
         "*.meta": "yaml",
+        "*.hpp": "cpp",
         "array": "cpp",
         "atomic": "cpp",
         "*.tcc": "cpp",
@@ -53,7 +54,10 @@
         "streambuf": "cpp",
         "thread": "cpp",
         "typeinfo": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "list": "cpp",
+        "random": "cpp",
+        "set": "cpp"
     },
     "cmake.configureOnOpen": false
 }

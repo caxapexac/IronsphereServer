@@ -73,7 +73,7 @@
     },
     "include": [
       "src/**/*",
-      "config/*"
+      "config/*", "scripts/node_gyp_cpp.js"
     ]
   }
   

@@ -30,7 +30,7 @@ Napi::String Signal(const Napi::CallbackInfo& info)
     }
     json input = info[0].ToString();
     json output;
-    game_lobby::get().signal(input, output)
+    //game_lobby::get().signal(input, output);
     return Napi::String::New(env, output.dump());
 }
 

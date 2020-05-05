@@ -9,8 +9,9 @@ l::l () {
 }
 
 void l::set_logger (abstract_logger* log, loggers type) {
-    unsigned int logger_num = log2(type);
-    log_arr[logger_num] = log;
+    //unsigned int logger_num = log2(type); //FIXME что за жесть, нужно сделать без математики
+    // Компилер node-gyp крашится тут
+    //log_arr[logger_num] = log;
 }
 
 void l::set_user_logger (logger_user* log) {

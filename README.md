@@ -30,6 +30,10 @@
 1. `npm run build` to rebuild server
 2. OR `npm run build-logic` (change inside for linux) to rebuild logic as terminal executable
 
+# Importand (TODO) #
+
+- node-gyp into [cmake.js](https://github.com/cmake-js/cmake-js)
+
 # Important (deploy) #
 1. `nano /etc/ssh/sshd_config` edit port (security)
 2. Restart the server

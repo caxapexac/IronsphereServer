@@ -15,7 +15,7 @@ void unit_prototype::serialize (json& package) const {
 
 void unit_prototype::deserialize (json& package) {
     abstract_unit::deserialize(package);
-    name = package["name"];
+    name = package["name"].get<std::string>();
     components = std::map<std::string, icomponent*>();
     for (const auto& i : package["components"]) components[i] = unit_factory::get_component(i);
 }

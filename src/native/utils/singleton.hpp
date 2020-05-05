@@ -7,6 +7,7 @@ template<typename T> //Where T : new()
 class singleton {
 protected:
     singleton () = default;
+
 public:
     singleton (const singleton&) = delete;
     singleton& operator= (const singleton) = delete;
@@ -15,7 +16,7 @@ public:
 
 template<typename T>
 T& singleton<T>::get () {
-    static const std::unique_ptr<T> instance = std::make_unique<T>();
+    static T* instance = new T();
     return *instance;
 }
 
