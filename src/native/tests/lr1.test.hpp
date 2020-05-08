@@ -2,9 +2,9 @@
 #define LOGIC_LR1_TEST_HPP
 
 #include "../base/interfaces.hpp"
-#include "../field/abstract_tilemap.hpp"
-#include "../field/tilemap_square.hpp"
-#include "../field/tilemap_hexagonal.hpp"
+#include "../tilemap/abstract_tilemap.hpp"
+#include "../tilemap/tilemap_square.hpp"
+#include "../tilemap/tilemap_hexagonal.hpp"
 #include "tilemap_square.test.hpp"
 #include "unit_prototype.test.hpp"
 #include "unit.test.hpp"
@@ -18,6 +18,7 @@ namespace unit_testing {
         /// Test:
         /// Разработать и реализовать набор классов:
         /// - Класс игрового поля
+
         test_tilemap_square();
         // test_tilemap_hexagonal();
         /// - Набор классов юнитов

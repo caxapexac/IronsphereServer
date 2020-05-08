@@ -2,7 +2,7 @@
 #define LOGIC_TILEMAP_SQUARE_TEST_HPP
 
 #include "../base/interfaces.hpp"
-#include "../field/tilemap_square.hpp"
+#include "../tilemap/tilemap_square.hpp"
 
 namespace unit_testing {
     void test_tilemap_square() {

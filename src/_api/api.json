@@ -1,4 +1,11 @@
 {
+  "login" : {
+    "uid" : "int"
+  },
+
+
+  ""
+
   "!start_argument": {
     "player_count": 1234,
     "win_rule": "kill/score/money/serialized_special_rule_class/ya_proigral",

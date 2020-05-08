@@ -1,6 +1,7 @@
 #ifndef LOGIC_JSON_TOOLS_H
 #define LOGIC_JSON_TOOLS_H
 
+#include <iostream>
 #include "json.hpp"
 
 class tile;
@@ -100,11 +101,12 @@ std::map<K, V> json_tools::unpack_map (const json& package) {
 
 template<typename K, typename V>
 void json_tools::pack_map_of_ptrs (const std::map<K, V*>& map, json& package) {
-    package = {};
+    package = json::object();
     for (auto const& i : map) {
         json j;
         i.second->serialize(j);
-        package[i.first] = j; //TODO check
+        package[std::to_string(i.first)] = j; //TODO check
+        std::cout << "serialized " << i.first;
     }
 }
 

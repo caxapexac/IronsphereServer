@@ -2,16 +2,21 @@
 #include "../game/base_game.hpp"
 #include "../game/game_realtime.hpp"
 #include "../game/game_stepped.hpp"
-#include "../field/tilemap_hexagonal.hpp"
-#include "../field/tilemap_square.hpp"
+#include "../tilemap/tilemap_hexagonal.hpp"
+#include "../tilemap/tilemap_square.hpp"
 
 std::unique_ptr<base_game> json_tools::unpack_game (json& package) {
-    std::string type = package["type"]; //TODO enum
     std::unique_ptr<base_game> result;
 
-    if (type == game_realtime::type) result = std::make_unique<game_realtime>();
-    else if (type == game_stepped::type) result = std::make_unique<game_stepped>();
-    else return nullptr; //throw; or log
+    if  (!package.contains("type")) {
+        result = std::make_unique<base_game>();
+    }
+    else {
+        std::string type = package["type"];
+        if (type == game_realtime::type) result = std::make_unique<game_realtime>();
+        else if (type == game_stepped::type) result = std::make_unique<game_stepped>();
+        // else throw; TODO
+    }
 
     result->deserialize(package);
     return result;

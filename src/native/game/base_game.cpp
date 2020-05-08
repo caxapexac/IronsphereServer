@@ -3,14 +3,14 @@
 base_game::base_game () : factory(unit_factory(*this)) {
     units = std::map<int, unit*>();
     players = std::map<int, player*>();
-    // TODO create field
+    tilemap = nullptr; // TODO create tilemap
 }
 
 void base_game::serialize (json& package) const {
     factory.serialize(package["factory"]);
     json_tools::pack_map_of_ptrs(units, package["units"]);
     json_tools::pack_map_of_ptrs(players, package["players"]);
-    field->serialize(package["field"]);
+    if (tilemap) tilemap->serialize(package["tilemap"]);
 }
 
 void base_game::deserialize (json& package) {
@@ -25,11 +25,11 @@ void base_game::deserialize (json& package) {
         item->deserialize(i.value());
         players[std::stoi(i.key())] = item; //TODO very bad (need to check at least)
     }
-    field = json_tools::unpack_tilemap(package["field"]);
+    if (package.contains("tilemap")) tilemap = json_tools::unpack_tilemap(package["tilemap"]);
 }
 
-void base_game::get_field (json& output) {
-    field->serialize(output);
+void base_game::get_tilemap (json& output) {
+    tilemap->serialize(output);
 }
 
 unit& base_game::make_unit (const std::string& prototype_name, int player_id) {
@@ -52,7 +52,7 @@ player* base_game::get_player (int uid) {
 }
 
 const tile* base_game::get_tile (const vector2<int>& position) {
-    return field->get_tile(position);
+    return tilemap->get_tile(position);
 }
 
 void base_game::update (json& output) {

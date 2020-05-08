@@ -3,7 +3,7 @@
 
 #include "../base/interfaces.hpp"
 #include "../structs/player.hpp"
-#include "../field/abstract_tilemap.hpp"
+#include "../tilemap/abstract_tilemap.hpp"
 #include "../entities/unit_factory.hpp"
 
 class base_game : iserializable {
@@ -11,7 +11,7 @@ protected:
     unit_factory factory;
     std::map<int, unit*> units; // TODO how to make no alloc without ptrs
     std::map<int, player*> players;
-    std::unique_ptr<abstract_tilemap> field;
+    std::unique_ptr<abstract_tilemap> tilemap;
 
 public:
     explicit base_game ();
@@ -22,9 +22,9 @@ public:
     void update (json& output);
     void signal (json& input, json& output);
     virtual bool check_end_game (json& output);
+    void get_tilemap (json& output);
     ///
 
-    void get_field (json& output);
     unit& make_unit (const std::string& prototype_name, int player_id);
     OBSOLETE unit_prototype* get_prototype(const std::string& prototype_name);
     unit* get_unit (int id);

@@ -12,6 +12,6 @@ void abstract_unit::serialize (json& package) const {
 }
 
 void abstract_unit::deserialize (json& package) {
-    prototype = game.get_prototype(package["prototype"]);
+    if (package.contains("prototype")) prototype = game.get_prototype(package["prototype"]);
     parameters.deserialize(package["parameters"]);
 }

@@ -27,3 +27,8 @@ std::vector<tile*> tilemap_square::get_neighbours (vector2<int> point) {
 float tilemap_square::get_euristic_distance (vector2<int> source, vector2<int> destination) {
     return 0;
 }
+
+void tilemap_square::serialize (json& package) const {
+    abstract_tilemap::serialize(package);
+    package["type"] = type;
+}

@@ -18,7 +18,7 @@ int game_session::get_player_count () {
 void game_session::get_info (json& output) {
     output["session_name"] = session_name;
     output["players_uid"] = players_uid;
-    if (game) game->get_field(output["field"]);
+    if (game) game->get_tilemap(output["field"]);
 }
 
 void game_session::join (json& input, json& output) {
