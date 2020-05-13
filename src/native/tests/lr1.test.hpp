@@ -1,13 +1,13 @@
 #ifndef LOGIC_LR1_TEST_HPP
 #define LOGIC_LR1_TEST_HPP
 
-#include "../base/interfaces.hpp"
+#include "../base/includes.hpp"
 #include "../tilemap/abstract_tilemap.hpp"
 #include "../tilemap/tilemap_square.hpp"
 #include "../tilemap/tilemap_hexagonal.hpp"
-#include "tilemap_square.test.hpp"
-#include "unit_prototype.test.hpp"
-#include "unit.test.hpp"
+#include "tilemap/tilemap_square.test.hpp"
+#include "entities/unit_prototype.test.hpp"
+#include "entities/unit.test.hpp"
 
 namespace unit_testing {
     void test_lr1() {

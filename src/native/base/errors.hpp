@@ -1,16 +1,15 @@
 #ifndef LOGIC_ERRORS_HPP
 #define LOGIC_ERRORS_HPP
 
-#include "interfaces.hpp"
+#include "third_party_includes.hpp"
 
 // TODO add more generic exceptions
 // TODO make it more complex and useful
 // TODO tryso
-// L7
 struct shared_pointer_exception : public std::exception {
     std::string info;
 
-    explicit shared_pointer_exception (std::string& msg) : info(msg) {
+    explicit shared_pointer_exception (const std::string& msg) : info(msg) {
     }
 
     const char* what () const noexcept override {
@@ -21,7 +20,7 @@ struct shared_pointer_exception : public std::exception {
 struct serialization_exception : public std::exception {
     std::string info;
 
-    explicit serialization_exception (std::string& msg) : info(msg) {
+    explicit serialization_exception (const std::string& msg) : info(msg) {
     }
 
     const char* what () const noexcept override {
@@ -32,11 +31,13 @@ struct serialization_exception : public std::exception {
 struct todo_exception : public std::exception {
     std::string info;
 
-    explicit todo_exception (std::string& msg) : info(msg) {
+    explicit todo_exception (const std::string& msg) : info(msg) {
     }
 
     const char* what () const noexcept override {
-        return ("[RELEASE THIS EXCEPTION] " + info).c_str();
+        std::cout << info;
+        return "help";
+        //return ("[RELEASE THIS EXCEPTION] " + ).c_str();
     }
 };
 

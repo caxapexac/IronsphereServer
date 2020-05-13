@@ -1,8 +1,7 @@
 #ifndef LOGIC_JSON_TOOLS_H
 #define LOGIC_JSON_TOOLS_H
 
-#include <iostream>
-#include "json.hpp"
+#include "../base/third_party_includes.hpp"
 
 class tile;
 class abstract_tilemap;
@@ -31,6 +30,12 @@ public:
     template<typename T>
     static std::vector<T> unpack_vector (const json& package);
 
+    template<typename T>
+    static void pack_queue (const std::queue<T>& queue, json& package);
+
+    template<typename T>
+    static std::queue<T> unpack_queue (const json& package);
+
     template<typename K, typename V>
     static void pack_map (const std::map<K, V>& map, json& package);
 
@@ -42,6 +47,9 @@ public:
 
     template<typename K, typename V>
     static std::map<K, V*> unpack_map_of_ptrs (const json& package);
+
+    // TODO make it in logger
+    static void print_tilemap(const abstract_tilemap& tilemap);
 };
 
 // Really
@@ -76,6 +84,37 @@ std::vector<T> json_tools::unpack_vector (const json& package) {
         vec.push_back(item);
     }
     return vec;
+}
+
+template<typename T>
+void json_tools::pack_queue (const std::queue<T>& queue, json& package) {
+    // TODO change to no alloc FIXME
+    package = json::array();
+    std::queue copy = queue; //copy the original queue to the temporary queue
+    while (!copy.empty())
+    {
+        T item = copy.front();
+        json j;
+        item.serialize(j);
+        package.push_back(j); //TODO remove alloc (use index)
+        copy.pop();
+    }
+}
+
+template<typename T>
+std::queue<T> json_tools::unpack_queue (const json& package) {
+    //static_assert(std::is_convertible<T*, iserializable*>::value, "vector class may only contain serializable objects");
+    if (package.type() != json::value_t::array) {
+        // TODO exception
+    }
+    std::queue<T> queue = std::queue<T>();
+    for (auto& i : package) { //TODO check is it working
+        T item;
+        json j = i;
+        item.deserialize(j); //TODO json constructor
+        queue.push(item);
+    }
+    return queue;
 }
 
 template<typename K, typename V>
@@ -120,5 +159,6 @@ std::map<K, V*> json_tools::unpack_map_of_ptrs (const json& package) {
     }
     return map;
 }
+
 
 #endif //LOGIC_JSON_TOOLS_H

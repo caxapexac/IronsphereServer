@@ -3,17 +3,14 @@
 
 #include "abstract_tilemap.hpp"
 
+const std::string tilemap_square_type = "tilemap_square";
 class tilemap_square : public abstract_tilemap {
 public:
-    static const std::string type;
-
-    explicit tilemap_square (const vector2<int>& nscale = vector2<int>(0, 0));
-
-    const tile& operator[] (const vector2<int>& position) const override;
-    const tile* get_tile (const vector2<int>& position) const override;
-    std::vector<vector2<int>> get_path (vector2<int> source, vector2<int> destination) override;
-    void serialize (json& package) const override; //TODO maybe something else
-
+    explicit tilemap_square(const vector2<int>& nscale = vector2<int>(0, 0));
+    const std::string& type () const override;
+    const tile* get_tile (int x, int y) const override;
+    void set_tile (int x, int y, tile* item) override;
+    std::queue<vector2<int>> get_path (const vector2<int>& source, const vector2<int>& destination) override;
 protected:
     bool is_valid (const vector2<int>& position) const override;
     std::vector<tile*> get_neighbours (vector2<int> point) override;

@@ -1,10 +1,6 @@
 #include "unit.hpp"
 
-#include <utility>
-
-unit::unit (base_game& ngame, unit_prototype* nprototype, int nplayer_id, int nid) : abstract_unit(ngame) {
-    prototype = nprototype; // TODO prototype can't be null cuz it will crash if we forget to init it
-    // TODO I think it shold be (storage + json) constructor
+unit::unit (unit_prototype* nprototype, int nplayer_id, int nid) : abstract_unit(nprototype) {
     player_id = nplayer_id;
     id = nid;
 }
@@ -29,19 +25,22 @@ int unit::get_id () {
     return id;
 }
 
-void unit::update () {
-    if (prototype) prototype->update(this); //FIXME
+void unit::update (base_game& context) {
+    if (prototype) prototype->update(*this, context); //FIXME
 }
 
-void unit::signal (json& input) {
-    if (prototype) prototype->signal(this, input); //FIXME
+void unit::signal (base_game& context, json& input) {
+    if (prototype) prototype->signal(*this, context, input); //FIXME
 }
 
-std::vector<vector2<int>>& unit::get_path () {
+void unit::command (unit& sender, base_game& context, json& input) {
+    if (prototype) prototype->command(sender, *this, context, input); //FIXME
+}
+
+std::queue<vector2<int>>& unit::get_path () {
     return parameters.get_path();
 }
 
-void unit::set_path (std::vector<vector2<int>> data) {
+void unit::set_path (std::queue<vector2<int>> data) {
     parameters.set_path(std::move(data));
 }
-

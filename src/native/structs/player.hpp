@@ -1,7 +1,7 @@
 #ifndef LOGIC_PLAYER_HPP
 #define LOGIC_PLAYER_HPP
 
-#include "../base/interfaces.hpp"
+#include "../base/includes.hpp"
 #include "parameter_map.hpp"
 
 class base_game;

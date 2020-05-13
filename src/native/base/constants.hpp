@@ -1,24 +1,13 @@
 #ifndef LOGIC_CONSTANTS_HPP
 #define LOGIC_CONSTANTS_HPP
 
-/// For the sake of readability. This freaking language just doesn't support attributes.
-/// God damn I'm creating serialization without reflection
-/// Path to clearing your soul:
-/// Learn c++
-/// Break up with a girl
-/// Make useless define
-#define N_S /*Non serialized*/
-#define OBSOLETE /*Obsolete*/
-/// *You are here*
-/// <doctype=html />
-/// Delet yuself
-/// Epik vin
-
+#include "third_party_includes.hpp"
 
 //TODO all strings into enum constants
 //TODO add common constants (generic RTS)
 //TODO uint -> int ?
 namespace constants {
+    const std::string empty_string = "";
     const int version = 101; // Game version (Anti chEET)
     const int lobby_delta_time = 1000; // ms (start game loop delay)
     const char game_title[] = "Ironsphere";
@@ -35,8 +24,6 @@ enum streams : char {
 };
 
 //TODO into class
-
-//TODO L4-5 without json ;(
 
 /*Patterns
  * L1 Unit attributes, abilities (components(?)) (?)
@@ -58,37 +45,5 @@ enum streams : char {
  * Other
  */
 
-
-/***
- * По десереализации можно написать класс,
- * который начинает парсить строку, например
- * первый символ означает какой класс. После
- * проверки первого символа создает необходимый
- * класс десереализации под конкретного юнита
- * (что-то по типу паттерна стратегия) и возвращает
- * восстановленный объект класса
- *
- * Можно создать класс, в котором есть map,
- * с ассоциацией символа и класса конкретной десереализции
- *
- * Есть общий класс десериализатора, который начинает
- * первым парсить строку. В этом классе, есть map,
- * который связывает тип и объект конкретного
- * десериализатора. Собственно, общий класс считывает
- * информацию, чтобы понять что за класс, по этой
- * информации достает из map необходимый десереализатор,
- * который будет завершать парсинг строки и
- * возвращать объект уже нужного класса
- *
- * можно сделать класс прослойку, который из строки
- * достает необходимые параметры, у уже вызывает
- * конструктор юнита с необходимыми параметрами.
- * Таким образом, мы избавляем класс юнита от необходимости
- * знать, каким образом и откуда он создается
- *
- * Вариант №2, узнавать размер класса, читать байты
- * из памяти напрямую и их сохранять, а при восстановлении
- * выделить нужную память и туда записывать байты
- ***/
 
 #endif //LOGIC_CONSTANTS_HPP

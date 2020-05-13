@@ -7,6 +7,10 @@ game_session::game_session (const std::string& nsession_name) {
     game = nullptr;
 }
 
+const std::string& game_session::type () const {
+    return game_session_type;
+}
+
 std::string game_session::get_session_name () {
     return session_name;
 }
@@ -18,7 +22,7 @@ int game_session::get_player_count () {
 void game_session::get_info (json& output) {
     output["session_name"] = session_name;
     output["players_uid"] = players_uid;
-    if (game) game->get_tilemap(output["field"]);
+    if (game) game->get_static_content(output["field"]);
 }
 
 void game_session::join (json& input, json& output) {
@@ -57,5 +61,7 @@ void game_session::transition_to (std::unique_ptr<ihandler> nstate) {
     state = std::move(nstate);
     //TODO log?
 }
+
+
 
 

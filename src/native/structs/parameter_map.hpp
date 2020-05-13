@@ -1,7 +1,7 @@
 #ifndef LOGIC_PARAMETER_MAP_HPP
 #define LOGIC_PARAMETER_MAP_HPP
 
-#include "../base/interfaces.hpp"
+#include "../base/includes.hpp"
 #include "vector2.hpp"
 
 // TODO Как добавить template, чтобы можно было делать вот так:
@@ -10,11 +10,12 @@
 
 class parameter_map : iserializable {
 private:
-    // std::map<std::string, int> parameters_int;
-    // std::map<std::string, float> parameters_float;
-    // std::map<std::string, std::string> parameters_string;
+    std::map<std::string, int> parameters_int;
+    std::map<std::string, float> parameters_float;
+    std::map<std::string, std::string> parameters_string;
+    std::map<std::string, vector2<int>> parameters_vector;
     // //std::map<std::string, ibuffable> parameters_buffs; TODO
-    std::vector<vector2<int>> parameter_path; // TODO think
+    std::queue<vector2<int>> parameter_path; // TODO think
 
 public:
     parameter_map ();
@@ -25,12 +26,14 @@ public:
     bool get (const std::string& name, int& result);
     bool get (const std::string& name, float& result);
     bool get (const std::string& name, std::string& result);
-    std::vector<vector2<int>>& get_path ();
+    bool get (const std::string& name, vector2<int>& result);
+    std::queue<vector2<int>>& get_path ();
 
     void set (const std::string& name, int data);
     void set (const std::string& name, float data);
     void set (const std::string& name, const std::string& data);
-    void set_path (std::vector<vector2<int>> data);
+    void set (const std::string& name, const vector2<int>& data);
+    void set_path (std::queue<vector2<int>> data);
 };
 
 #endif //LOGIC_PARAMETER_MAP_HPP

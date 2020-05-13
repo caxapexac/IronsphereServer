@@ -1,27 +1,11 @@
 #ifndef LOGIC_INTERFACES_HPP
 #define LOGIC_INTERFACES_HPP
 
-/// *All used stl libraries*
-#include <exception>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <numeric>
-#include <memory>
-#include <string>
-#include <vector>
-#include <ctime>
-#include <list>
-#include <map>
-#include <set>
-/// *************************
-#include "constants.hpp"
-#include "../utils/json.hpp"
-#include "../utils/json_tools.hpp"
+#include "third_party_includes.hpp"
 
 class unit;
-
-using json = nlohmann::json;
+class unit_prototype;
+class base_game;
 
 /// TODO setdirty
 /// For json serialization
@@ -39,17 +23,24 @@ public:
     virtual ~idisposable () = default;
 };
 
-/// For unit's behaviours
-class icomponent {
+class ityped {
 public:
-    virtual std::string get_name() = 0;
-    virtual void signal (unit& sender, json& input) = 0;
-    virtual void update (unit& sender) = 0;
+    virtual const std::string& type() const = 0;
+    virtual ~ityped () = default;
+};
+
+/// For unit's behaviours
+class icomponent : public ityped {
+public:
+    virtual void setup_prototype(unit_prototype& prototype) = 0;
+    virtual void command (unit& sender, unit& owner, base_game& context, json& input) = 0;
+    virtual void signal (unit& owner, base_game& context, json& input) = 0;
+    virtual void update (unit& owner, base_game& context) = 0;
     virtual ~icomponent () = default;
 };
 
 /// For game loop purposes
-class ihandler {
+class ihandler : public ityped {
 public:
     virtual void join (json& input, json& output) = 0;
     virtual void quit (json& input, json& output) = 0;
@@ -59,7 +50,7 @@ public:
     virtual void setup (json& input, json& output) = 0;
     virtual void update (json& output) = 0;
     virtual void signal (json& input, json& output) = 0;
-    ~ihandler () = default;
+    virtual ~ihandler () = default;
 };
 
 

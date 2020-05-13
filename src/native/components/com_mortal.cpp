@@ -1,15 +1,27 @@
 #include "com_mortal.hpp"
 
-const std::string com_mortal::type = "com_mortal";
-
-std::string com_mortal::get_name () {
-    return type;
+const std::string& com_mortal::type () const {
+    return com_mortal_type;
 }
 
-void com_mortal::signal (unit& sender, json& input) {
+void com_mortal::setup_prototype (unit_prototype& prototype) {
 
 }
 
-void com_mortal::update (unit& sender) {
+void com_mortal::command (unit& sender, unit& owner, base_game& context, json& input) {
 
 }
+
+void com_mortal::signal (unit& owner, base_game& context, json& input) {
+
+}
+
+void com_mortal::update (unit& owner, base_game& context) {
+
+}
+
+
+
+
+
+

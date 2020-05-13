@@ -2,7 +2,6 @@
 #define LOGIC_VECTORS_H
 
 #include "../base/interfaces.hpp"
-#include "../utils/json.hpp"
 
 /// https://docs.unity3d.com/ScriptReference/Vector2.html
 /// \tparam T : value number
@@ -12,6 +11,7 @@ struct vector2 : public iserializable {
     T y;
 
     explicit vector2 (T nx = 0, T ny = 0);
+    explicit vector2 (json& package);
     vector2 (const vector2& other);
     vector2& operator= (const vector2& other);
     ~vector2 () override = default;
@@ -51,6 +51,11 @@ template<typename T>
 vector2<T>::vector2 (T nx, T ny) : x(nx), y(ny) { }
 
 template<typename T>
+vector2<T>::vector2 (json& package) {
+    deserialize(package);
+}
+
+template<typename T>
 vector2<T>::vector2 (const vector2& other) : x(other.x), y(other.y) { }
 
 template<typename T>
@@ -78,6 +83,5 @@ template<typename T>
 bool vector2<T>::is_set () {
     return (x != -1) && (y != -1);
 }
-
 
 #endif //LOGIC_VECTORS_H

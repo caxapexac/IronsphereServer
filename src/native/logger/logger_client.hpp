@@ -1,7 +1,6 @@
 #ifndef LOGIC_LOGGER_CLIENT_HPP
 #define LOGIC_LOGGER_CLIENT_HPP
 
-
 #include "abstract_logger.hpp"
 //#include "../transmitter.hpp" FIXME
 

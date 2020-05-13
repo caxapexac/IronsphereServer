@@ -2,19 +2,20 @@
 #define LOGIC_TILE_DAMAGE_HPP
 
 #include "tile.hpp"
-#include "tile_money.hpp"
 
-
+const std::string tile_damage_type = "tile_damage";
 class tile_damage : public tile {
 private:
     int damage;
 public:
-    static const std::string type;
-
-    explicit tile_damage (int ndamage = 1, float nheight = 0);
+    explicit tile_damage (float nheight = 0, int ndamage = 1);
     void serialize (json& package) const override;
     void deserialize (json& package) override;
+    const std::string& type () const override;
 
+    void on_unit_enter (unit& sender) override;
+    void on_unit_touch (unit& sender) override;
+    void on_unit_exit (unit& sender) override;
 };
 
 

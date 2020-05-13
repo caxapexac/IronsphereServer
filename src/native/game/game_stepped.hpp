@@ -3,10 +3,10 @@
 
 #include "base_game.hpp"
 
+const std::string game_stepped_type = "game_stepped";
 class game_stepped : public base_game {
 public:
-    static const std::string type;
-
+    const std::string& type () const override;
     bool check_end_game (json& output) override;
 private:
     void frame () override;

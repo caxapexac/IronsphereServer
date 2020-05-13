@@ -1,8 +1,8 @@
 #ifndef LOGIC_TILEMAP_GENERATOR_H
 #define LOGIC_TILEMAP_GENERATOR_H
 
-#include <random>
-#include "../field/abstract_tilemap.hpp"
+#include "../../base/includes.hpp"
+#include "../../tilemap/abstract_tilemap.hpp"
 
 //TODO Moved separated cuz this is frequently changing zone
 //TODO Made builder https://refactoring.guru/design-patterns/builder
@@ -23,7 +23,7 @@ public:
 map_builder::map_builder (const vector2<int>& nscale) : scale(nscale) { }
 
 map_builder& map_builder::generate_ground () {
-    result = std::make_shared<abstract_tilemap>(scale);
+    //result = std::make_shared<abstract_tilemap>(scale);
     return *this;
 }
 map_builder& map_builder::generate_units () {

@@ -1,12 +1,13 @@
 #ifndef LOGIC_BASE_GAME_HPP
 #define LOGIC_BASE_GAME_HPP
 
-#include "../base/interfaces.hpp"
+#include "../base/includes.hpp"
 #include "../structs/player.hpp"
 #include "../tilemap/abstract_tilemap.hpp"
 #include "../entities/unit_factory.hpp"
 
-class base_game : iserializable {
+const std::string base_game_type = "base_game";
+class base_game : public iserializable, public ityped {
 protected:
     unit_factory factory;
     std::map<int, unit*> units; // TODO how to make no alloc without ptrs
@@ -17,19 +18,21 @@ public:
     explicit base_game ();
     virtual void serialize (json& package) const override;
     virtual void deserialize (json& package) override;
+    const std::string& type () const override;
 
     ///External API
+    void get_static_content (json& output);
     void update (json& output);
     void signal (json& input, json& output);
     virtual bool check_end_game (json& output);
-    void get_tilemap (json& output);
     ///
 
     unit& make_unit (const std::string& prototype_name, int player_id);
     OBSOLETE unit_prototype* get_prototype(const std::string& prototype_name);
+    //unit_factory& get_factory(); // TODO does it ruin SOLEED
     unit* get_unit (int id);
     player* get_player (int uid);
-    const tile* get_tile (const vector2<int>& position);
+    abstract_tilemap& get_tilemap();
 
     // TODO L6 map_builder builder;
     // TODO map type (square/hex)

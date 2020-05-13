@@ -1,6 +1,7 @@
 #include "base_game.hpp"
 
-base_game::base_game () : factory(unit_factory(*this)) {
+base_game::base_game () {
+    factory = unit_factory();
     units = std::map<int, unit*>();
     players = std::map<int, player*>();
     tilemap = nullptr; // TODO create tilemap
@@ -16,7 +17,7 @@ void base_game::serialize (json& package) const {
 void base_game::deserialize (json& package) {
     factory.deserialize(package["factory"]);
     for (const auto& i : package["units"].items()) {
-        unit* item = new unit(*this);
+        unit* item = new unit();
         item->deserialize(i.value());
         units[std::stoi(i.key())] = item; //TODO very bad (need to check at least)
     }
@@ -28,31 +29,12 @@ void base_game::deserialize (json& package) {
     if (package.contains("tilemap")) tilemap = json_tools::unpack_tilemap(package["tilemap"]);
 }
 
-void base_game::get_tilemap (json& output) {
+const std::string& base_game::type () const {
+    return base_game_type;
+}
+
+void base_game::get_static_content (json& output) {
     tilemap->serialize(output);
-}
-
-unit& base_game::make_unit (const std::string& prototype_name, int player_id) {
-    unit* result = factory.make_unit(prototype_name, player_id);
-    units[result->get_id()] = result;
-    return *units[result->get_id()];
-    // TODO simplify
-}
-
-unit_prototype* base_game::get_prototype (const std::string& prototype_name) {
-    return factory.get_prototype(prototype_name);
-}
-
-unit* base_game::get_unit (int id) {
-    return units[id];
-}
-
-player* base_game::get_player (int uid) {
-    return players[uid];
-}
-
-const tile* base_game::get_tile (const vector2<int>& position) {
-    return tilemap->get_tile(position);
 }
 
 void base_game::update (json& output) {
@@ -87,9 +69,32 @@ void base_game::signal (json& input, json& output) {
             continue;
         }
         // TODO is command normal
-        target->signal(input["command"]);
+        target->signal(*this, input["command"]);
         output = {{"success", "[game.signal] Your command was sent"}};
     }
+}
+
+unit& base_game::make_unit (const std::string& prototype_name, int player_id) {
+    unit* result = factory.make_unit(prototype_name, player_id);
+    units[result->get_id()] = result;
+    return *units[result->get_id()];
+    // TODO simplify
+}
+
+unit_prototype* base_game::get_prototype (const std::string& prototype_name) {
+    return factory.get_prototype(prototype_name);
+}
+
+unit* base_game::get_unit (int id) {
+    return units[id];
+}
+
+player* base_game::get_player (int uid) {
+    return players[uid];
+}
+
+abstract_tilemap& base_game::get_tilemap () {
+    return *tilemap;
 }
 
 void base_game::frame () {
@@ -99,5 +104,8 @@ void base_game::frame () {
 void base_game::calculate_client_data(int player_uid, json& output) {
     //TODO
 }
+
+
+
 
 

@@ -1,8 +1,8 @@
 #ifndef LOGIC_VECTOR2_TEST_HPP
 #define LOGIC_VECTOR2_TEST_HPP
 
-#include "../base/interfaces.hpp"
-#include "../structs/vector2.hpp"
+#include "../../base/includes.hpp"
+#include "../../structs/vector2.hpp"
 
 namespace unit_testing {
     void test_vector2() {

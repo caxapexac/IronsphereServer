@@ -1,11 +1,10 @@
 #ifndef LOGIC_GAME_LOBBY_HPP
 #define LOGIC_GAME_LOBBY_HPP
 
-#include "game_session.hpp"
+#include "../base/includes.hpp"
 #include "../utils/singleton.hpp"
-#include "../base/constants.hpp"
-#include "../base/interfaces.hpp"
 #include "../logger/l.hpp"
+#include "game_session.hpp"
 
 /// TODO json structures of commands
 /// Facade of the game

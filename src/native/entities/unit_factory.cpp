@@ -1,20 +1,10 @@
 #include "unit_factory.hpp"
-#include "../components/com_attack.hpp"
-#include "../components/com_mortal.hpp"
-#include "../components/com_move.hpp"
-#include "../components/com_storage.hpp"
-
-// TODO add new components
-std::map<std::string, icomponent*> unit_factory::components = {{com_attack::type,  new com_attack()},
-                                                               {com_mortal::type,  new com_mortal()},
-                                                               {com_move::type,    new com_move()},
-                                                               {com_storage::type, new com_storage()}};
 
 int unit_factory::get_id () {
     return next_id++;
 }
 
-unit_factory::unit_factory (base_game& nstorage) : game(nstorage) {
+unit_factory::unit_factory () {
     next_id = 1;
     prototypes = std::map<std::string, unit_prototype*>();
 }
@@ -29,27 +19,29 @@ void unit_factory::serialize (json& package) const {
 void unit_factory::deserialize (json& package) {
     next_id = package["next_id"].get<int>();
     for (auto& i : package["prototypes"].items()) {
-        unit_prototype* item = new unit_prototype(game);
-        item->deserialize(i.value());
-        prototypes[i.key()] = item;
+        prototypes[i.key()] = new unit_prototype(i.value());
     }
-}
-
-icomponent* unit_factory::get_component (const std::string& component_name) {
-    if (components[component_name] == nullptr) throw std::exception(); //TODO cooler exceptions
-    return components[component_name];
 }
 
 unit_prototype* unit_factory::get_prototype (const std::string& prototype_name) {
     if (prototypes[prototype_name] == nullptr) {
-        prototypes[prototype_name] = new unit_prototype(game, prototype_name); //TODO fix memory leak
+        throw todo_exception("Yo n**igga you can't get this stuff cuz it gonna blow your mind in segfault");
     }
     return prototypes[prototype_name];
 }
 
-unit* unit_factory::make_unit (const std::string& prototype_name, int player_uid) {
-    // TODO check json
-    // and throw exception
-    return new unit(game, get_prototype(prototype_name), player_uid, get_id());
+void unit_factory::set_prototype (const std::string& prototype_name, unit_prototype* prototype) {
+    if (prototypes[prototype_name] != nullptr) {
+        throw todo_exception("Double kill");
+    }
+    prototypes[prototype_name] = prototype; // FIXME memory leak
 }
+
+unit* unit_factory::make_unit (const std::string& prototype_name, int player_uid) {
+    if (prototypes[prototype_name] == nullptr) {
+        throw todo_exception("This freaking prototype wasn't literally exist. Im not torch just sweet throwed");
+    }
+    return new unit(get_prototype(prototype_name), player_uid, get_id());
+}
+
 

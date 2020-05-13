@@ -1,6 +1,7 @@
 #ifndef LOGIC_MAIN_TEST_HPP
 #define LOGIC_MAIN_TEST_HPP
 
+#include "logic.test.hpp"
 #include "lr1.test.hpp"
 #include "lr2.test.hpp"
 #include "lr3.test.hpp"
@@ -8,11 +9,12 @@
 #include "lr5.test.hpp"
 #include "lr6.test.hpp"
 #include "lr7.test.hpp"
-
-#include "vector2.test.hpp"
-#include "transform.test.hpp"
-#include "unit.test.hpp"
-#include "unit_prototype.test.hpp"
+//
+#include "tiles/tile.test.hpp"
+#include "tilemap/tilemap_square.test.hpp"
+#include "entities/unit.test.hpp"
+#include "entities/unit_prototype.test.hpp"
+#include "structs/vector2.test.hpp"
 
 namespace unit_testing {
     //TODO output string/count passed/exception with a problem
@@ -20,7 +22,6 @@ namespace unit_testing {
         std::cout << "***STARTING UNIT TESTING***" << std::endl;
         // TODO test logger
         test_tilemap_square();
-        test_transform();
         test_unit();
         test_unit_prototype();
         test_vector2();

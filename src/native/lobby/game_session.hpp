@@ -1,17 +1,17 @@
 #ifndef LOGIC_GAME_SESSION_HPP
 #define LOGIC_GAME_SESSION_HPP
 
-#include "../base/interfaces.hpp"
+#include "../base/includes.hpp"
 #include "../game/base_game.hpp"
 #include "../game_states/state_choose.hpp"
 #include "../game_states/state_play.hpp"
 #include "../game_states/state_pause.hpp"
 
+const std::string game_session_type = "game_session";
 class game_session : ihandler {
     friend class state_choose;
     friend class state_play;
     friend class state_pause;
-    friend class state_finish;
 
 private:
     std::string session_name;
@@ -21,7 +21,7 @@ private:
 
 public:
     explicit game_session (const std::string& nsession_name);
-
+    const std::string& type () const override;
     std::string get_session_name ();
     int get_player_count ();
     void get_info (json& output);

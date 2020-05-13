@@ -4,10 +4,10 @@
 #include "base_game.hpp"
 
 // template <int PlayerCount>
+const std::string game_realtime_type = "game_realtime";
 class game_realtime : public base_game {
 public:
-    static const std::string type;
-
+    const std::string& type () const override;
     bool check_end_game (json& output) override;
 private:
     void frame () override;

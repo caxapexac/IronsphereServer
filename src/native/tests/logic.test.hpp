@@ -1,18 +1,24 @@
 #ifndef LOGIC_LOGIC_TEST_HPP
 #define LOGIC_LOGIC_TEST_HPP
 
-#include "../base/interfaces.hpp"
+#include "../base/includes.hpp"
 #include "../utils/timer.hpp"
 #include "../game/game_realtime.hpp"
+#include "../tilemap/tilemap_square.hpp"
 
 namespace unit_testing {
     void test_base_game() {
         std::cout << "* test_base_game [started]" << std::endl; //TODO logger
-        base_game game = base_game();
 
         std::map<int, unit*> units = std::map<int, unit*>();
-        units[0] = new unit(game);
-        units[3] = new unit(game);
+        unit_prototype proto_1 = unit_prototype("proto_1");
+        proto_1.add_component(com_move_type);
+        //unit_prototype proto_2 = unit_prototype("proto_2", &proto_1);
+        unit* unit_1 = new unit(&proto_1);
+        unit_1->set_parameter("position", vector2<int>(0, 1));
+        units[0] = unit_1;
+
+        //units[3] = new unit();
 
         std::map<int, player*> players = std::map<int, player*>();
         players[0] = new player(0);
@@ -34,7 +40,7 @@ namespace unit_testing {
         j["factory"]["next_id"] = 2;
         j["players"] = players_package;
         j["units"] = units_package;
-        j["tilemap"]["type"] = "square";
+        j["tilemap"]["type"] = tilemap_square_type;
         j["tilemap"]["data"] = json::array();
         for (int i = 0; i < scale.x * scale.y; i++) {
             json tj;
@@ -45,7 +51,7 @@ namespace unit_testing {
         j["tilemap"]["scale"]["x"] = scale.x;
         j["tilemap"]["scale"]["y"] = scale.y;
 
-
+        base_game game = base_game();
         game.deserialize(j);
         // loading
 
@@ -55,6 +61,14 @@ namespace unit_testing {
         json k;
         game.serialize(k);
         std::cout << k.dump(2);
+
+        json sig;
+        sig[com_move_type]["type"] = "move";
+        vector2<int> target_position = vector2<int>(1, 2);
+        target_position.serialize(sig[com_move_type]["position"]);
+        json out;
+        game.signal(sig, out);
+
 
         //timer t = timer();
         //t.setInterval(game.update, 1000);
@@ -75,7 +89,7 @@ namespace unit_testing {
                 game.signal(input, output);
             }
             //
-            std::cout << command << command.size() << std::endl;
+            json_tools::print_tilemap(game.get_tilemap());
             //
 
         }

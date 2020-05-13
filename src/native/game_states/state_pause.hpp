@@ -1,13 +1,15 @@
 #ifndef LOGIC_STATE_PAUSE_HPP
 #define LOGIC_STATE_PAUSE_HPP
 
-#include "../base/interfaces.hpp"
+#include "../base/includes.hpp"
 
+const std::string state_pause_type = "state_pause";
 class state_pause : public ihandler {
 private:
     game_session& session;
 public:
     explicit state_pause (game_session& context);
+    const std::string& type () const override;
     void join (json& input, json& output) override;
     void quit (json& input, json& output) override;
     void play (json& output) override;

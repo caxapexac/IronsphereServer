@@ -1,13 +1,15 @@
 #ifndef LOGIC_STATE_PLAY_HPP
 #define LOGIC_STATE_PLAY_HPP
 
-#include "../base/interfaces.hpp"
+#include "../base/includes.hpp"
 
+const std::string state_play_type = "state_play";
 class state_play : public ihandler {
 private:
     game_session& session;
 public:
     explicit state_play (game_session& context);
+    const std::string& type () const override;
     void join (json& input, json& output) override;
     void quit (json& input, json& output) override;
     void play (json& output) override;

@@ -45,16 +45,16 @@ map_miles_builder::map_miles_builder (int nseed) : seed(nseed) {
 }
 
 map_builder& map_miles_builder::generate_ground () {
-    result = std::make_shared<abstract_tilemap>(scale);
+    //result = std::make_shared<abstract_tilemap>(scale);
 
     //Test generation
     //vector2<int> i = vector2<int>(0, 0); //TODO Change to iterator (L1)
-    for (int i = 0; i < scale.y; ++i) {
-        for (int k = 0; k < scale.x; ++k) {
-            // TODO maybe add tile.set_texture etc.
-            if (i == k) result->get_tile(vector2<int>(i, k)) = tile(true, 1, tile::T_Ground);
-        }
-    }
+    // for (int i = 0; i < scale.y; ++i) {
+    //     for (int k = 0; k < scale.x; ++k) {
+    //         // TODO maybe add tile.set_texture etc.
+    //         if (i == k) result->get_tile(vector2<int>(i, k)) = tile(true, 1, tile::T_Ground);
+    //     }
+    // }
     //
 
     //logger::get().log(logger::O_Cons | logger::T_Info, "Game field initialized with ", scale.x, " width and ", scale.y, " height");

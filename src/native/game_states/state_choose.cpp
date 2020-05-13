@@ -5,6 +5,10 @@ state_choose::state_choose (game_session& context) : session(context) {
     session.game = nullptr;
 }
 
+const std::string& state_choose::type () const {
+    return state_choose_type;
+}
+
 void state_choose::join (json& input, json& output) {
     auto result = session.players_uid.emplace(input.get<int>()); //TODO other type checks
     if (result.second) {
@@ -59,6 +63,7 @@ void state_choose::update (json& output) {
 void state_choose::signal (json& input, json& output) {
     output = {{"error", "[choose.signal] wrong transition"}};
 }
+
 
 
 

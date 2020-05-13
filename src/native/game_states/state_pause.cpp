@@ -3,6 +3,10 @@
 
 state_pause::state_pause (game_session& context) : session(context) { }
 
+const std::string& state_pause::type () const {
+    return state_pause_type;
+}
+
 void state_pause::join (json& input, json& output) {
     output = {{"error", "[pause.join] wrong transition"}};
 }

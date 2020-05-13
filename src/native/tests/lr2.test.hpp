@@ -1,7 +1,7 @@
 #ifndef LOGIC_LR2_TEST_HPP
 #define LOGIC
 
-#include "../base/interfaces.hpp"
+#include "../base/includes.hpp"
 
 namespace unit_testing {
     void test_lr2() {

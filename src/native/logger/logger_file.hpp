@@ -1,9 +1,8 @@
 #ifndef LOGIC_LOGGER_FILE_HPP
 #define LOGIC_LOGGER_FILE_HPP
 
-#include "../base/interfaces.hpp"
+#include "../base/includes.hpp"
 #include "abstract_logger.hpp"
-
 
 class logger_file : public abstract_logger {
 private:

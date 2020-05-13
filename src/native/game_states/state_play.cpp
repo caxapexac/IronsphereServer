@@ -3,6 +3,10 @@
 
 state_play::state_play (game_session& context) : session(context) { }
 
+const std::string& state_play::type () const {
+    return state_play_type;
+}
+
 void state_play::join (json& input, json& output) {
     output = {{"error", "[play.join] wrong transition"}};
 }

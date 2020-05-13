@@ -1,8 +1,8 @@
 #ifndef LOGIC_TRANSFORM_H
 #define LOGIC_TRANSFORM_H
 
-#include "vector2.hpp"
-#include "../base/interfaces.hpp"
+#include "../structs/vector2.hpp"
+#include "../base/includes.hpp"
 
 // https://docs.unity3d.com/ScriptReference/Transform.html
 class transform : public iserializable {
