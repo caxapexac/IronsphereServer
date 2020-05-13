@@ -17,19 +17,24 @@ public:
     void deserialize (json& package) override;
     const std::string& type () const override;
 
-    void set_prototype(unit_prototype* nprototype);
+    void set_prototype (unit_prototype* nprototype);
 
-    template<typename P>
-    bool get_parameter (const std::string& name, P& result) {
-        // TODO static assert
-        return parameters.get(name, result);
-    }
+    template<typename T>
+    T& get_parameter (const std::string& name);
 
-    template<typename P>
-    void set_parameter (const std::string& name, P data) {
-        // TODO static assert
-        parameters.set(name, data);
-    }
+    template<typename T>
+    void set_parameter (const std::string& name, T data);
 };
+
+template<typename T>
+T& abstract_unit::get_parameter (const std::string& name) {
+    return parameters.get<T>(name);
+}
+
+template<typename T>
+void abstract_unit::set_parameter (const std::string& name, T data) {
+    parameters.set(name, data);
+}
+
 
 #endif //LOGIC_ABSTRACT_UNIT_HPP

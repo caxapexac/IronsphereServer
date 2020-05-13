@@ -9,22 +9,42 @@
 #include "lr5.test.hpp"
 #include "lr6.test.hpp"
 #include "lr7.test.hpp"
-//
-#include "tiles/tile.test.hpp"
-#include "tilemap/tilemap_square.test.hpp"
+
+#include "components/com_attack.test.hpp"
+#include "components/com_mortal.test.hpp"
+#include "components/com_move.test.hpp"
+#include "components/com_storage.test.hpp"
+
 #include "entities/unit.test.hpp"
+#include "entities/unit_factory.test.hpp"
 #include "entities/unit_prototype.test.hpp"
+
+#include "game/base_game.test.hpp"
+#include "game/game_realtime.test.hpp"
+#include "game/game_stepped.test.hpp"
+
+//#include "game_states/"
+
+#include "lobby/game_lobby.test.hpp"
+#include "lobby/game_session.test.hpp"
+
+//#include "logger/"
+
+#include "structs/parameter_map.test.hpp"
+#include "structs/player.test.hpp"
 #include "structs/vector2.test.hpp"
 
+#include "tilemap/tilemap_hexagonal.test.hpp"
+#include "tilemap/tilemap_square.test.hpp"
+
+#include "tiles/tile.test.hpp"
+#include "tiles/tile_damage.test.hpp"
+#include "tiles/tile_money.test.hpp"
+
+
 namespace unit_testing {
-    //TODO output string/count passed/exception with a problem
     void unit_test_all() {
         std::cout << "***STARTING UNIT TESTING***" << std::endl;
-        // TODO test logger
-        test_tilemap_square();
-        test_unit();
-        test_unit_prototype();
-        test_vector2();
         // TODO
         std::cout << "***UNIT TESTING SUCCESS***" << std::endl;
     }

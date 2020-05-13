@@ -24,17 +24,19 @@ public:
 
     const tile* get_tile (const vector2<int>& position) const;
     void set_tile (const vector2<int>& position, tile* item);
+    bool is_valid(const vector2<int>& position) const;
     const tile& operator[] (const vector2<int>& position) const;
 
     virtual const tile* get_tile (int x, int y) const = 0;
     virtual void set_tile (int x, int y, tile* item) = 0;
+    virtual bool is_valid(int x, int y) const = 0;
+
+    virtual std::vector<tile*> get_neighbours (vector2<int> point) = 0;
+    virtual float get_distance (vector2<int> source, vector2<int> destination) = 0;
     virtual std::queue<vector2<int>> get_path(const vector2<int>& source, const vector2<int>& destination) = 0;
 
 protected:
-    int size() const;
-    virtual bool is_valid(const vector2<int>& position) const = 0; // TODO change to x;y (vector goes not virtual)
-    virtual std::vector<tile*> get_neighbours (vector2<int> point) = 0;
-    virtual float get_euristic_distance (vector2<int> source, vector2<int> destination) = 0;
+    int tile_count() const;
 };
 
 #endif //LOGIC_ABSTRACT_TILEMAP_HPP

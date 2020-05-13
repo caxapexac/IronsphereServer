@@ -24,7 +24,7 @@ std::vector<tile*> tilemap_hexagonal::get_neighbours (vector2<int> point) {
     return std::vector<tile*>();
 }
 
-float tilemap_hexagonal::get_euristic_distance (vector2<int> source, vector2<int> destination) {
+float tilemap_hexagonal::get_distance (vector2<int> source, vector2<int> destination) {
     return 0;
 }
 

@@ -6,7 +6,6 @@
 
 const std::string com_mortal_type = "mortal";
 class com_mortal : public icomponent {
-    friend void test_com_mortal();
 public:
     const std::string& type () const override;
     void setup_prototype (unit_prototype& prototype) override;

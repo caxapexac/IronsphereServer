@@ -13,7 +13,7 @@ public:
 protected:
     bool is_valid (const vector2<int>& position) const override;
     std::vector<tile*> get_neighbours (vector2<int> point) override;
-    float get_euristic_distance (vector2<int> source, vector2<int> destination) override;
+    float get_distance (vector2<int> source, vector2<int> destination) override;
 };
 
 #endif //LOGIC_TILEMAP_HEXAGONAL_HPP

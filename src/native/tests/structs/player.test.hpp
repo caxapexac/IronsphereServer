@@ -4,12 +4,12 @@
 #include "../../base/includes.hpp"
 
 namespace unit_testing {
-    void test_() {
-        std::cout << "* test_ [started]" << std::endl;
+    void test_player() {
+        std::cout << "* test_player [started]" << std::endl;
 
+        // TODO
 
-
-        std::cout << "* test_ [success]" << std::endl;
+        std::cout << "* test_player [success]" << std::endl;
     }
 }
 

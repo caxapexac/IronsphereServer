@@ -4,12 +4,12 @@
 #include "../../base/includes.hpp"
 
 namespace unit_testing {
-    void test_() {
-        std::cout << "* test_ [started]" << std::endl;
+    void test_com_storage() {
+        std::cout << "* test_com_storage [started]" << std::endl;
 
+        // TODO
 
-
-        std::cout << "* test_ [success]" << std::endl;
+        std::cout << "* test_com_storage [success]" << std::endl;
     }
 }
 

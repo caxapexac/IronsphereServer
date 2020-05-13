@@ -6,7 +6,6 @@
 
 const std::string com_storage_type = "storage";
 class com_storage : public icomponent {
-    friend void test_com_storage();
 public:
     const std::string& type () const override;
     void setup_prototype (unit_prototype& prototype) override;

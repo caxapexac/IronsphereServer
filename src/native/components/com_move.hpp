@@ -3,13 +3,8 @@
 
 #include "../base/includes.hpp"
 
-/// using:
-///
-/// depend on:
-///
 const std::string com_move_type = "move";
 class com_move : public icomponent {
-    friend void test_com_move();
 public:
     const std::string& type () const override;
     void setup_prototype (unit_prototype& prototype) override;

@@ -5,11 +5,11 @@
 
 namespace unit_testing {
     void test_() {
-        std::cout << "* test_ [started]" << std::endl;
+        std::cout << "* test_tile_damage [started]" << std::endl;
 
+        // TODO
 
-
-        std::cout << "* test_ [success]" << std::endl;
+        std::cout << "* test_tile_damage [success]" << std::endl;
     }
 }
 

@@ -4,12 +4,12 @@
 #include "../../base/includes.hpp"
 
 namespace unit_testing {
-    void test_() {
-        std::cout << "* test_ [started]" << std::endl;
+    void test_tilemap_hexagonal() {
+        std::cout << "* test_tilemap_hexagonal [started]" << std::endl;
 
+        // TODO
 
-
-        std::cout << "* test_ [success]" << std::endl;
+        std::cout << "* test_tilemap_hexagonal [success]" << std::endl;
     }
 }
 

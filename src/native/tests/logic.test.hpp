@@ -7,7 +7,7 @@
 #include "../tilemap/tilemap_square.hpp"
 
 namespace unit_testing {
-    void test_base_game() {
+    void test_logic() {
         std::cout << "* test_base_game [started]" << std::endl; //TODO logger
 
         std::map<int, unit*> units = std::map<int, unit*>();

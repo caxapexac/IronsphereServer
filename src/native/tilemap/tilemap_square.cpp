@@ -43,7 +43,7 @@ std::vector<tile*> tilemap_square::get_neighbours (vector2<int> point) {
     return std::vector<tile*>();
 }
 
-float tilemap_square::get_euristic_distance (vector2<int> source, vector2<int> destination) {
+float tilemap_square::get_distance (vector2<int> source, vector2<int> destination) {
     return abs(destination.x - source.x) + abs(destination.y - destination.x);
 }
 
