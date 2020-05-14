@@ -52,7 +52,12 @@ void abstract_tilemap::deserialize (json& package) {
     }
 }
 
-const tile* abstract_tilemap::get_tile (const vector2<int>& position) const {
+tile& abstract_tilemap::operator[] (const vector2<int>& position) {
+    if (!is_valid(position)) throw todo_exception("tilemap overflow exception");
+    return *get_tile(position.x, position.y);
+}
+
+tile* abstract_tilemap::get_tile (const vector2<int>& position) {
     return get_tile(position.x, position.y);
 }
 
@@ -64,13 +69,20 @@ bool abstract_tilemap::is_valid (const vector2<int>& position) const {
     return is_valid(position.x, position.y);
 }
 
-const tile& abstract_tilemap::operator[] (const vector2<int>& position) const {
-    if (!is_valid(position)) throw todo_exception("tilemap overflow exception");
-    return *get_tile(position.x, position.y);
+std::vector<tile*> abstract_tilemap::get_neighbours (const vector2<int>& point) {
+    return get_neighbours(point.x, point.y);
 }
+
+float abstract_tilemap::get_distance (const vector2<int>& source, const vector2<int>& destination) {
+    return get_distance(source.x, source.y, destination.x, destination.y);
+}
+
+std::queue<vector2<int>> abstract_tilemap::get_path (const vector2<int>& source, const vector2<int>& destination) {
+    return get_path(source.x, source.y, destination.x, destination.y);
+}
+
 
 int abstract_tilemap::tile_count () const {
     return scale.x * scale.y;
 }
-
 

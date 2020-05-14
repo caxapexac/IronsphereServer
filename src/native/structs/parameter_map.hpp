@@ -41,7 +41,7 @@ void parameter_map::serialize (json& package) const {
     package["parameters_int"] = parameters_int;
     package["parameters_float"] = parameters_float;
     package["parameters_string"] = parameters_string;
-    json_tools::pack_map<vector2<int>>(parameters_vector2, package["parameters_vector2"]);
+    json_tools::pack_map_string<vector2<int>>(parameters_vector2, package["parameters_vector2"]);
     json_tools::pack_queue(parameter_path, package["parameters_path"]);
 }
 
@@ -54,8 +54,7 @@ void parameter_map::deserialize (json& package) {
     parameters_float = p_float;
     std::map<std::string, std::string> p_string = package["parameters_string"];
     parameters_string = p_string;
-    std::map<std::string, vector2<int>> p_vector2 = package["parameters_vector2"];
-    parameters_vector2 = p_vector2;
+    parameters_vector2 = json_tools::unpack_map_string<vector2<int>>(package["parameters_vector2"]);
     parameter_path = json_tools::unpack_queue<vector2<int>>(package["parameters_path"]);
 }
 

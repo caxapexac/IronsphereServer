@@ -47,7 +47,7 @@ void tile::on_unit_enter (unit& sender) {
     // Do nothing
 }
 
-void tile::on_unit_touch (unit& sender) {
+void tile::on_unit_touch (unit& sender) const {
     // Do nothing
 }
 

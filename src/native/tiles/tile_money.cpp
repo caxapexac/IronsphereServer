@@ -20,7 +20,7 @@ void tile_money::on_unit_enter (unit& sender) {
     tile::on_unit_enter(sender);
 }
 
-void tile_money::on_unit_touch (unit& sender) {
+void tile_money::on_unit_touch (unit& sender) const {
     tile::on_unit_touch(sender);
 }
 

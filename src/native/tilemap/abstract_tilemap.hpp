@@ -22,18 +22,20 @@ public:
     void serialize (json& package) const override;
     void deserialize (json& package) override;
 
-    const tile* get_tile (const vector2<int>& position) const;
+    tile& operator[] (const vector2<int>& position);
+    tile* get_tile (const vector2<int>& position);
     void set_tile (const vector2<int>& position, tile* item);
     bool is_valid(const vector2<int>& position) const;
-    const tile& operator[] (const vector2<int>& position) const;
+    std::vector<tile*> get_neighbours (const vector2<int>& point);
+    float get_distance (const vector2<int>& source, const vector2<int>& destination);
+    std::queue<vector2<int>> get_path(const vector2<int>& source, const vector2<int>& destination);
 
-    virtual const tile* get_tile (int x, int y) const = 0;
+    virtual tile* get_tile (int x, int y) = 0;
     virtual void set_tile (int x, int y, tile* item) = 0;
     virtual bool is_valid(int x, int y) const = 0;
-
-    virtual std::vector<tile*> get_neighbours (vector2<int> point) = 0;
-    virtual float get_distance (vector2<int> source, vector2<int> destination) = 0;
-    virtual std::queue<vector2<int>> get_path(const vector2<int>& source, const vector2<int>& destination) = 0;
+    virtual std::vector<tile*> get_neighbours (int x, int y) = 0;
+    virtual float get_distance (int source_x, int source_y, int destination_x, int destination_y) = 0;
+    virtual std::queue<vector2<int>> get_path(int source_x, int source_y, int destination_x, int destination_y) = 0;
 
 protected:
     int tile_count() const;

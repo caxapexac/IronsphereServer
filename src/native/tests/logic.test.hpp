@@ -26,11 +26,11 @@ namespace unit_testing {
 
 
         json units_package;
-        json_tools::pack_map_of_ptrs(units, units_package);
+        json_tools::pack_map_int_of_ptrs(units, units_package);
         //std::cout << units_package.dump(2) << std::endl;
 
         json players_package;
-        json_tools::pack_map_of_ptrs(players, players_package);
+        json_tools::pack_map_int_of_ptrs(players, players_package);
         std::cout << players_package.dump(2) << std::endl;
 
         vector2<int> scale = vector2<int>(2, 3);

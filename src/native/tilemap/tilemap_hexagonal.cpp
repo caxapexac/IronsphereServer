@@ -4,7 +4,7 @@ const std::string& tilemap_hexagonal::type () const {
     return tilemap_hexagonal_type;
 }
 
-const tile* tilemap_hexagonal::get_tile (int x, int y) const {
+tile* tilemap_hexagonal::get_tile (int x, int y) {
     return nullptr;
 }
 
@@ -12,19 +12,18 @@ void tilemap_hexagonal::set_tile (int x, int y, tile* item) {
 
 }
 
-std::queue<vector2<int>> tilemap_hexagonal::get_path (const vector2<int>& source, const vector2<int>& destination) {
-    return std::queue<vector2<int>>();
-}
-
-bool tilemap_hexagonal::is_valid (const vector2<int>& position) const {
+bool tilemap_hexagonal::is_valid (int x, int y) const {
     return false;
 }
 
-std::vector<tile*> tilemap_hexagonal::get_neighbours (vector2<int> point) {
+std::vector<tile*> tilemap_hexagonal::get_neighbours (int x, int y) {
     return std::vector<tile*>();
 }
 
-float tilemap_hexagonal::get_distance (vector2<int> source, vector2<int> destination) {
+float tilemap_hexagonal::get_distance (int source_x, int source_y, int destination_x, int destination_y) {
     return 0;
 }
 
+std::queue<vector2<int>> tilemap_hexagonal::get_path (int source_x, int source_y, int destination_x, int destination_y) {
+    return std::queue<vector2<int>>();
+}

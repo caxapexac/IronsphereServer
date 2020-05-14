@@ -9,8 +9,8 @@ base_game::base_game () {
 
 void base_game::serialize (json& package) const {
     factory.serialize(package["factory"]);
-    json_tools::pack_map_of_ptrs(units, package["units"]);
-    json_tools::pack_map_of_ptrs(players, package["players"]);
+    json_tools::pack_map_int_of_ptrs(units, package["units"]);
+    json_tools::pack_map_int_of_ptrs(players, package["players"]);
     if (tilemap) tilemap->serialize(package["tilemap"]);
 }
 

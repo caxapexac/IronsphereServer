@@ -6,7 +6,7 @@
 const std::string tile_type = "tile";
 class tile : public iserializable, public ityped {
 private:
-    float height; // Ground
+    float height;
     int occupier_id;
 
 public:
@@ -22,7 +22,7 @@ public:
     bool is_occupied () const;
 
     virtual void on_unit_enter (unit& sender);
-    virtual void on_unit_touch (unit& sender);
+    virtual void on_unit_touch (unit& sender) const;
     virtual void on_unit_exit (unit& sender);
 };
 
