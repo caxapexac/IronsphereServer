@@ -8,66 +8,54 @@
 
 namespace unit_testing {
     void test_logic() {
-        std::cout << "* test_base_game [started]" << std::endl; //TODO logger
+        std::cout << "* test_logic [started] \n"
+                     "* Print '-' to stop testing\n"
+                     "* Enter empty string to update\n" << std::endl; //TODO logger
 
-        std::map<int, unit*> units = std::map<int, unit*>();
-        unit_prototype proto_1 = unit_prototype("proto_1");
-        proto_1.add_component(com_move_type);
-        //unit_prototype proto_2 = unit_prototype("proto_2", &proto_1);
-        unit* unit_1 = new unit(&proto_1);
-        unit_1->set_parameter("position", vector2<int>(0, 1));
-        units[0] = unit_1;
+        srand(time(nullptr));
+        const vector2<int> tilemap_scale = vector2<int>(9, 12);
 
-        //units[3] = new unit();
-
-        std::map<int, player*> players = std::map<int, player*>();
-        players[0] = new player(0);
-        players[1] = new player(1);
-
-
-        json units_package;
-        json_tools::pack_map_int_of_ptrs(units, units_package);
-        //std::cout << units_package.dump(2) << std::endl;
-
-        json players_package;
-        json_tools::pack_map_int_of_ptrs(players, players_package);
-        std::cout << players_package.dump(2) << std::endl;
-
-        vector2<int> scale = vector2<int>(2, 3);
-
-        json j;
-        //j["type"];
-        j["factory"]["next_id"] = 2;
-        j["players"] = players_package;
-        j["units"] = units_package;
-        j["tilemap"]["type"] = tilemap_square_type;
-        j["tilemap"]["data"] = json::array();
-        for (int i = 0; i < scale.x * scale.y; i++) {
-            json tj;
-            tile t = tile(i);
-            t.serialize(tj);
-            j["tilemap"]["data"].push_back(tj);
-        }
-        j["tilemap"]["scale"]["x"] = scale.x;
-        j["tilemap"]["scale"]["y"] = scale.y;
 
         base_game game = base_game();
-        game.deserialize(j);
-        // loading
 
-        // ...something
+        // Tilemap
+        std::unique_ptr<abstract_tilemap> tilemap = std::make_unique<tilemap_square>(tilemap_scale);
+        game.set_tilemap(std::move(tilemap));
+
+        //tile* t = new tile();
+        //tile_damage* t_d = new tile_damage();
+        for (int ny = 0; ny < tilemap_scale.y; ny++) {
+            for (int nx = 0; nx < tilemap_scale.x; nx++) {
+                game.get_tilemap().set_tile(nx, ny, new tile(nx * 10 + ny));
+            }
+        }
+
+        // Players
+        game.set_player(1, new player(1));
+        game.set_player(2, new player(2));
+
+        // Factory
+        unit_prototype p_runner = unit_prototype("runner");
+        p_runner.add_component(com_move_type);
+        game.set_prototype(&p_runner);
+
+        // Units
+        unit& u_runner_1 = game.make_unit("runner", 1);
+        game.get_tilemap().transpose(u_runner_1, vector2<int>(0, 0));
+        unit& u_runner_2 = game.make_unit("runner", 2);
+        game.get_tilemap().transpose(u_runner_2, vector2<int>(6, 7));
 
         // saving
-        json k;
-        game.serialize(k);
-        std::cout << k.dump(2);
+        //json k;
+        //game.serialize(k);
+        //std::cout << k.dump(2);
 
-        json sig;
-        sig[com_move_type]["type"] = "move";
-        vector2<int> target_position = vector2<int>(1, 2);
-        target_position.serialize(sig[com_move_type]["position"]);
-        json out;
-        game.signal(sig, out);
+        // json sig;
+        // sig[com_move_type]["type"] = "move";
+        // vector2<int> target_position = vector2<int>(1, 2);
+        // target_position.serialize(sig[com_move_type]["position"]);
+        // json out;
+        // game.signal(sig, out);
 
 
         //timer t = timer();
@@ -78,24 +66,26 @@ namespace unit_testing {
             //std::cin >> command;
             std::getline(std::cin, command);
 
-            if (command == "") {
+            if (command.empty()) {
                 //std::cout << "upd" << std::endl;
                 json j;
                 game.update(j);
             }
             else {
                 json input;
+                vector2<int> position = vector2<int>(rand() % tilemap_scale.x, rand() % tilemap_scale.y);
+                input["component"] = com_move_type;
+                input["is_moving"] = true;
+                position.serialize(input["move_target"]);
                 json output;
-                game.signal(input, output);
+                u_runner_1.signal(game, input);
+                //game.signal(input, output);
             }
             //
             json_tools::print_tilemap(game.get_tilemap());
             //
-
         }
-
-
-        std::cout << "* test_base_game [success]" << std::endl;
+        std::cout << "* test_logic [success]" << std::endl;
     }
 }
 

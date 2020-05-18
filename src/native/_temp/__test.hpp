@@ -7,6 +7,14 @@
 #include "../entities/unit_prototype.hpp"
 
 
+class self_serializable {
+private:
+    self_serializable() = default;
+
+public:
+    json& serialize();
+};
+
 
 //client
 // player -> json command -> switch? -> unit -> game_storage -> player -> <unit!> -> component? -> execute

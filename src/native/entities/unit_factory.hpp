@@ -18,7 +18,7 @@ public:
     void deserialize (json& package) override;
 
     unit_prototype* get_prototype(const std::string& prototype_name);
-    void set_prototype(const std::string& prototype_name, unit_prototype* prototype);
+    void set_prototype(unit_prototype* prototype);
     unit* make_unit(const std::string& prototype_name, int player_uid);
 };
 

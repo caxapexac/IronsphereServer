@@ -10,7 +10,6 @@ game_lobby::game_lobby () noexcept {
 void game_lobby::update (json& output) {
     output["delta_time"] = delta_time;
     output["chat_buffer"] = chat_buffer;
-    // TODO maybe output["log"] = logger_client::get().log();
     chat_buffer.clear();
     for (const auto& item : sessions) {
         item.second->update(output["sessions"][item.first]);

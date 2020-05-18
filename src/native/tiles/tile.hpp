@@ -22,7 +22,7 @@ public:
     bool is_occupied () const;
 
     virtual void on_unit_enter (unit& sender);
-    virtual void on_unit_touch (unit& sender) const;
+    virtual void on_unit_touch (unit& sender);
     virtual void on_unit_exit (unit& sender);
 };
 

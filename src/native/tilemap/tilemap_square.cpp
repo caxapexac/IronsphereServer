@@ -6,29 +6,34 @@ const std::string& tilemap_square::type () const {
     return tilemap_square_type;
 }
 
-tile* tilemap_square::get_tile (int x, int y) {
-    return data[y * scale.y + x];
+tile& tilemap_square::get_tile (int x, int y) {
+    if (!is_valid(x, y)) throw todo_exception("setting tile square tilemap out of range exception");
+    return *data[y * scale.x + x];
 }
 
 void tilemap_square::set_tile (int x, int y, tile* item) {
-    // TODO is_valid(x, y);
-    delete data[y * scale.y + x];
-    data[y * scale.y + x] = item;
+    if (!is_valid(x, y)) throw todo_exception("setting tile square tilemap out of range exception");
+    delete data[y * scale.x + x];
+    data[y * scale.x + x] = item;
 }
 
 bool tilemap_square::is_valid (int x, int y) const {
     return !(x < 0 || x >= scale.x || y < 0 || y >= scale.y);
 }
 
-std::vector<tile*> tilemap_square::get_neighbours (int x, int y) {
-    std::vector<tile*> result = std::vector<tile*>();
-    //if (is_valid(x,y+1)) result.push_back(then); TODO
-    //if (is_valid(point + )) TODO neighbours
-    return std::vector<tile*>();
+std::vector<vector2<int>> tilemap_square::get_neighbours (int x, int y) {
+    std::vector<vector2<int>> result = std::vector<vector2<int>>(); // TODO maybe references
+    if (is_valid(x + 1, y)) result.emplace_back(x + 1, y);
+    if (is_valid(x - 1, y)) result.emplace_back(x - 1, y);
+    if (is_valid(x, y + 1)) result.emplace_back(x, y + 1);
+    if (is_valid(x, y - 1)) result.emplace_back(x, y - 1);
+    return result;
 }
 
 float tilemap_square::get_distance (int source_x, int source_y, int destination_x, int destination_y) {
-    return abs(destination_x - source_x) + abs(destination_y - destination_x);
+    int a = destination_x - source_x;
+    int b = destination_y - source_y;
+    return sqrtf((float)(a * a + b * b)); // TODO optimize
 }
 
 std::queue<vector2<int>> tilemap_square::get_path (int source_x, int source_y, int destination_x, int destination_y) {

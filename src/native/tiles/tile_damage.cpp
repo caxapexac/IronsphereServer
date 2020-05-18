@@ -20,7 +20,7 @@ void tile_damage::on_unit_enter (unit& sender) {
     tile::on_unit_enter(sender);
 }
 
-void tile_damage::on_unit_touch (unit& sender) const {
+void tile_damage::on_unit_touch (unit& sender) {
     tile::on_unit_touch(sender);
 }
 

@@ -30,11 +30,11 @@ unit_prototype* unit_factory::get_prototype (const std::string& prototype_name) 
     return prototypes[prototype_name];
 }
 
-void unit_factory::set_prototype (const std::string& prototype_name, unit_prototype* prototype) {
-    if (prototypes[prototype_name] != nullptr) {
+void unit_factory::set_prototype (unit_prototype* prototype) {
+    if (prototypes[prototype->type()] != nullptr) {
         throw todo_exception("Double kill");
     }
-    prototypes[prototype_name] = prototype; // FIXME memory leak
+    prototypes[prototype->type()] = prototype; // FIXME memory leak
 }
 
 unit* unit_factory::make_unit (const std::string& prototype_name, int player_uid) {

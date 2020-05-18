@@ -51,7 +51,7 @@ bool base_game::check_end_game (json& output) {
 
 void base_game::signal (json& input, json& output) {
     if (input["selected_units"].type() != json::value_t::array) {
-        // TODO exception
+        throw todo_exception("wrong json");
         // TODO more checkings
     }
 
@@ -74,8 +74,8 @@ void base_game::signal (json& input, json& output) {
     }
 }
 
-unit& base_game::make_unit (const std::string& prototype_name, int player_id) {
-    unit* result = factory.make_unit(prototype_name, player_id);
+unit& base_game::make_unit (const std::string& prototype_name, int player_uid) {
+    unit* result = factory.make_unit(prototype_name, player_uid);
     units[result->get_id()] = result;
     return *units[result->get_id()];
     // TODO simplify
@@ -85,25 +85,44 @@ unit_prototype* base_game::get_prototype (const std::string& prototype_name) {
     return factory.get_prototype(prototype_name);
 }
 
+void base_game::set_prototype (unit_prototype* prototype) {
+    factory.set_prototype(prototype);
+}
+
 unit* base_game::get_unit (int id) {
     return units[id];
 }
 
-player* base_game::get_player (int uid) {
-    return players[uid];
+player& base_game::get_player (int uid) {
+    return *players[uid];
+}
+
+void base_game::set_player (int uid, player* nplayer) {
+    if (players[uid] != nullptr) throw todo_exception("Player with this uid is already exist");
+    // TODO maybe replace instead of exception
+    players[uid] = nplayer;
 }
 
 abstract_tilemap& base_game::get_tilemap () {
     return *tilemap;
 }
 
+void base_game::set_tilemap (std::unique_ptr<abstract_tilemap> ntilemap) {
+    tilemap = std::move(ntilemap);
+}
+
 void base_game::frame () {
-    //TODO
+    for (const auto& i : units) {
+        i.second->update(*this);
+    }
 }
 
 void base_game::calculate_client_data(int player_uid, json& output) {
     //TODO
 }
+
+
+
 
 
 

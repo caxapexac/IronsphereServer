@@ -15,7 +15,7 @@ namespace unit_testing {
 
 
         proto_1.add_component(com_move_type);
-        proto_1.
+        //proto_1.
 
 
         std::cout << "* test_unit_prototype [success]" << std::endl;

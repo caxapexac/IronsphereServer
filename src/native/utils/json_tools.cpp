@@ -53,13 +53,13 @@ tile* json_tools::unpack_tile (json& package) {
     return result;
 }
 
-void json_tools::print_tilemap (const abstract_tilemap& tilemap) {
+void json_tools::print_tilemap (abstract_tilemap& tilemap) {
     std::cout << "[abstract_tilemap] " << tilemap.scale.x << "x" << tilemap.scale.y << std::endl;
     for (int ny = 0; ny < tilemap.scale.y; ++ny) {
         for (int nx = 0; nx < tilemap.scale.x; ++nx) {
-            const tile* t = tilemap.get_tile(nx, ny);
-            if (t->is_occupied()) {
-                std::cout << t->get_occupier_id() << "\t";
+            tile& t = tilemap.get_tile(nx, ny);
+            if (t.is_occupied()) {
+                 std::cout << t.get_occupier_id() << "\t";
             }
             else {
                 std::cout << ".\t";

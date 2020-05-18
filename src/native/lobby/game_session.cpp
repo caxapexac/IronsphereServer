@@ -25,6 +25,14 @@ void game_session::get_info (json& output) {
     if (game) game->get_static_content(output["field"]);
 }
 
+void game_session::load (json& input, json& output) {
+    state->load(input, output);
+}
+
+void game_session::save (json& output) {
+    state->save(output);
+}
+
 void game_session::join (json& input, json& output) {
     state->join(input, output);
 }
@@ -61,6 +69,9 @@ void game_session::transition_to (std::unique_ptr<ihandler> nstate) {
     state = std::move(nstate);
     //TODO log?
 }
+
+
+
 
 
 

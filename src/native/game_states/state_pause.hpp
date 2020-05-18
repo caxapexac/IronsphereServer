@@ -10,6 +10,8 @@ private:
 public:
     explicit state_pause (game_session& context);
     const std::string& type () const override;
+    void load (json& input, json& output) override;
+    void save (json& output) override;
     void join (json& input, json& output) override;
     void quit (json& input, json& output) override;
     void play (json& output) override;

@@ -3,24 +3,28 @@
 
 
 
-unit_prototype::unit_prototype (const std::string& nname, unit_prototype* nprototype) : abstract_unit(nprototype) {
+unit_prototype::unit_prototype (const std::string& nname, unit_prototype* nprototype) {
+    prototype = nprototype;
     name = nname;
     components = std::map<std::string, icomponent*>();
 }
 
-unit_prototype::unit_prototype (json& package) : abstract_unit(nullptr) {
+unit_prototype::unit_prototype (json& package) {
     deserialize(package);
 }
 
 void unit_prototype::serialize (json& package) const {
-    abstract_unit::serialize(package);
+    parameter_map::serialize(package);
+    if (prototype) prototype->serialize(package["prototype"]);
     package["name"] = name;
     package["components"] = json::array();
     for (const auto& key : components) package["components"].push_back(key.second->type());
 }
 
 void unit_prototype::deserialize (json& package) {
-    abstract_unit::deserialize(package);
+    parameter_map::deserialize(package);
+    if (package.contains("prototype")) prototype = new unit_prototype(package["prototype"]);
+    else prototype = nullptr; // TODO optimize
     name = package["name"].get<std::string>();
     components = std::map<std::string, icomponent*>();
     for (const auto& componentName : package["components"]) components[componentName] = component_storage::get_component(componentName);

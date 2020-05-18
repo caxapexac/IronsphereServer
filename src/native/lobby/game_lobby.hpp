@@ -9,17 +9,16 @@
 /// TODO json structures of commands
 /// Facade of the game
 class game_lobby : public singleton<game_lobby> {
+    friend class singleton;
 private:
     float delta_time;
     std::map<int, std::shared_ptr<game_session>> sessions;
     json chat_buffer; // TODO chat class
     json log_buffer; // TODO connect with logger TODO into chat
 
+    game_lobby () noexcept;
+
 public:
-    OBSOLETE l log;
-
-    game_lobby () noexcept; //TODO make private (its singleton)
-
     /// One server frame
     /// \param output
     void update (json& output);
@@ -30,12 +29,10 @@ public:
     void signal (json& input, json& output);
 
 private:
-    /// TODO
     /// Client menu get_info (players online, room list, etc)
     /// \param output
     void get_info (json& output);
 
-    /// TODO
     /// Add message from user to the message buffer
     /// \param input
     /// \param output

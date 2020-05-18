@@ -42,12 +42,13 @@ bool tile::is_occupied () const {
 }
 
 void tile::on_unit_enter (unit& sender) {
-    if (is_occupied()) throw todo_exception("Uh, sama lamaa duma lama you assuming I'm a human\n What I gotta do to get it through to you I'm superhuman\nInnovative and I'm made of rubber\nSo that anything you say is ricocheting off of me and it'll glue to you\nI'm devastating, more than ever demonstrating\nHow to give a motherfuckin' audience a feeling like it's levitating\nNever fading, and I know the haters are forever waiting\nFor the day that they can say I fell off, they'd be celebrating\nCause I know the way to get 'em motivated\nI make elevating music, you make elevator music");
+    if (is_occupied() && sender.get_id() != occupier_id) throw todo_exception("Uh, sama lamaa duma lama you assuming I'm a human\n What I gotta do to get it through to you I'm superhuman\nInnovative and I'm made of rubber\nSo that anything you say is ricocheting off of me and it'll glue to you\nI'm devastating, more than ever demonstrating\nHow to give a motherfuckin' audience a feeling like it's levitating\nNever fading, and I know the haters are forever waiting\nFor the day that they can say I fell off, they'd be celebrating\nCause I know the way to get 'em motivated\nI make elevating music, you make elevator music");
     occupier_id = sender.get_id();
     // Do nothing
 }
 
-void tile::on_unit_touch (unit& sender) const {
+void tile::on_unit_touch (unit& sender) {
+    occupier_id = sender.get_id(); // FIXME delete this (only for debug)
     // Do nothing
 }
 

@@ -7,14 +7,15 @@
 namespace unit_testing {
     void test_unit() {
         std::cout << "* test_unit [started] (depends on unit_prototype)" << std::endl;
-        json j;
+        //json j;
 
-        unit u = unit();
-        u.serialize(j);
+        //unit u = unit();
+        //u.serialize(j);
 
 
-        std::cout << j.dump(2) << std::endl;
+        //std::cout << j.dump(2) << std::endl;
         // TODO
+
         std::cout << "* test_unit [success]" << std::endl;
     }
 }

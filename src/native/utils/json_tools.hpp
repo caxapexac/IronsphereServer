@@ -16,12 +16,8 @@ class json_tools {
 private:
     json_tools () = default;
 public:
-    /// Abstract unpackers
-    // FIXME after creating new game
     static std::unique_ptr<base_game> unpack_game (json& package);
-    // FIXME after creating new tilemap
     static std::unique_ptr<abstract_tilemap> unpack_tilemap (json& package);
-    // FIXME after creating new type
     static tile* unpack_tile (json& package); // TODO Спросить Тимура про массив умных указателей
 
     template<typename T>
@@ -31,10 +27,10 @@ public:
     static std::vector<T> unpack_vector (const json& package);
 
     template<typename T>
-    static void pack_queue (const std::queue<T>& queue, json& package);
+    static void pack_list (const std::list<T>& list, json& package);
 
     template<typename T>
-    static std::queue<T> unpack_queue (const json& package);
+    static std::list<T> unpack_list (const json& package);
 
     template<typename V>
     static void pack_map_string (const std::map<std::string, V>& map, json& package);
@@ -49,6 +45,9 @@ public:
     static void pack_map_int_of_ptrs (const std::map<int, V*>& map, json& package);
 
     template<typename V>
+    static void pack_map_string_list (const std::map<std::string, std::list<V>>& map, json& package);
+
+    template<typename V>
     static std::map<std::string, V> unpack_map_string (json& package);
 
     template<typename V>
@@ -60,8 +59,12 @@ public:
     template<typename V>
     static std::map<int, V*> unpack_map_int_of_ptrs (json& package);
 
+    template<typename V>
+    static std::map<std::string, std::list<V>> unpack_map_string_list (json& package);
+
+
     // TODO make it in logger
-    static void print_tilemap(const abstract_tilemap& tilemap);
+    static void print_tilemap(abstract_tilemap& tilemap);
 };
 
 // Really
@@ -99,10 +102,10 @@ std::vector<T> json_tools::unpack_vector (const json& package) {
 }
 
 template<typename T>
-void json_tools::pack_queue (const std::queue<T>& queue, json& package) {
+void json_tools::pack_list (const std::list<T>& list, json& package) {
     // TODO change to no alloc FIXME
     package = json::array();
-    std::queue copy = queue; //copy the original queue to the temporary queue
+    std::queue copy = list; //copy the original queue to the temporary queue
     while (!copy.empty())
     {
         T item = copy.front();
@@ -114,19 +117,19 @@ void json_tools::pack_queue (const std::queue<T>& queue, json& package) {
 }
 
 template<typename T>
-std::queue<T> json_tools::unpack_queue (const json& package) {
+std::list<T> json_tools::unpack_list (const json& package) {
     //static_assert(std::is_convertible<T*, iserializable*>::value, "vector class may only contain serializable objects");
     if (package.type() != json::value_t::array) {
         // TODO exception
     }
-    std::queue<T> queue = std::queue<T>();
+    std::list<T> list = std::list<T>();
     for (auto& i : package) { //TODO check is it working
         T item;
         json j = i;
         item.deserialize(j); //TODO json constructor
-        queue.push(item);
+        list.push(item);
     }
-    return queue;
+    return list;
 }
 
 // TODO there is big chunk of map packers/unpackers and it is not good
@@ -171,8 +174,18 @@ void json_tools::pack_map_int_of_ptrs (const std::map<int, V*>& map, json& packa
 }
 
 template<typename V>
+void json_tools::pack_map_string_list (const std::map<std::string, std::list<V>>& map, json& package) {
+    package = json::object();
+    for (auto const& i : map) {
+        json j;
+        i.second->serialize(j);
+        package[std::to_string(i.first)] = j;
+    }
+}
+
+template<typename V>
 std::map<std::string, V> json_tools::unpack_map_string (json& package) {
-    std::map<std::string, V> map = std::map<std::string, V>(); //TODO no alloc
+    std::map<std::string, V> map = std::map<std::string, V>();
     for (auto const& i : package.items()) {
         V element = V();
         element.deserialize(i.value());
@@ -183,7 +196,7 @@ std::map<std::string, V> json_tools::unpack_map_string (json& package) {
 
 template<typename V>
 std::map<int, V> json_tools::unpack_map_int (json& package) {
-    std::map<int, V> map = std::map<int, V>(); //TODO no alloc
+    std::map<int, V> map = std::map<int, V>();
     for (auto const& i : package.items()) {
         V element = V();
         element.deserialize(i.value());
@@ -194,7 +207,7 @@ std::map<int, V> json_tools::unpack_map_int (json& package) {
 
 template<typename V>
 std::map<std::string, V*> json_tools::unpack_map_string_of_ptrs (json& package) {
-    std::map<std::string, V*> map = std::map<std::string, V*>(); //TODO no alloc
+    std::map<std::string, V*> map = std::map<std::string, V*>();
     for (auto const& i : package.items()) {
         V* element = new V();
         element->deserialize(i.value());
@@ -205,7 +218,7 @@ std::map<std::string, V*> json_tools::unpack_map_string_of_ptrs (json& package) 
 
 template<typename V>
 std::map<int, V*> json_tools::unpack_map_int_of_ptrs (json& package) {
-    std::map<int, V*> map = std::map<int, V*>(); //TODO no alloc
+    std::map<int, V*> map = std::map<int, V*>();
     for (auto const& i : package.items()) {
         V* element = new V();
         element->deserialize(i.value());
@@ -213,5 +226,17 @@ std::map<int, V*> json_tools::unpack_map_int_of_ptrs (json& package) {
     }
     return map;
 }
+
+template<typename V>
+std::map<std::string, std::list<V>> json_tools::unpack_map_string_list (json& package) {
+    std::map<std::string, std::list<V>> map = std::map<std::string, std::list<V>>();
+    for (auto const& i : package.items()) {
+        V* element = new V();
+        element->deserialize(i.value());
+        map[std::stoi(i.key())] = element;
+    }
+    return map;
+}
+
 
 #endif //LOGIC_JSON_TOOLS_H

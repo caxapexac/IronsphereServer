@@ -27,12 +27,14 @@ public:
     virtual bool check_end_game (json& output);
     ///
 
-    unit& make_unit (const std::string& prototype_name, int player_id);
-    OBSOLETE unit_prototype* get_prototype(const std::string& prototype_name);
-    //unit_factory& get_factory(); // TODO does it ruin SOLEED
+    unit_prototype* get_prototype(const std::string& prototype_name);
+    void set_prototype(unit_prototype* prototype);
+    unit& make_unit (const std::string& prototype_name, int player_uid);
     unit* get_unit (int id);
-    player* get_player (int uid);
+    player& get_player (int uid);
+    void set_player (int uid, player* nplayer);
     abstract_tilemap& get_tilemap();
+    void set_tilemap (std::unique_ptr<abstract_tilemap> ntilemap);
 
     // TODO L6 map_builder builder;
     // TODO map type (square/hex)

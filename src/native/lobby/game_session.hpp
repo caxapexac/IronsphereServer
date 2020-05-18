@@ -8,7 +8,7 @@
 #include "../game_states/state_pause.hpp"
 
 const std::string game_session_type = "game_session";
-class game_session : ihandler {
+class game_session : public ihandler {
     friend class state_choose;
     friend class state_play;
     friend class state_pause;
@@ -16,16 +16,19 @@ class game_session : ihandler {
 private:
     std::string session_name;
     std::set<int> players_uid; // For security
-    std::unique_ptr<ihandler> state; // Game state
+    std::unique_ptr<ihandler> state; // Game state TODO maybe change all output errors to exceptions
     std::unique_ptr<base_game> game; // Game & game rules
 
 public:
     explicit game_session (const std::string& nsession_name);
     const std::string& type () const override;
+
     std::string get_session_name ();
     int get_player_count ();
     void get_info (json& output);
 
+    void load (json& input, json& output) override;
+    void save (json& output) override;
     void join (json& input, json& output) override;
     void quit (json& input, json& output) override;
     void play (json& output) override;

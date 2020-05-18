@@ -7,9 +7,9 @@ const std::string& com_move::type () const {
 }
 
 void com_move::setup_prototype (unit_prototype& prototype) {
-    prototype.set_parameter("position", vector2<int>(0, 0));
+    prototype.set_parameter("position", vector2<int>(-1, -1));
     prototype.set_parameter("is_moving", false);
-    prototype.set_parameter("move_target", vector2<int>(0, 0));
+    prototype.set_parameter("move_target", vector2<int>(-1, -1));
 }
 
 void com_move::command (unit& sender, unit& owner, base_game& context, json& input) {
@@ -18,7 +18,8 @@ void com_move::command (unit& sender, unit& owner, base_game& context, json& inp
 
 void com_move::signal (unit& owner, base_game& context, json& input) {
     if (input.contains("is_moving")) {
-        owner.set_parameter<bool>("is_moving", input["is_moving"].get<bool>());
+        bool moving = input["is_moving"].get<bool>();
+        owner.set_parameter("is_moving", input["is_moving"].get<bool>());
     }
     if (input.contains("move_target")) {
         vector2<int> move_target = vector2<int>(input["move_target"]);
@@ -51,7 +52,7 @@ void com_move::update (unit& owner, base_game& context) {
                 tile& t = context.get_tilemap()[position];
                 if (t.get_occupier_id() == owner.get_id()) t.on_unit_exit(owner);
                 owner.set_parameter("position", next_position);
-                context.get_tilemap()[position].on_unit_touch(owner);
+                context.get_tilemap()[next_position].on_unit_touch(owner);
                 // TODO check occupied (dynamic walls units) and recalculate
             }
         }

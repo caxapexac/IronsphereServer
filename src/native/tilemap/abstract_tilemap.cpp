@@ -1,5 +1,5 @@
 #include "abstract_tilemap.hpp"
-
+#include "../entities/unit.hpp"
 
 abstract_tilemap::abstract_tilemap (const vector2<int>& nscale) {
     scale = nscale;
@@ -53,11 +53,10 @@ void abstract_tilemap::deserialize (json& package) {
 }
 
 tile& abstract_tilemap::operator[] (const vector2<int>& position) {
-    if (!is_valid(position)) throw todo_exception("tilemap overflow exception");
-    return *get_tile(position.x, position.y);
+    return get_tile(position.x, position.y);
 }
 
-tile* abstract_tilemap::get_tile (const vector2<int>& position) {
+tile& abstract_tilemap::get_tile (const vector2<int>& position) {
     return get_tile(position.x, position.y);
 }
 
@@ -69,7 +68,7 @@ bool abstract_tilemap::is_valid (const vector2<int>& position) const {
     return is_valid(position.x, position.y);
 }
 
-std::vector<tile*> abstract_tilemap::get_neighbours (const vector2<int>& point) {
+std::vector<vector2<int>> abstract_tilemap::get_neighbours (const vector2<int>& point) {
     return get_neighbours(point.x, point.y);
 }
 
@@ -81,8 +80,15 @@ std::queue<vector2<int>> abstract_tilemap::get_path (const vector2<int>& source,
     return get_path(source.x, source.y, destination.x, destination.y);
 }
 
-
 int abstract_tilemap::tile_count () const {
     return scale.x * scale.y;
+}
+
+void abstract_tilemap::transpose (unit& target, const vector2<int>& to_position) {
+    vector2<int> previous_position = target.get_parameter<vector2<int>>("position");
+    if (is_valid(previous_position)) get_tile(previous_position).on_unit_exit(target);
+    get_tile(to_position).on_unit_enter(target);
+    target.set_parameter("position", to_position);
+    // TODO is it optimal
 }
 

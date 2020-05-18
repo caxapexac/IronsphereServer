@@ -39,9 +39,12 @@ public:
     virtual ~icomponent () = default;
 };
 
+
 /// For game loop purposes
 class ihandler : public ityped {
 public:
+    virtual void load (json& input, json& output) = 0;
+    virtual void save (json& output) = 0;
     virtual void join (json& input, json& output) = 0;
     virtual void quit (json& input, json& output) = 0;
     virtual void play (json& output) = 0;

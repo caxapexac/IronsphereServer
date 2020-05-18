@@ -14,7 +14,7 @@ public:
     const std::string& type () const override;
 
     void on_unit_enter (unit& sender) override;
-    void on_unit_touch (unit& sender) const override;
+    void on_unit_touch (unit& sender) override;
     void on_unit_exit (unit& sender) override;
 };
 
