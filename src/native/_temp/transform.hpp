@@ -3,17 +3,18 @@
 
 #include "../structs/vector2.hpp"
 #include "../base/includes.hpp"
+#include "vector2.hpp"
 
 // https://docs.unity3d.com/ScriptReference/Transform.html
 class transform : public iserializable {
 private:
-    vector2<int> position; // Tile x,y
+    stts::vector2<int> position; // Tile x,y
     float rotation {}; // Rotation in grads (0..360)
     float scale {}; // For collision detection where 1 is the width of tile
-    vector2<float> offset; // Offset from center of tile position (-1..1) where 1 is the width of tile
+    stts::vector2<float> offset; // Offset from center of tile position (-1..1) where 1 is the width of tile
 
 public:
-    explicit transform (const vector2<int>& pos = vector2<int>(), float rot = 0, float size = 1, const vector2<float>& off = vector2<float>());
+    explicit transform (const stts::vector2<int>& pos = stts::vector2<int>(), float rot = 0, float size = 1, const stts::vector2<float>& off = stts::vector2<float>());
     transform (const transform& copy);
     transform& operator= (const transform& copy);
     ~transform () override = default;
@@ -23,11 +24,11 @@ public:
     bool operator== (const transform& other) const;
     bool operator!= (const transform& other) const;
 
-    const vector2<int>& getPosition() const;
-    const void setPosition(const vector2<int>& pos);
+    const stts::vector2<int>& getPosition() const;
+    const void setPosition(const stts::vector2<int>& pos);
 };
 
-transform::transform (const vector2<int>& pos, float rot, float size, const vector2<float>& off)
+transform::transform (const stts::vector2<int>& pos, float rot, float size, const stts::vector2<float>& off)
         : position(pos), rotation(rot), scale(size), offset(off) {
 }
 
@@ -67,11 +68,11 @@ bool transform::operator!= (const transform& other) const {
     return !operator==(other);
 }
 
-const vector2<int> &transform::getPosition() const {
+const stts::vector2<int> &transform::getPosition() const {
     return position;
 }
 
-const void transform::setPosition(const vector2<int>& pos) {
+const void transform::setPosition(const stts::vector2<int>& pos) {
     position = pos; //FIXME: why not working????????? no idea........
 }
 

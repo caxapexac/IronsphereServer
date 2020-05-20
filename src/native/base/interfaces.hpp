@@ -3,9 +3,10 @@
 
 #include "third_party_includes.hpp"
 
-class unit;
-class unit_prototype;
-class base_game;
+namespace ent { class unit; }
+namespace ent { class unit_prototype; }
+namespace game { class base_game; }
+
 
 /// TODO setdirty
 /// For json serialization
@@ -25,17 +26,17 @@ public:
 
 class ityped {
 public:
-    virtual const std::string& type() const = 0;
+    virtual const std::string& type () const = 0;
     virtual ~ityped () = default;
 };
 
 /// For unit's behaviours
 class icomponent : public ityped {
 public:
-    virtual void setup_prototype(unit_prototype& prototype) = 0;
-    virtual void command (unit& sender, unit& owner, base_game& context, json& input) = 0;
-    virtual void signal (unit& owner, base_game& context, json& input) = 0;
-    virtual void update (unit& owner, base_game& context) = 0;
+    virtual void setup_prototype (ent::unit_prototype& prototype) = 0;
+    virtual void command (ent::unit& sender, ent::unit& owner, game::base_game& context, json& input) = 0;
+    virtual void signal (ent::unit& owner, game::base_game& context, json& input) = 0;
+    virtual void update (ent::unit& owner, game::base_game& context) = 0;
     virtual ~icomponent () = default;
 };
 
@@ -43,6 +44,7 @@ public:
 /// For game loop purposes
 class ihandler : public ityped {
 public:
+    virtual void info (json& output) = 0;
     virtual void load (json& input, json& output) = 0;
     virtual void save (json& output) = 0;
     virtual void join (json& input, json& output) = 0;
@@ -55,6 +57,5 @@ public:
     virtual void signal (json& input, json& output) = 0;
     virtual ~ihandler () = default;
 };
-
 
 #endif //LOGIC_INTERFACES_HPP

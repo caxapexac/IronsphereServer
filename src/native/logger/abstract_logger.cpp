@@ -1,6 +1,6 @@
 #include "abstract_logger.hpp"
 
-std::string& abstract_logger::get_time_name (bool full) {
+std::string& l::abstract_logger::get_time_name (bool full) {
     time_t raw_time;
     struct tm* time_info;
     char buffer[80];

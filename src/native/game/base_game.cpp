@@ -1,43 +1,43 @@
 #include "base_game.hpp"
 
-base_game::base_game () {
-    factory = unit_factory();
-    units = std::map<int, unit*>();
-    players = std::map<int, player*>();
+game::base_game::base_game () {
+    factory = ent::unit_factory();
+    units = std::map<int, ent::unit*>();
+    players = std::map<int, stts::player*>();
     tilemap = nullptr; // TODO create tilemap
 }
 
-void base_game::serialize (json& package) const {
+void game::base_game::serialize (json& package) const {
     factory.serialize(package["factory"]);
-    json_tools::pack_map_int_of_ptrs(units, package["units"]);
-    json_tools::pack_map_int_of_ptrs(players, package["players"]);
+    nlohmann::json_tools::pack_map_int_of_ptrs(units, package["units"]);
+    nlohmann::json_tools::pack_map_int_of_ptrs(players, package["players"]);
     if (tilemap) tilemap->serialize(package["tilemap"]);
 }
 
-void base_game::deserialize (json& package) {
+void game::base_game::deserialize (json& package) {
     factory.deserialize(package["factory"]);
     for (const auto& i : package["units"].items()) {
-        unit* item = new unit();
+        ent::unit* item = new ent::unit();
         item->deserialize(i.value());
         units[std::stoi(i.key())] = item; //TODO very bad (need to check at least)
     }
     for (const auto& i : package["players"].items()) {
-        player* item = new player();
+        stts::player* item = new stts::player();
         item->deserialize(i.value());
         players[std::stoi(i.key())] = item; //TODO very bad (need to check at least)
     }
-    if (package.contains("tilemap")) tilemap = json_tools::unpack_tilemap(package["tilemap"]);
+    if (package.contains("tilemap")) tilemap = nlohmann::json_tools::unpack_tilemap(package["tilemap"]);
 }
 
-const std::string& base_game::type () const {
-    return base_game_type;
+const std::string& game::base_game::type () const {
+    return game::base_game_type;
 }
 
-void base_game::get_static_content (json& output) {
+void game::base_game::get_static_content (json& output) {
     tilemap->serialize(output);
 }
 
-void base_game::update (json& output) {
+void game::base_game::update (json& output) {
     frame();
     // TODO send messages from frame (signals queue)
     for (const auto& i : players) {
@@ -45,11 +45,11 @@ void base_game::update (json& output) {
     }
 }
 
-bool base_game::check_end_game (json& output) {
+bool game::base_game::check_end_game (json& output) {
     return false; //TODO
 }
 
-void base_game::signal (json& input, json& output) {
+void game::base_game::signal (json& input, json& output) {
     if (input["selected_units"].type() != json::value_t::array) {
         throw todo_exception("wrong json");
         // TODO more checkings
@@ -59,7 +59,7 @@ void base_game::signal (json& input, json& output) {
 
     for (auto& i : input["selected_units"]) { //TODO check is it working
         int id = i.get<int>(); // TODO type checking
-        unit* target = get_unit(id);
+        ent::unit* target = get_unit(id);
         if (target == nullptr) {
             output = {{"error", "[game.signal] Unit with this id doesn't exist check your internet connection"}};
             continue;
@@ -74,50 +74,50 @@ void base_game::signal (json& input, json& output) {
     }
 }
 
-unit& base_game::make_unit (const std::string& prototype_name, int player_uid) {
-    unit* result = factory.make_unit(prototype_name, player_uid);
+ent::unit& game::base_game::make_unit (const std::string& prototype_name, int player_uid) {
+    ent::unit* result = factory.make_unit(prototype_name, player_uid);
     units[result->get_id()] = result;
     return *units[result->get_id()];
     // TODO simplify
 }
 
-unit_prototype* base_game::get_prototype (const std::string& prototype_name) {
+ent::unit_prototype* game::base_game::get_prototype (const std::string& prototype_name) {
     return factory.get_prototype(prototype_name);
 }
 
-void base_game::set_prototype (unit_prototype* prototype) {
+void game::base_game::set_prototype (ent::unit_prototype* prototype) {
     factory.set_prototype(prototype);
 }
 
-unit* base_game::get_unit (int id) {
+ent::unit* game::base_game::get_unit (int id) {
     return units[id];
 }
 
-player& base_game::get_player (int uid) {
+stts::player& game::base_game::get_player (int uid) {
     return *players[uid];
 }
 
-void base_game::set_player (int uid, player* nplayer) {
+void game::base_game::set_player (int uid, stts::player* nplayer) {
     if (players[uid] != nullptr) throw todo_exception("Player with this uid is already exist");
     // TODO maybe replace instead of exception
     players[uid] = nplayer;
 }
 
-abstract_tilemap& base_game::get_tilemap () {
+tilemap::abstract_tilemap& game::base_game::get_tilemap () {
     return *tilemap;
 }
 
-void base_game::set_tilemap (std::unique_ptr<abstract_tilemap> ntilemap) {
+void game::base_game::set_tilemap (std::unique_ptr<tilemap::abstract_tilemap> ntilemap) {
     tilemap = std::move(ntilemap);
 }
 
-void base_game::frame () {
+void game::base_game::frame () {
     for (const auto& i : units) {
         i.second->update(*this);
     }
 }
 
-void base_game::calculate_client_data(int player_uid, json& output) {
+void game::base_game::calculate_client_data(int player_uid, json& output) {
     //TODO
 }
 

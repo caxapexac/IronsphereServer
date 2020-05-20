@@ -1,6 +1,6 @@
 #include "logger_server.hpp"
 
-void logger_server::let(std::string &verbal, streams stream) {
+void l::logger_server::let(std::string &verbal, streams stream) {
     switch (stream) {
         case error:
             std::cout << "\\033[31m" << verbal << "\\033[m\"" << std::endl;

@@ -1,15 +1,16 @@
 #include "player.hpp"
 #include "../game/base_game.hpp"
+#include "parameter_map.hpp"
 
-player::player (int nteam) : team(nteam) {
+stts::player::player (int nteam) : team(nteam) {
     parameters = parameter_map();
 }
 
-player::player (const player& copy) {
+stts::player::player (const player& copy) {
     *this = copy;
 }
 
-player& player::operator= (const player& copy) {
+stts::player& stts::player::operator= (const player& copy) {
     if (this != &copy) {
         team = copy.team;
         parameters = parameter_map();
@@ -17,12 +18,12 @@ player& player::operator= (const player& copy) {
     return *this;
 }
 
-void player::serialize (json& package) const {
+void stts::player::serialize (json& package) const {
     package["team"] = team;
     parameters.serialize(package["parameters"]);
 }
 
-void player::deserialize (json& package) {
+void stts::player::deserialize (json& package) {
     team = package["team"].get<int>();
     parameters.deserialize(package["parameters"]);
 }

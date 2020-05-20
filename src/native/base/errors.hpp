@@ -5,6 +5,7 @@
 
 // TODO add more generic exceptions
 // TODO make it more complex and useful
+// TODO iserializable constructor exception
 // TODO tryso
 struct shared_pointer_exception : public std::exception {
     std::string info;

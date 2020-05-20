@@ -4,9 +4,11 @@
 #include "../base/includes.hpp"
 #include "abstract_logger.hpp"
 
-class logger_server : public abstract_logger {
-public:
-    void let(std::string& verbal, streams stream) override;
-};
+namespace l {
+    class logger_server : public l::abstract_logger {
+    public:
+        void let(std::string& verbal, streams stream) override;
+    };
+}
 
 #endif //LOGIC_LOGGER_SERVER_HPP

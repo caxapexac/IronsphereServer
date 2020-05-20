@@ -38,8 +38,8 @@
 #include "tilemap/tilemap_square.test.hpp"
 
 #include "tiles/tile.test.hpp"
-#include "tiles/tile_damage.test.hpp"
-#include "tiles/tile_money.test.hpp"
+#include "tiles/tile_damage_dealer.test.hpp"
+#include "tiles/tile_money_dealer.test.hpp"
 
 
 namespace unit_testing {

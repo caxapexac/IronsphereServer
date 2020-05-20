@@ -2,19 +2,20 @@
 #define LOGIC_TILEMAP_PERLIN_BUILDER_HPP
 
 #include "map_builder.hpp"
+#include "vector2.hpp"
 
 class map_perlin_builder : public map_builder {
 protected:
     int seed;
 public:
-    explicit map_perlin_builder (int nseed, const vector2<int>& nscale);
+    explicit map_perlin_builder (int nseed, const stts::vector2<int>& nscale);
     map_builder& generate_ground () override; //TODO arguments
     map_builder& generate_units () override;
 
     enum seeds { small, medium, large };
 };
 
-map_perlin_builder::map_perlin_builder (int nseed, const vector2<int>& nscale) : seed(nseed) {
+map_perlin_builder::map_perlin_builder (int nseed, const stts::vector2<int>& nscale) : seed(nseed) {
     scale = nscale;
     //TODO
 }

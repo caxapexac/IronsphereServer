@@ -5,7 +5,9 @@
 #include "errors.hpp"
 #include "interfaces.hpp"
 #include "third_party_includes.hpp"
+
 #include "../utils/json_tools.hpp"
+using json_tools = nlohmann::json_tools;
 
 /// For the sake of readability. This freaking language just doesn't support attributes.
 /// God damn I'm creating serialization without reflection

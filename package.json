@@ -34,12 +34,13 @@
     "gyp-config": "node-gyp configure",
     "gyp-build": "node-gyp build",
     "win-node-gyp-quick-fix": "sh scripts/win-gyp-quick-fix.sh",
-    "wp" : "webpack"
+    "wp": "webpack"
   },
   "dependencies": {
     "@types/node": "^13.9.0",
     "@types/ws": "^7.2.3",
     "bindings": "^1.5.0",
+    "cli-interact": "^0.1.9",
     "express": "^4.17.1",
     "mongodb": "^3.5.7",
     "node-addon-api": "^2.0.0",

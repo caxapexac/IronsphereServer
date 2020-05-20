@@ -8,8 +8,10 @@
 //TODO uint -> int ?
 namespace constants {
     const std::string empty_string = "";
-    const int version = 101; // Game version (Anti chEET)
+    const int version = 102; // Game version (Anti chEET)
     const int lobby_delta_time = 1000; // ms (start game loop delay)
+    const int chat_queue_capacity = 100;
+    const int log_queue_capacity = 100;
     const char game_title[] = "Ironsphere";
     //const unsigned int player_units_limit = 100;
     //const unsigned int neutral_units_limit = 25;

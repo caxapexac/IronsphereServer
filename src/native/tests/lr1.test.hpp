@@ -3,8 +3,8 @@
 
 #include "../base/includes.hpp"
 #include "../tilemap/abstract_tilemap.hpp"
-#include "../tilemap/tilemap_square.hpp"
-#include "../tilemap/tilemap_hexagonal.hpp"
+#include "../tilemap/square.hpp"
+#include "../tilemap/hexagonal.hpp"
 #include "tilemap/tilemap_square.test.hpp"
 #include "entities/unit_prototype.test.hpp"
 #include "entities/unit.test.hpp"
@@ -18,12 +18,13 @@ namespace unit_testing {
         /// Test:
         /// Разработать и реализовать набор классов:
         /// - Класс игрового поля
+        tilemap::square ts = tilemap::square(stts::vector2<int>(10, 20));
 
-        test_tilemap_square();
+        //test_tilemap_square();
         // test_tilemap_hexagonal();
         /// - Набор классов юнитов
-        test_unit_prototype();
-        test_unit();
+        //test_unit_prototype();
+        //test_unit();
         /// Игровое поле является контейнером для объектов представляющим прямоугольную сетку. Основные требования к классу игрового поля:
         /// - Создание поля произвольного размера
 

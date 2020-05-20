@@ -3,8 +3,8 @@
 
 #include "../base/includes.hpp"
 #include "../utils/timer.hpp"
-#include "../game/game_realtime.hpp"
-#include "../tilemap/tilemap_square.hpp"
+#include "../game/realtime.hpp"
+#include "../tilemap/square.hpp"
 
 namespace unit_testing {
     void test_logic() {
@@ -13,37 +13,37 @@ namespace unit_testing {
                      "* Enter empty string to update\n" << std::endl; //TODO logger
 
         srand(time(nullptr));
-        const vector2<int> tilemap_scale = vector2<int>(9, 12);
+        const stts::vector2<int> tilemap_scale = stts::vector2<int>(9, 12);
 
 
-        base_game game = base_game();
+        game::base_game game = game::base_game();
 
         // Tilemap
-        std::unique_ptr<abstract_tilemap> tilemap = std::make_unique<tilemap_square>(tilemap_scale);
+        std::unique_ptr<tilemap::abstract_tilemap> tilemap = std::make_unique<tilemap::square>(tilemap_scale);
         game.set_tilemap(std::move(tilemap));
 
         //tile* t = new tile();
         //tile_damage* t_d = new tile_damage();
         for (int ny = 0; ny < tilemap_scale.y; ny++) {
             for (int nx = 0; nx < tilemap_scale.x; nx++) {
-                game.get_tilemap().set_tile(nx, ny, new tile(nx * 10 + ny));
+                game.get_tilemap().set_tile(nx, ny, new tile::base_tile(nx * 10 + ny));
             }
         }
 
         // Players
-        game.set_player(1, new player(1));
-        game.set_player(2, new player(2));
+        game.set_player(1, new stts::player(1));
+        game.set_player(2, new stts::player(2));
 
         // Factory
-        unit_prototype p_runner = unit_prototype("runner");
-        p_runner.add_component(com_move_type);
+        ent::unit_prototype p_runner = ent::unit_prototype("runner");
+        p_runner.add_component(com::move_type);
         game.set_prototype(&p_runner);
 
         // Units
-        unit& u_runner_1 = game.make_unit("runner", 1);
-        game.get_tilemap().transpose(u_runner_1, vector2<int>(0, 0));
-        unit& u_runner_2 = game.make_unit("runner", 2);
-        game.get_tilemap().transpose(u_runner_2, vector2<int>(6, 7));
+        ent::unit& u_runner_1 = game.make_unit("runner", 1);
+        game.get_tilemap().transpose(u_runner_1, stts::vector2<int>(0, 0));
+        ent::unit& u_runner_2 = game.make_unit("runner", 2);
+        game.get_tilemap().transpose(u_runner_2, stts::vector2<int>(6, 7));
 
         // saving
         //json k;
@@ -73,8 +73,8 @@ namespace unit_testing {
             }
             else {
                 json input;
-                vector2<int> position = vector2<int>(rand() % tilemap_scale.x, rand() % tilemap_scale.y);
-                input["component"] = com_move_type;
+                stts::vector2<int> position = stts::vector2<int>(rand() % tilemap_scale.x, rand() % tilemap_scale.y);
+                input["component"] = com::move_type;
                 input["is_moving"] = true;
                 position.serialize(input["move_target"]);
                 json output;
@@ -82,7 +82,7 @@ namespace unit_testing {
                 //game.signal(input, output);
             }
             //
-            json_tools::print_tilemap(game.get_tilemap());
+            nlohmann::json_tools::print_tilemap(game.get_tilemap());
             //
         }
         std::cout << "* test_logic [success]" << std::endl;

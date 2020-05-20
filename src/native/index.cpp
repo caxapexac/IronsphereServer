@@ -1,7 +1,7 @@
 #include "napi.h"
 #include <string>
 #include "utils/json.hpp"
-#include "lobby/game_lobby.hpp"
+#include "lobby/api.hpp"
 
 // Arg0 - Json string
 Napi::String Update(const Napi::CallbackInfo& info)

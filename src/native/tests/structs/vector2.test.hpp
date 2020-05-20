@@ -7,7 +7,7 @@
 namespace unit_testing {
     void test_vector2() {
         std::cout << "* test_vector2 [started]" << std::endl; //TODO logger
-        vector2<int> v2int = vector2<int>();
+        stts::vector2<int> v2int = stts::vector2<int>();
         json j;
         v2int.serialize(j);
         std::cout << j.dump(2) << std::endl; //TODO assert
@@ -16,7 +16,7 @@ namespace unit_testing {
         j = {};
         v2int.serialize(j);
         std::cout << j.dump(2) << std::endl;
-        vector2<float> v2float = vector2<float>(30, 40);
+        stts::vector2<float> v2float = stts::vector2<float>(30, 40);
         j = {};
         v2float.serialize(j);
         std::cout << j.dump(2) << std::endl;

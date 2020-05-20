@@ -5,21 +5,23 @@
 #include "unit_prototype.hpp"
 #include "unit.hpp"
 
-class unit_factory : iserializable {
-private:
-    std::map<std::string, unit_prototype*> prototypes;
-    int next_id;
+namespace ent {
+    class unit_factory : iserializable {
+    private:
+        std::map<std::string, unit_prototype*> prototypes;
+        int next_id;
 
-    int get_id();
+        int get_id();
 
-public:
-    explicit unit_factory ();
-    void serialize (json& package) const override;
-    void deserialize (json& package) override;
+    public:
+        explicit unit_factory ();
+        void serialize (json& package) const override;
+        void deserialize (json& package) override;
 
-    unit_prototype* get_prototype(const std::string& prototype_name);
-    void set_prototype(unit_prototype* prototype);
-    unit* make_unit(const std::string& prototype_name, int player_uid);
-};
+        unit_prototype* get_prototype(const std::string& prototype_name);
+        void set_prototype(unit_prototype* prototype);
+        unit* make_unit(const std::string& prototype_name, int player_uid);
+    };
+}
 
 #endif //LOGIC_UNIT_FACTORY_HPP

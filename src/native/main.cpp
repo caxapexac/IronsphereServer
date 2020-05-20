@@ -1,6 +1,6 @@
 #include "tests/main.test.hpp"
 #include "base/interfaces.hpp"
-#include "lobby/game_lobby.hpp"
+#include "online/api.hpp"
 
 int main () {
 
