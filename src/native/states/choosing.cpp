@@ -1,5 +1,7 @@
 #include "choosing.hpp"
-#include "../lobby/session.hpp"
+#include "holding.hpp"
+#include "playing.hpp"
+#include "../online/session.hpp"
 
 
 states::choosing::choosing (online::session& context) : session(context) {
@@ -8,6 +10,10 @@ states::choosing::choosing (online::session& context) : session(context) {
 
 const std::string& states::choosing::type () const {
     return states::choosing_type;
+}
+
+void states::choosing::info (json& output) {
+    // TODO
 }
 
 void states::choosing::load (json& input, json& output) {
@@ -46,7 +52,7 @@ void states::choosing::quit (json& input, json& output) {
 void states::choosing::play (json& output) {
     if (session.game != nullptr) {
         output = {{"success", "[state_choose.pause] The game was started"}};
-        session.transition_to(std::make_unique<state_play>(session));
+        session.transition_to(std::make_unique<playing>(session));
     }
     else {
         output = {{"error", "[state_choose.pause] The game wasn't setup"}};
@@ -79,6 +85,8 @@ void states::choosing::update (json& output) {
 void states::choosing::signal (json& input, json& output) {
     output = {{"error", "[state_choose.signal] wrong transition"}};
 }
+
+
 
 
 

@@ -36,17 +36,16 @@ float tilemap::square::get_distance (int source_x, int source_y, int destination
     return sqrtf((float)(a * a + b * b)); // TODO optimize
 }
 
-std::queue<stts::vector2<int>> tilemap::square::get_path (int source_x, int source_y, int destination_x, int destination_y) {
-    std::queue<stts::vector2<int>> path = std::queue<stts::vector2<int>>();
+std::list<stts::vector2<int>> tilemap::square::get_path (int source_x, int source_y, int destination_x, int destination_y) {
+    std::list<stts::vector2<int>> path = std::list<stts::vector2<int>>();
     if (!is_valid(source_x, source_y) || !is_valid(destination_x, destination_y)) return path;
     // TODO
-    int delta_x = destination_x - source_x;
-    int delta_y = destination_y - source_y;
-    for (int x = 0; x < delta_x; x++) {
-        path.push(stts::vector2<int>(source_x + x, source_y));
-    }
-    for (int y = 0; y < delta_y; y++) {
-        path.push(stts::vector2<int>(source_x + delta_x, source_y + y));
+    while (source_x != destination_x && source_y != destination_y) {
+        if (source_x > destination_x) source_x--;
+        else if (source_x < destination_x) source_x++;
+        if (source_y > destination_y) source_y--;
+        else if (source_y < destination_y) source_y++;
+        path.emplace_back(source_x, source_y);
     }
     // TODO
     return path;

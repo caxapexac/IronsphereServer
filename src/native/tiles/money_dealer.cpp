@@ -1,6 +1,5 @@
 #include "money_dealer.hpp"
 #include "base_tile.hpp"
-#include "unit.hpp"
 
 tile::money_dealer::money_dealer (float nheight, int nmoney) : tile::base_tile(nheight), money(nmoney) {}
 

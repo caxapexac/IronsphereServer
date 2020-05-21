@@ -13,7 +13,7 @@ namespace tilemap {
         bool is_valid (int x, int y) const override;
         std::vector<stts::vector2<int>> get_neighbours (int x, int y) override;
         float get_distance (int source_x, int source_y, int destination_x, int destination_y) override;
-        std::queue<stts::vector2<int>> get_path (int source_x, int source_y, int destination_x, int destination_y) override;
+        std::list<stts::vector2<int>> get_path (int source_x, int source_y, int destination_x, int destination_y) override;
     };
 }
 

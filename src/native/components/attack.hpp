@@ -8,6 +8,7 @@ namespace com {
     class attack : public icomponent {
     public:
         const std::string& type () const override;
+        void serialize_public (const ent::unit& owner, json& package) const override;
         void setup_prototype (ent::unit_prototype& prototype) override;
         void command (ent::unit& sender, ent::unit& owner, game::base_game& context, json& input) override;
         void signal (ent::unit& owner, game::base_game& context, json& input) override;

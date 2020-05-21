@@ -11,7 +11,8 @@ namespace stts {
         std::map<std::string, int> parameters_int;
         std::map<std::string, float> parameters_float;
         std::map<std::string, std::string> parameters_string;
-        std::map<std::string, vector2<int>> parameters_vector2;
+        std::map<std::string, vector2<int>> parameters_vector2_int;
+        std::map<std::string, vector2<float>> parameters_vector2_float;
         std::map<std::string, std::list<vector2<int>>> parameters_list_vector2;
         // //std::map<std::string, ibuffable> parameters_buffs; TODO
 
@@ -21,39 +22,43 @@ namespace stts {
         void deserialize (json& package) override;
 
         template<typename T>
-        bool get (const std::string& name, T& data); // TODO allocates memory
+        bool get (const std::string& name, T& data) const; // TODO allocates memory
 
         template<typename T>
         void set (const std::string& name, T data);
     };
 
     template<typename T>
-    bool parameter_map::get (const std::string& name, T& data) {
-        throw todo_exception(name + " parameter map get with this type wasn't implemented yet");
+    bool parameter_map::get (const std::string& name, T& data) const {
+        throw todo_exception(name + " : " + typeid(T).name() + " parameter map get with this type wasn't implemented yet");
     }
 
     template<typename T>
-    void parameter_map::set (const std::string& name, T data) {
-        throw todo_exception(name + " parameter map set with this type wasn't implemented yet");
+    void parameter_map::set (const std::string& name, const T data) {
+        throw todo_exception(name + " : " + typeid(T).name() + " parameter map set with this type wasn't implemented yet");
     }
 
     template <>
-    bool parameter_map::get (const std::string& name, bool& data);
+    bool parameter_map::get (const std::string& name, bool& data) const;
 
     template <>
-    bool parameter_map::get (const std::string& name, int& data);
+    bool parameter_map::get (const std::string& name, int& data) const;
 
     template <>
-    bool parameter_map::get (const std::string& name, float& data);
+    bool parameter_map::get (const std::string& name, float& data) const;
 
     template <>
-    bool parameter_map::get (const std::string& name, std::string& data);
+    bool parameter_map::get (const std::string& name, std::string& data) const;
 
     template <>
-    bool parameter_map::get (const std::string& name, vector2<int>& data);
+    bool parameter_map::get (const std::string& name, vector2<int>& data) const;
 
     template <>
-    bool parameter_map::get (const std::string& name, std::list<vector2<int>>& data);
+    bool parameter_map::get (const std::string& name, vector2<float>& data) const;
+
+    template <>
+    bool parameter_map::get (const std::string& name, std::list<vector2<int>>& data) const;
+
 
     template <>
     void parameter_map::set (const std::string& name, bool data);
@@ -69,6 +74,9 @@ namespace stts {
 
     template <>
     void parameter_map::set (const std::string& name, vector2<int> data);
+
+    template <>
+    void parameter_map::set (const std::string& name, vector2<float> data);
 
     template <>
     void parameter_map::set (const std::string& name, std::list<vector2<int>> data);

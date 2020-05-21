@@ -29,7 +29,7 @@ namespace tilemap {
         bool is_valid(const stts::vector2<int>& position) const;
         std::vector<stts::vector2<int>> get_neighbours (const stts::vector2<int>& point);
         float get_distance (const stts::vector2<int>& source, const stts::vector2<int>& destination);
-        std::queue<stts::vector2<int>> get_path(const stts::vector2<int>& source, const stts::vector2<int>& destination);
+        std::list<stts::vector2<int>> get_path(const stts::vector2<int>& source, const stts::vector2<int>& destination);
         void transpose(ent::unit& target, const stts::vector2<int>& to_position);
 
         virtual tile::base_tile& get_tile (int x, int y) = 0;
@@ -37,7 +37,7 @@ namespace tilemap {
         virtual bool is_valid(int x, int y) const = 0;
         virtual std::vector<stts::vector2<int>> get_neighbours (int x, int y) = 0;
         virtual float get_distance (int source_x, int source_y, int destination_x, int destination_y) = 0;
-        virtual std::queue<stts::vector2<int>> get_path(int source_x, int source_y, int destination_x, int destination_y) = 0;
+        virtual std::list<stts::vector2<int>> get_path(int source_x, int source_y, int destination_x, int destination_y) = 0;
 
     protected:
         int tile_count() const;

@@ -1,11 +1,17 @@
 #include "playing.hpp"
-#include "../lobby/session.hpp"
+#include "choosing.hpp"
+#include "holding.hpp"
+#include "../online/session.hpp"
 
 
 states::playing::playing (online::session& context) : session(context) { }
 
 const std::string& states::playing::type () const {
     return states::playing_type;
+}
+
+void states::playing::info (json& output) {
+    // TODO
 }
 
 void states::playing::load (json& input, json& output) {
@@ -53,3 +59,5 @@ void states::playing::signal (json& input, json& output) {
     // TODO maybe try catch with success/error response to client
     session.game->signal(input, output);
 }
+
+

@@ -27,7 +27,7 @@ namespace online {
         std::string get_session_name ();
         int get_player_count ();
         void get_info (json& output);
-
+        void info (json& output) override;
         void load (json& input, json& output) override;
         void save (json& output) override;
         void join (json& input, json& output) override;

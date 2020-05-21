@@ -10,22 +10,22 @@ stts::chat_message::chat_message (json& package) {
     deserialize(package);
 }
 
-stts::chat_message::chat_message (const chat_message& other) : uid(other.uid), message(other.message) { }
+stts::chat_message::chat_message (const chat_message& other) : player_uid(other.player_uid), message(other.message) { }
 
 stts::chat_message& stts::chat_message::operator= (const chat_message& other) {
     if (this != &other) {
-        uid = other.uid;
+        player_uid = other.player_uid;
         message = other.message;
     }
     return *this;
 }
 
 void stts::chat_message::serialize (json& package) const {
-    package["uid"] = uid;
+    package["player_uid"] = player_uid;
     package["message"] = message;
 }
 
 void stts::chat_message::deserialize (json& package) {
-    uid = package["uid"].get<int>();
+    player_uid = package["player_uid"].get<int>();
     message = package["message"].get<std::string>();
 }

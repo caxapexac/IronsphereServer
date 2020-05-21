@@ -17,6 +17,14 @@ namespace constants {
     //const unsigned int neutral_units_limit = 25;
 }
 
+namespace p {
+    const std::string position = "position";
+    const std::string is_moving = "is_moving";
+    const std::string move_target = "move_target";
+    const std::string move_path = "move_path";
+
+}
+
 enum loggers {
     server_console_logger = 1, all_clients_logger = 2, server_file_logger = 4
 };

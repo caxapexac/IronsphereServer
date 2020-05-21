@@ -13,6 +13,7 @@ namespace states {
     public:
         explicit playing (online::session& context);
         const std::string& type () const override;
+        void info (json& output) override;
         void load (json& input, json& output) override;
         void save (json& output) override;
         void join (json& input, json& output) override;

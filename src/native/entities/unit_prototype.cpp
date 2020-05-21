@@ -39,6 +39,10 @@ void ent::unit_prototype::add_component (const std::string& component_name) {
     components[component_name] = component;
 }
 
+void ent::unit_prototype::get_cache_public (const ent::unit& head, json& output) const {
+    for (const auto& i : components) i.second->serialize_public(head, output);
+}
+
 void ent::unit_prototype::update (ent::unit& head, game::base_game& game, int ttl) {
     if (--ttl <= 0) throw todo_exception("I don't know how but you have unit with 128 layers of inheritance");
     for (const auto& i : components) i.second->update(head, game);
@@ -72,5 +76,7 @@ void ent::unit_prototype::command (ent::unit& sender, ent::unit& head, game::bas
         // TODO maybe have output from signal
     }
 }
+
+
 
 

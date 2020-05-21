@@ -8,9 +8,7 @@
 
 namespace unit_testing {
     void test_logic() {
-        std::cout << "* test_logic [started] \n"
-                     "* Print '-' to stop testing\n"
-                     "* Enter empty string to update\n" << std::endl; //TODO logger
+        std::cout << "* test_logic [started]" << std::endl; //TODO logger
 
         srand(time(nullptr));
         const stts::vector2<int> tilemap_scale = stts::vector2<int>(9, 12);
@@ -61,15 +59,19 @@ namespace unit_testing {
         //timer t = timer();
         //t.setInterval(game.update, 1000);
 
+        std::cout << "* Print 'q' to stop testing\n"
+                     "* Enter empty string to update" << std::endl;
         std::string command = "";
-        while (command != "-") {
-            //std::cin >> command;
+        while (true) {
             std::getline(std::cin, command);
 
             if (command.empty()) {
-                //std::cout << "upd" << std::endl;
                 json j;
                 game.update(j);
+
+            }
+            else if (command == "q") {
+                break;
             }
             else {
                 json input;

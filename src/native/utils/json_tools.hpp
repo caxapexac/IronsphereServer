@@ -206,13 +206,12 @@ namespace nlohmann {
         }
     }
 
+    // TODO test
     template<typename V>
     void json_tools::pack_map_string_list (const std::map<std::string, std::list<V>>& map, json& package) {
         package = json::object();
         for (auto const& i : map) {
-            json j;
-            i.second->serialize(j);
-            package[std::to_string(i.first)] = j;
+            pack_list(i.second, package[i.first]);
         }
     }
 
@@ -260,13 +259,12 @@ namespace nlohmann {
         return map;
     }
 
+    // TODO test
     template<typename V>
-    std::map<std::string, std::__cxx11::list<V>> json_tools::unpack_map_string_list (::json& package) {
-        std::map<std::string, std::__cxx11::list<V>> map = std::map<std::string, std::__cxx11::list<V>>();
+    std::map<std::string, std::list<V>> json_tools::unpack_map_string_list (json& package) {
+        std::map<std::string, std::list<V>> map = std::map<std::string, std::list<V>>();
         for (auto const& i : package.items()) {
-            V* element = new V();
-            element->deserialize(i.value());
-            map[std::stoi(i.key())] = element;
+            map[i.key()] = unpack_list<V>(i.value());
         }
         return map;
     }

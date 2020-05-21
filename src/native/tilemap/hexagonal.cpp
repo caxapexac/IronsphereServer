@@ -24,7 +24,7 @@ float tilemap::hexagonal::get_distance (int source_x, int source_y, int destinat
     return 0;
 }
 
-std::queue<stts::vector2<int>> tilemap::hexagonal::get_path (int source_x, int source_y, int destination_x, int destination_y) {
-    return std::queue<stts::vector2<int>>();
+std::list<stts::vector2<int>> tilemap::hexagonal::get_path (int source_x, int source_y, int destination_x, int destination_y) {
+    return std::list<stts::vector2<int>>();
 }
 

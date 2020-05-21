@@ -26,6 +26,10 @@ void online::session::get_info (json& output) {
     if (game) game->get_static_content(output["field"]);
 }
 
+void online::session::info (json& output) {
+    state->info(output);
+}
+
 void online::session::load (json& input, json& output) {
     state->load(input, output);
 }
@@ -70,6 +74,8 @@ void online::session::transition_to (std::unique_ptr<ihandler> nstate) {
     state = std::move(nstate);
     //TODO log?
 }
+
+
 
 
 

@@ -76,7 +76,7 @@ float tilemap::abstract_tilemap::get_distance (const stts::vector2<int>& source,
     return get_distance(source.x, source.y, destination.x, destination.y);
 }
 
-std::queue<stts::vector2<int>> tilemap::abstract_tilemap::get_path (const stts::vector2<int>& source, const stts::vector2<int>& destination) {
+std::list<stts::vector2<int>> tilemap::abstract_tilemap::get_path (const stts::vector2<int>& source, const stts::vector2<int>& destination) {
     return get_path(source.x, source.y, destination.x, destination.y);
 }
 
