@@ -21,11 +21,12 @@ namespace l {
 
         streams stream;
         unsigned int logs;
-        std::ostringstream alpha;
         bool to;
 
         abstract_logger* log_arr[3];
         logger_user* usr;
+
+        std::ostringstream alpha;
 
     public:
         explicit lll ();
@@ -38,10 +39,10 @@ namespace l {
         static lll& say_to (std::string& addressee, streams str = message);
 
         template<typename T>
-        friend lll& operator<< (lll& out, const T& value);
-        friend lll& operator<< (lll& out, json& object);
-        friend lll& operator<< (lll& out, lll& (* f) (lll&));
-        friend void operator<< (lll& out, void (* f) (lll&));
+        friend l::lll& operator<< (l::lll& out, const T& value);
+        friend l::lll& operator<< (l::lll& out, json& object);
+        friend l::lll& operator<< (l::lll& out, l::lll& (* f) (l::lll&));
+        friend void operator<< (l::lll& out, void (* f) (l::lll&));
         //TODO: for iSerializable,  any object to say
 
         static lll& over (lll& out);
@@ -51,10 +52,9 @@ namespace l {
 }
 
 template<typename T>
-l::lll& operator<< (l::lll& out, const T& value) {
+l::lll& l::operator<<(l::lll &out, const T &value) {
     out.alpha << value;
     return out;
 }
-
 
 #endif //LOGIC_LOG_HPP

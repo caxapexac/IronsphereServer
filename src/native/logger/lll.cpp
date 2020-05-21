@@ -45,14 +45,11 @@ void l::lll::send (std::string& verbal) {
 
 
 l::lll& l::lll::say (streams str, unsigned int logs) {
-    // lll& logger = online::api::get().log; //TODO: add object!
-    // logger.stream = str;
-    // logger.logs = logs;
-    // logger.to = false;
-    // return logger;
-
-    OBSOLETE lll* logger = new lll();
-    OBSOLETE return *logger;
+    lll& logger = online::api::get().get_logger(); //TODO: add object!
+    logger.stream = str;
+    logger.logs = logs;
+    logger.to = false;
+    return logger;
 }
 
 l::lll& l::lll::say_to (std::string& addressee, streams str) {
@@ -66,18 +63,19 @@ l::lll& l::lll::say_to (std::string& addressee, streams str) {
 }
 
 
-l::lll& operator<< (l::lll& out, l::lll& (* f) (l::lll&)) {
-    return f(out);
-}
-
-void operator<< (l::lll& out, void (* f) (l::lll&)) {
-    f(out);
-}
-
-l::lll& operator<< (l::lll& out, json& object) {
+l::lll& l::operator<<(l::lll &out, json &object) {
     //out.alpha << object.dump(2); FIXME
     return out;
 }
+
+l::lll& l::operator<<(l::lll &out, l::lll &(*f)(l::lll &)) {
+    return f(out);
+}
+
+void l::operator<<(l::lll &out, void (*f)(l::lll &)) {
+    f(out);
+}
+
 
 l::lll& l::lll::over (lll& out) {
     std::string verbal = out.alpha.str();

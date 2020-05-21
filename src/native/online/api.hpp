@@ -17,11 +17,15 @@ namespace online {
         int chat_buffer_updates;
         std::queue<stts::chat_message> chat_buffer;
         std::map<int, std::shared_ptr<session>> sessions;
-        //OBSOLETE l::lll lllll; // FIXME
+        l::lll lllll;
 
         api () noexcept;
 
     public:
+        l::lll& get_logger() {
+            return lllll;
+        }
+
         /// One server frame
         /// \param output
         void update (json& output);
