@@ -68,7 +68,6 @@ namespace unit_testing {
             if (command.empty()) {
                 json j;
                 game.update(j);
-
             }
             else if (command == "q") {
                 break;
@@ -76,7 +75,7 @@ namespace unit_testing {
             else {
                 json input;
                 stts::vector2<int> position = stts::vector2<int>(rand() % tilemap_scale.x, rand() % tilemap_scale.y);
-                input["component"] = com::move_type;
+                input[in_game_signal::command] = com::move_type;
                 input["is_moving"] = true;
                 position.serialize(input["move_target"]);
                 json output;

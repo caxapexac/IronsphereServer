@@ -33,44 +33,46 @@ const std::string& game::base_game::type () const {
     return game::base_game_type;
 }
 
-void game::base_game::get_static_content (json& output) {
-    tilemap->serialize(output);
+void game::base_game::info (json& output) {
+    output[out_game_info::game_type] = type();
+    tilemap->serialize(output[out_game_info::tilemap]);
 }
 
 void game::base_game::update (json& output) {
     frame();
     // TODO send messages from frame (signals queue)
     for (const auto& i : players) {
-        calculate_client_data(i.first, output["players_data"][std::to_string(i.first)]);
+        calculate_client_data(i.first, output[out_update::session_data::players_data][std::to_string(i.first)]);
     }
 }
 
 bool game::base_game::check_end_game (json& output) {
+    if (units.empty()) return true;
     return false; //TODO
 }
 
 void game::base_game::signal (json& input, json& output) {
-    if (input["selected_units"].type() != json::value_t::array) {
-        throw todo_exception("wrong json");
+    if (input[in_game_signal::selected_units].type() != json::value_t::array) {
+        output[out_signal::error] = "[game.signal] wrong json";
+        return;
         // TODO more checkings
     }
 
-    int sender_uid = input["player_uid"].get<int>();
-
-    for (auto& i : input["selected_units"]) { //TODO check is it working
+    int sender_uid = input[in_signal::sender].get<int>();
+    for (auto& i : input[in_game_signal::selected_units]) { //TODO check is it working
         int id = i.get<int>(); // TODO type checking
         ent::unit* target = get_unit(id);
         if (target == nullptr) {
-            output = {{"error", "[game.signal] Unit with this id doesn't exist check your internet connection"}};
+            output[out_signal::error] = "[game.signal] Unit with this id doesn't exist check your internet connection";
             continue;
         }
         if (target->get_player_id() != sender_uid) {
-            output = {{"error", "[game.signal] This unit is not yours"}};
+            output[out_signal::error] = "[game.signal] This unit is not yours";
             continue;
         }
-        // TODO is command normal
-        target->signal(*this, input["command"]);
-        output = {{"success", "[game.signal] Your command was sent"}};
+        // TODO validate command
+        target->signal(*this, input[in_game_signal::command]);
+        output[out_signal::success] = "[game.signal] Your command was sent";
     }
 }
 

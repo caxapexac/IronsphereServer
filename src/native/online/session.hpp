@@ -17,7 +17,7 @@ namespace online {
     private:
         std::string session_name;
         std::set<int> players_uid; // For security
-        std::unique_ptr<ihandler> state; // Game state TODO maybe change all output errors to exceptions
+        std::unique_ptr<ihandler> state; // Game state TODO maybe change all output errors to exceptions?
         std::unique_ptr<game::base_game> game; // Game & game rules
 
     public:
@@ -26,12 +26,12 @@ namespace online {
 
         std::string get_session_name ();
         int get_player_count ();
-        void get_info (json& output);
-        void info (json& output) override;
+        void session_info(json& output);
+        void info (json& output);
         void load (json& input, json& output) override;
         void save (json& output) override;
-        void join (json& input, json& output) override;
-        void quit (json& input, json& output) override;
+        void join (int player_uid, json& output) override;
+        void quit (int player_uid, json& output) override;
         void play (json& output) override;
         void pause (json& output) override;
         void stop (json& output) override;

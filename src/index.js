@@ -45,6 +45,7 @@ wss.on("connection", function connection(ws) {
 
 wss.on("close", function connection(ws) {
     // TODO remove connections with value ws or maybe check ws.readyState === WebSocket.OPEN
+    //nativeoop.OnDisconnect(connections where player_uid : ws)
     console.log(`${ws} close`);
 });
 

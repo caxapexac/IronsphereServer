@@ -14,11 +14,9 @@ namespace online {
         friend class singleton;
     private:
         float delta_time;
-        std::map<int, std::shared_ptr<session>> sessions;
         int chat_buffer_updates;
         std::queue<stts::chat_message> chat_buffer;
-        OBSOLETE int log_buffer_updates;
-        OBSOLETE std::queue<std::string> log_buffer;
+        std::map<int, std::shared_ptr<session>> sessions;
         //OBSOLETE l::lll lllll; // FIXME
 
         api () noexcept;
@@ -36,7 +34,7 @@ namespace online {
     private:
         /// Client menu get_info (players online, room list, etc)
         /// \param output
-        void get_info (json& output);
+        void server_info (json& output);
 
         /// Chat and log buffer
         /// \param output

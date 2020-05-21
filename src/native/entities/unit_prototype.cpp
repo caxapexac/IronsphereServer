@@ -51,8 +51,8 @@ void ent::unit_prototype::update (ent::unit& head, game::base_game& game, int tt
 
 void ent::unit_prototype::signal (ent::unit& head, game::base_game& game, json& input, int ttl) {
     if (--ttl <= 0) throw todo_exception("I don't know how but you have unit with 128 layers of inheritance");
-    if (components[input["component"]] != nullptr) {
-        components[input["component"]]->signal(head, game, input);
+    if (components[input[in_game_signal::command_data::component]] != nullptr) {
+        components[input[in_game_signal::command_data::component]]->signal(head, game, input);
     }
     else if (prototype) {
         prototype->signal(head, game, input, ttl);

@@ -20,7 +20,7 @@ namespace tilemap {
         abstract_tilemap (const abstract_tilemap& copy);
         abstract_tilemap& operator= (const abstract_tilemap& copy);
         ~abstract_tilemap () override;
-        void serialize (json& package) const override;
+        void serialize (json& package) const override; // TODO cache and set_dirty!
         void deserialize (json& package) override;
 
         tile::base_tile& operator[] (const stts::vector2<int>& position);

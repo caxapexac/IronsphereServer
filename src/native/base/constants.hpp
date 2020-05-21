@@ -3,9 +3,7 @@
 
 #include "third_party_includes.hpp"
 
-//TODO all strings into enum constants
 //TODO add common constants (generic RTS)
-//TODO uint -> int ?
 namespace constants {
     const std::string empty_string = "";
     const int version = 102; // Game version (Anti chEET)
@@ -13,8 +11,8 @@ namespace constants {
     const int chat_queue_capacity = 100;
     const int log_queue_capacity = 100;
     const char game_title[] = "Ironsphere";
-    //const unsigned int player_units_limit = 100;
-    //const unsigned int neutral_units_limit = 25;
+    //const int player_units_limit = 100;
+    //const int neutral_units_limit = 25;
 }
 
 namespace p {

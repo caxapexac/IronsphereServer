@@ -22,7 +22,7 @@ namespace game {
         const std::string& type () const override;
 
         ///External API
-        void get_static_content (json& output);
+        void info (json& output);
         void update (json& output);
         void signal (json& input, json& output);
         virtual bool check_end_game (json& output);

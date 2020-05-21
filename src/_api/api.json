@@ -1,11 +1,4 @@
 {
-  "login" : {
-    "uid" : "int"
-  },
-
-
-  ""
-
   "!start_argument": {
     "player_count": 1234,
     "win_rule": "kill/score/money/serialized_special_rule_class/ya_proigral",
@@ -66,25 +59,6 @@
       }
     }
   },
-  "!signal_argument": {
-    "player_uid": 252334,
-    "selected_units": [
-      24,
-      6,
-      13
-    ],
-    "command": {
-      "component": "move/attack/build/etc сюда пихаем enum/int",
-      "position": "serialized_vector2<int>",
-      "type": "building_warehouse",
-      "who_p": "1234",
-      "who_u": "1234",
-      "etc": "etc"
-    }
-  },
-  "!signal_return": {
-    "idk": "idk"
-  },
   "!destroy_return": {
     "statistics": [
       {
@@ -107,26 +81,5 @@
         "etc": "etc"
       }
     ]
-  },
-  "prototypes" : [
-    {
-      "name": "gunner",
-      "components" : ["attackable"],
-      "prototype" : "runner",
-      "parameters" : {
-        "damage" : 4000
-      }
-    },
-    {
-      "name": "swimmer",
-      "components" : ["swimming"],
-      "prototype" : "runner",
-      "speed" : "30"
-    },
-    {
-      "name" : "runner",
-      "components" : ["movable"],
-      "speed" : "10"
-    }
-  ]
+  }
 }

@@ -92,3 +92,5 @@ void tilemap::abstract_tilemap::transpose (ent::unit& target, const stts::vector
     // TODO is it optimal
 }
 
+
+

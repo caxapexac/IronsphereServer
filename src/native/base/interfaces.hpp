@@ -47,16 +47,14 @@ public:
 /// For game loop purposes
 class ihandler : public ityped {
 public:
-    // Returns current session info
-    virtual void info (json& output) = 0;
     // Restores game from input
     virtual void load (json& input, json& output) = 0;
     // Serializes game into output
     virtual void save (json& output) = 0;
     // Adds user into the session
-    virtual void join (json& input, json& output) = 0;
+    virtual void join (int player_uid, json& output) = 0;
     // Removes user from the session
-    virtual void quit (json& input, json& output) = 0;
+    virtual void quit (int player_uid, json& output) = 0;
     // Starts the game
     virtual void play (json& output) = 0;
     // Pauses the game

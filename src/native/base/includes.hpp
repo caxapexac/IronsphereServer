@@ -2,6 +2,9 @@
 #define LOGIC_INCLUDES_HPP
 
 #include "constants.hpp"
+#include "constants_requests.hpp"
+#include "constants_responses.hpp"
+#include "constants_values.hpp"
 #include "errors.hpp"
 #include "interfaces.hpp"
 #include "third_party_includes.hpp"
