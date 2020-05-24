@@ -40,7 +40,7 @@ namespace in_game_info { // : in_signal_session
 
 namespace in_game_load { // : in_signal_session
     const std::string type = TOSTRING(in_game_load);
-    const std::string game = TOSTRING(game); // : base_game?
+    const std::string game = TOSTRING(game); // : abstract_game?
 }
 
 namespace in_game_save { // : in_signal_session
@@ -69,7 +69,7 @@ namespace in_game_stop { // : in_signal_session
 
 namespace in_game_setup { // : in_signal_session
     const std::string type = TOSTRING(in_game_setup);
-    const std::string generator = TOSTRING(generator); // : j_{: abstract_generator}
+    const std::string generator = TOSTRING(generator); // : abstract_generator
 }
 
 namespace in_game_signal { // : in_signal_session

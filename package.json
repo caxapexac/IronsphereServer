@@ -25,6 +25,7 @@
   "scripts": {
     "test": "sh scripts/test.sh",
     "build": "sh scripts/build.sh",
+    "build-debug": "sh scripts/build-debug.sh",
     "build-prod": "sh scripts/build-prod.sh",
     "rebuild": "sh scripts/rebuild.sh",
     "start": "sh scripts/start.sh",
