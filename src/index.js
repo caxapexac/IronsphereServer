@@ -15,8 +15,10 @@ if (!fs.existsSync("database.json")) {
 if (!fs.existsSync("config.json")) {
     fs.writeFileSync("config.json", {
         title: "Ironsphere Game Server",
+        version: 103,
         port: 1109,
         delta_time: 1111,
+        chat_capacity: 100
     });
 }
 
@@ -57,9 +59,15 @@ wss.on("error", function connection(ws) {
 function Signal(ws, message) {
     var messageJson = JSON.parse(message);
 
+    if (messageJson.version != config.version) {
+        console.log(`! Message with version ${messageJson.version} from player ${messageJson.sender}`);
+        ws.send({error: "Please download the latest version of the game"});
+    }
+
     if (!messageJson.has("sender")) {
         if (!messageJson.has("nickname")) {
             console.log(`! Message from unknown socket: ${message}`);
+            ws.send({error: "Please send your nickname and then uid"});
             return;
         }
 

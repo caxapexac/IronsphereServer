@@ -4,7 +4,12 @@
 #include "base_tile.hpp"
 
 namespace tile {
-    const std::string damage_type = "damage_dealer";
+    // JSON
+    namespace j_damage_dealer {
+        const std::string type = "damage_dealer";
+        const std::string damage = "damage";
+    }
+
     class damage_dealer : public base_tile {
     private:
         int damage;

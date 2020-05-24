@@ -4,13 +4,21 @@
 #include "../base/interfaces.hpp"
 
 namespace stts {
+    // JSON
+    namespace j_vector2 {
+        const std::string x = TOSTRING(x); // : T where T : new()
+        const std::string y = TOSTRING(y); // : T where T : new()
+    }
+
     /// https://docs.unity3d.com/ScriptReference/Vector2.html
     /// \tparam T : value number
     template<typename T>
-    struct vector2 : public iserializable {
+    class vector2 : public iserializable {
+    public:
         T x;
         T y;
 
+    public:
         explicit vector2 (T nx = 0, T ny = 0);
         explicit vector2 (json& package);
         vector2 (const vector2& other);
@@ -37,7 +45,7 @@ namespace stts {
             return os << j;
             // TODO is needed?
         }
-    
+
         bool is_set ();
 
         /// \return squared length of the vector
@@ -69,14 +77,14 @@ namespace stts {
 
     template<typename T>
     void vector2<T>::serialize (json& package) const {
-        package["x"] = x;
-        package["y"] = y;
+        package[j_vector2::x] = x;
+        package[j_vector2::y] = y;
     }
 
     template<typename T>
     void vector2<T>::deserialize (json& package) {
-        x = package["x"].get<T>();
-        y = package["y"].get<T>();
+        x = package[j_vector2::x].get<T>();
+        y = package[j_vector2::y].get<T>();
     }
 
     template<typename T>

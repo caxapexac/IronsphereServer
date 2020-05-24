@@ -1,7 +1,7 @@
 #include "hexagonal.hpp"
 
 const std::string& tilemap::hexagonal::type () const {
-    return hexagonal_type;
+    return j_hexagonal::type;
 }
 
 tile::base_tile& tilemap::hexagonal::get_tile (int x, int y) {

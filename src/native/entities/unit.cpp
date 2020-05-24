@@ -1,8 +1,9 @@
 #include "unit.hpp"
+#include "../game/abstract_game.hpp"
 
 ent::unit::unit (unit_prototype* nprototype, int nplayer_id, int nid) {
     prototype = nprototype;
-    player_id = nplayer_id;
+    player_uid = nplayer_id;
     id = nid;
     is_dirty = true;
 }
@@ -14,10 +15,10 @@ void ent::unit::serialize (json& package) const {
 
 void ent::unit::deserialize (json& package) {
     parameter_map::deserialize(package);
-    if (package.contains("prototype")) prototype = new unit_prototype(package["prototype"]);
+    if (package.contains(j_unit::prototype)) prototype = new unit_prototype(package[j_unit::prototype]);
     else prototype = nullptr; // TODO optimize
-    id = package["id"].get<int>();
-    player_id = package["player_id"].get<int>();
+    id = package[j_unit::id].get<int>();
+    player_uid = package[j_unit::player_uid].get<int>();
 }
 
 void ent::unit::serialize_public (json& package) const {
@@ -30,40 +31,40 @@ void ent::unit::set_dirty () {
 }
 
 void ent::unit::set_prototype (unit_prototype* nprototype) {
-    delete nprototype; // TODO will crash if prototype was lightweight
+    delete nprototype; // TODO will crash if prototype was lightweight (use shared_ptr)
     prototype = nprototype;
 }
 
 int ent::unit::get_player_id () {
-    return player_id;
+    return player_uid;
 }
 
 int ent::unit::get_id () {
     return id;
 }
 
-void ent::unit::update (game::base_game& context) {
+void ent::unit::update (game::abstract_game& context) {
     if (prototype) prototype->update(*this, context); //FIXME
 }
 
-void ent::unit::signal (game::base_game& context, json& input) {
-    if (prototype) prototype->signal(*this, context, input); //FIXME
+void ent::unit::signal (game::abstract_game& context, std::string component_name, json& component_data) {
+    if (prototype) prototype->signal(*this, context, component_name, component_data); //FIXME
 }
 
-void ent::unit::command (unit& sender, game::base_game& context, json& input) {
-    if (prototype) prototype->command(sender, *this, context, input); //FIXME
+void ent::unit::command (unit& sender, game::abstract_game& context, std::string component_name, json& component_data) {
+    if (prototype) prototype->command(sender, *this, context, component_name, component_data); //FIXME
 }
 
 void ent::unit::ensure_cache () const {
     if (is_dirty) {
         cache = {};
-        cache["player_id"] = player_id;
-        cache["id"] = id;
+        cache[j_unit::player_uid] = player_uid;
+        cache[j_unit::id] = id;
         cache_public = cache;
 
         parameter_map::serialize(cache);
         if (prototype) {
-            prototype->serialize(cache["prototype"]);
+            prototype->serialize(cache[j_unit::prototype]);
             prototype->get_cache_public(*this, cache_public); //FIXME
         }
         is_dirty = false;

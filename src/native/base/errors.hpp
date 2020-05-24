@@ -38,7 +38,7 @@ struct todo_exception : public std::exception {
     const char* what () const noexcept override {
         std::cout << info;
         return "help";
-        //return ("[RELEASE THIS EXCEPTION] " + ).c_str();
+        //return ("[RELEASE THIS EXCEPTION] " + ).c_str(); FIXME
     }
 };
 

@@ -9,7 +9,7 @@ online::session::session (const std::string& nsession_name) {
 }
 
 const std::string& online::session::type () const {
-    return online::session_type;
+    return j_session::type;
 }
 
 std::string online::session::get_session_name () {
@@ -20,68 +20,65 @@ int online::session::get_player_count () {
     return players_uid.size();
 }
 
-void online::session::session_info (json& output) {
-    output[out_server_info::session_info::state] = state->type();
-    output[out_server_info::session_info::session_name] = get_session_name();
-    output[out_server_info::session_info::player_count] = get_player_count();
+void online::session::get_session_info (json& output) {
+    output[j_typed::type] = j_session::type;
+    output[j_session::session_name] = get_session_name();
+    output[j_session::state] = state->type();
+    output[j_session::players_uid] = players_uid;
 }
 
-void online::session::info (json& output) {
-    output[out_signal::type] = api_type::game_info;
-    output[out_game_info::players_uid] = players_uid;
-    if (game) game->info(output);
+void online::session::get_game_info (json& output) {
+    output[j_typed::type] = out_game_info::type;
+    if (game) game->serialize_public(output[out_game_info::game_data]);
 }
 
-void online::session::load (json& input, json& output) {
-    output[out_signal::type] = api_type::game_load;
-    state->load(input, output);
+void online::session::game_update (json& output) {
+    state->game_update(output);
 }
 
-void online::session::save (json& output) {
-    output[out_signal::type] = api_type::game_save;
-    state->save(output);
+void online::session::game_load (json& input, json& output) {
+    output[j_typed::type] = out_game_load::type;
+    state->game_load(input, output);
 }
 
-void online::session::join (int player_uid, json& output) {
-    output[out_signal::type] = api_type::game_join;
-    state->join(player_uid, output);
+void online::session::game_save (json& output) {
+    output[j_typed::type] = out_game_save::type;
+    state->game_save(output);
 }
 
-void online::session::quit (int player_uid, json& output) {
-    output[out_signal::type] = api_type::game_quit;
-    state->quit(player_uid, output);
+void online::session::game_join (int player_uid, json& output) {
+    output[j_typed::type] = out_game_join::type;
+    state->game_join(player_uid, output);
 }
 
-void online::session::play (json& output) {
-    output[out_signal::type] = api_type::game_play;
-    state->play(output);
+void online::session::game_quit (int player_uid, json& output) {
+    output[j_typed::type] = out_game_quit::type;
+    state->game_quit(player_uid, output);
 }
 
-void online::session::pause (json& output) {
-    output[out_signal::type] = api_type::game_pause;
-    state->pause(output);
+void online::session::game_play (json& output) {
+    output[j_typed::type] = out_game_play::type;
+    state->game_play(output);
 }
 
-void online::session::stop (json& output) {
-    output[out_signal::type] = api_type::game_stop;
-    state->stop(output);
+void online::session::game_pause (json& output) {
+    output[j_typed::type] = out_game_pause::type;
+    state->game_pause(output);
 }
 
-void online::session::setup (json& input, json& output) {
-    output[out_signal::type] = api_type::game_setup;
-    state->setup(input, output);
+void online::session::game_stop (json& output) {
+    output[j_typed::type] = out_game_stop::type;
+    state->game_stop(output);
 }
 
-void online::session::update (json& output) {
-    output[out_update::type] = api_type::game_update;
-    output[out_update::session_data::players_uid] = players_uid;
-    output[out_update::session_data::state] = state->type();
-    state->update(output);
+void online::session::game_setup (json& input, json& output) {
+    output[j_typed::type] = out_game_setup::type;
+    state->game_setup(input, output);
 }
 
-void online::session::signal (json& input, json& output) {
-    output[out_signal::type] = api_type::game_signal;
-    state->signal(input, output);
+void online::session::game_signal (json& input, json& output) {
+    output[j_typed::type] = out_game_signal::type;
+    state->game_signal(input, output);
 }
 
 void online::session::transition_to (std::unique_ptr<ihandler> nstate) {

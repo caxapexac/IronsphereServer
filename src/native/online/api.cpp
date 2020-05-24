@@ -3,7 +3,7 @@
 #include "../structs/chat_message.hpp"
 
 online::api::api () noexcept {
-    delta_time = constants::lobby_delta_time;
+    delta_time = 0;
     chat_buffer_updates = 0;
     chat_buffer = std::queue<stts::chat_message>();
     sessions = std::map<int, std::shared_ptr<session>>();
@@ -17,96 +17,98 @@ online::api::api () noexcept {
     //TODO log it (server started at xx:xx xx.xx.xxxx)
 }
 
+void online::api::start (json& config) {
+    delta_time = config[j_api::delta_time].get<float>();
+    chat_capacity = config[j_api::chat_capacity].get<int>();
+}
+
 void online::api::update (json& output) {
     output[out_update::delta_time] = delta_time;
     output[out_update::chat_buffer_updates] = chat_buffer_updates;
-    for (const auto& item : sessions) item.second->update(output[out_update::sessions][item.first]);
+    for (const auto& item : sessions) item.second->game_update(output[out_update::players_sessions][item.first]);
 }
 
 void online::api::signal (json& input, json& output) {
-    output[out_signal::type] = api_type::signal;
-    if (input[in_signal::version] == nullptr || input[in_signal::type] == nullptr || input[in_signal::sender] == nullptr) {
-        output[out_signal::error] = "Input isn't correct";
-        return;
-    }
-    if (input[in_signal::version].get<int>() != constants::version) {
-        output[out_signal::error] = "Please download the latest version of the game";
+    output[j_typed::type] = out_signal::type;
+    if (input[j_typed::type] == nullptr || input[in_signal::sender] == nullptr) {
+        output[out_signal::error] = LOCATED("Input isn't correct");
         return;
     }
 
-    std::string type = input[in_signal::type];
-    if (type == api_type::server_info) server_info(output);
-    else if (type == api_type::read_chat) read_chat(output);
-    else if (type == api_type::write_chat) write_chat(input, output);
-    else if (type == api_type::create_session) create_session(input, output);
+    std::string type = input[j_typed::type];
+    if (type == in_server_info::type) server_info(output);
+    else if (type == in_read_chat::type) read_chat(output);
+    else if (type == in_write_chat::type) write_chat(input, output);
+    else if (type == in_create_session::type) create_session(input, output);
     else signal_session(input, output);
 }
 
 void online::api::server_info (json& output) {
-    output[out_signal::type] = api_type::server_info;
-    for (const auto& item : sessions) item.second->session_info(output[out_server_info::sessions][item.first]);
+    output[j_typed::type] = out_server_info::type;
+    output[out_server_info::sessions] = json::object();
+    for (const auto& item : sessions) item.second->get_session_info(output[out_server_info::sessions][item.first]);
 }
 
 void online::api::read_chat (json& output) {
-    output[out_signal::type] = api_type::read_chat;
+    output[j_typed::type] = out_read_chat::type;
     json_tools::pack_queue(chat_buffer, output[out_read_chat::chat_buffer]);
 }
 
 void online::api::write_chat (json& input, json& output) {
-    output[out_signal::type] = api_type::write_chat;
+    output[j_typed::type] = out_write_chat::type;
     if (input[in_write_chat::message] == nullptr) {
-        output[out_signal::error] = "Input isn't correct";
+        output[out_signal::error] = LOCATED("Input isn't correct");
         return;
     }
     int player_uid = input[in_signal::sender].get<int>();
     chat_buffer.push(stts::chat_message(player_uid, input[in_write_chat::message]));
-    if (chat_buffer.size() > constants::chat_queue_capacity) chat_buffer.pop();
+    if (chat_buffer.size() > chat_capacity) chat_buffer.pop();
     chat_buffer_updates++;
     output[out_signal::success] = "Message has been sent";
     //TODO important game events into write_chat (or log) (for example, logger::setup_lobby(this) then use logger::log_chat();
 }
 
 void online::api::create_session (json& input, json& output) {
-    output[out_signal::type] = api_type::create_session;
+    output[j_typed::type] = out_create_session::type;
     if (input[in_create_session::session_id] == nullptr || input[in_create_session::session_name] == nullptr) {
-        output[out_signal::error] = "Input isn't correct";
+        output[out_signal::error] = LOCATED("Input isn't correct");
         return;
     }
     int session_id = input[in_create_session::session_id].get<int>();
     if (sessions[session_id] != nullptr) {
-        output[out_signal::error] = "Room is already exist";
+        output[out_signal::error] = LOCATED("Room is already exist");
         return;
     }
 
     sessions[session_id] = std::make_shared<session>(input[in_create_session::session_name]);
-    sessions[session_id]->join(input[in_signal::sender], output);
+    sessions[session_id]->game_join(input[in_signal::sender], output);
 }
 
 void online::api::signal_session (json& input, json& output) {
-    output[out_signal::type] = api_type::signal_session;
+    output[j_typed::type] = out_signal_session::type;
     if (input[in_signal_session::session_id] == nullptr) {
-        output[out_signal::error] = "Input isn't correct";
+        output[out_signal::error] = LOCATED("Input isn't correct");
         return;
     }
     int session_id = input[in_signal_session::session_id].get<int>();
     std::shared_ptr<session> session = sessions[session_id];
     if (session == nullptr) {
-        output[out_signal::error] = "Session wasn't found";
+        output[out_signal::error] = LOCATED("Session wasn't found");
         return;
     }
 
-    std::string type = input[in_signal::type];
-    if (type == api_type::game_info) session->info(output);
-    else if (type == api_type::game_load) session->load(input, output);
-    else if (type == api_type::game_save) session->save(output);
-    else if (type == api_type::game_join) session->join(input[in_signal::sender].get<int>(), output);
-    else if (type == api_type::game_quit) session->quit(input[in_signal::sender].get<int>(), output);
-    else if (type == api_type::game_play) session->play(output);
-    else if (type == api_type::game_pause) session->pause(output);
-    else if (type == api_type::game_stop) session->stop(output);
-    else if (type == api_type::game_setup) session->setup(input, output);
-    else if (type == api_type::game_signal) session->signal(input, output);
-    else output[out_signal::error] = "Type isn't correct";
+    std::string type = input[j_typed::type];
+    if (type == in_game_info::type) session->get_game_info(output);
+    else if (type == in_game_load::type) session->game_load(input, output);
+    else if (type == in_game_save::type) session->game_save(output);
+    else if (type == in_game_join::type) session->game_join(input[in_signal::sender].get<int>(), output);
+    else if (type == in_game_quit::type) session->game_quit(input[in_signal::sender].get<int>(), output);
+    else if (type == in_game_play::type) session->game_play(output);
+    else if (type == in_game_pause::type) session->game_pause(output);
+    else if (type == in_game_stop::type) session->game_stop(output);
+    else if (type == in_game_setup::type) session->game_setup(input, output);
+    else if (type == in_game_signal::type) session->game_signal(input, output);
+    else output[out_signal::error] = LOCATED("Type isn't correct");
 
     if (session->get_player_count() == 0) {
         sessions.erase(session_id);

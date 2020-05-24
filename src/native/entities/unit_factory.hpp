@@ -6,6 +6,12 @@
 #include "unit.hpp"
 
 namespace ent {
+    // JSON
+    namespace j_unit_factory {
+        const std::string prototypes = TOSTRING(prototypes); // : map<std::string, unit_prototype>
+        const std::string next_id = TOSTRING(next_id); // : int
+    }
+
     class unit_factory : iserializable {
     private:
         std::map<std::string, unit_prototype*> prototypes;

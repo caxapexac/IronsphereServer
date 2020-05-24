@@ -5,6 +5,17 @@
 #include "vector2.hpp"
 
 namespace stts {
+    // JSON
+    namespace j_parameter_map {
+        const std::string parameters_bool = TOSTRING(parameters_bool); // : map<string, bool>
+        const std::string parameters_int = TOSTRING(parameters_int); // : map<string, int>
+        const std::string parameters_float = TOSTRING(parameters_float); // : map<string, float>
+        const std::string parameters_string = TOSTRING(parameters_string); // : map<string, string>
+        const std::string parameters_vector2_int = TOSTRING(parameters_vector2_int); // : map<string, vector2<int>>
+        const std::string parameters_vector2_float = TOSTRING(parameters_vector2_float); // : map<string, vector2<float>>
+        const std::string parameters_list_vector2 = TOSTRING(parameters_list_vector2); // : map<string, std::list<vector2<int>>>
+    }
+
     class parameter_map : iserializable {
     private:
         std::map<std::string, bool> parameters_bool;

@@ -12,15 +12,15 @@ ent::unit_factory::unit_factory () {
 }
 
 void ent::unit_factory::serialize (json& package) const {
-    package["next_id"] = next_id;
+    package[j_unit_factory::next_id] = next_id;
     for (const auto& i : prototypes) {
-        i.second->serialize(package["prototypes"][i.first]);
+        i.second->serialize(package[j_unit_factory::prototypes][i.first]);
     }
 }
 
 void ent::unit_factory::deserialize (json& package) {
-    next_id = package["next_id"].get<int>();
-    for (auto& i : package["prototypes"].items()) {
+    next_id = package[j_unit_factory::next_id].get<int>();
+    for (auto& i : package[j_unit_factory::prototypes].items()) {
         prototypes[i.key()] = new unit_prototype(i.value());
     }
 }
@@ -33,10 +33,10 @@ ent::unit_prototype* ent::unit_factory::get_prototype (const std::string& protot
 }
 
 void ent::unit_factory::set_prototype (unit_prototype* prototype) {
-    if (prototypes[prototype->type()] != nullptr) {
+    if (prototypes[prototype->get_name()] != nullptr) {
         throw todo_exception("Double kill");
     }
-    prototypes[prototype->type()] = prototype; // FIXME memory leak
+    prototypes[prototype->get_name()] = prototype; // FIXME memory leak
 }
 
 ent::unit* ent::unit_factory::make_unit (const std::string& prototype_name, int player_uid) {

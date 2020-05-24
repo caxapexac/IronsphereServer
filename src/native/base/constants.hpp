@@ -3,35 +3,14 @@
 
 #include "third_party_includes.hpp"
 
-//TODO add common constants (generic RTS)
-namespace constants {
-    const std::string empty_string = "";
-    const int version = 102; // Game version (Anti chEET)
-    const int lobby_delta_time = 1000; // ms (start game loop delay)
-    const int chat_queue_capacity = 100;
-    const int log_queue_capacity = 100;
-    const char game_title[] = "Ironsphere";
-    //const int player_units_limit = 100;
-    //const int neutral_units_limit = 25;
-}
-
-namespace p {
-    const std::string position = "position";
-    const std::string is_moving = "is_moving";
-    const std::string move_target = "move_target";
-    const std::string move_path = "move_path";
-
-}
-
-enum loggers {
+enum loggers { // FIXME into loggers folder and namespace
     server_console_logger = 1, all_clients_logger = 2, server_file_logger = 4
 };
 
-enum streams : char {
+enum streams : char { // FIXME into loggers folder and namespace
     error = 'E', warning = 'W', debug = 'D', message = 'M', special = 'S'
 };
 
-//TODO into class
 
 /*Patterns
  * L1 Unit attributes, abilities (components(?)) (?)

@@ -6,11 +6,17 @@
 namespace ent { class unit; }
 
 namespace tile {
-    const std::string tile_type = "tile";
+    // JSON
+    namespace j_base_tile {
+        const std::string type = "base_tile";
+        const std::string height = "height"; // : float
+        const std::string occupier_uid = "occupier_uid"; // : int
+    }
+
     class base_tile : public iserializable, public ityped {
     private:
         float height;
-        int occupier_id;
+        int occupier_uid;
 
     public:
         explicit base_tile (float nheight = 0);
@@ -18,6 +24,7 @@ namespace tile {
         base_tile& operator= (const base_tile& copy);
         void serialize (json& package) const override;
         void deserialize (json& package) override;
+        void serialize_public (json& package);
         const std::string& type () const override;
 
         float get_height () const;

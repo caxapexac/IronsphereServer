@@ -3,9 +3,11 @@
 
 #include "../base/third_party_includes.hpp"
 
-namespace game { class base_game; }
-namespace tile { class base_tile; }
+namespace game { class abstract_game; }
+namespace generators { class abstract_generator; }
+namespace rules { class abstract_rule; }
 namespace tilemap { class abstract_tilemap; }
+namespace tile { class base_tile; }
 
 namespace nlohmann {
     /// Static helper serialization class
@@ -13,7 +15,9 @@ namespace nlohmann {
     private:
         json_tools () = default;
     public:
-        static std::unique_ptr<game::base_game> unpack_game (json& package);
+        static std::unique_ptr<game::abstract_game> unpack_game (json& package);
+        static std::unique_ptr<generators::abstract_generator> unpack_generator (json& package);
+        static std::unique_ptr<rules::abstract_rule> unpack_rule (json& package);
         static std::unique_ptr<tilemap::abstract_tilemap> unpack_tilemap (json& package);
         static tile::base_tile* unpack_tile (json& package); // TODO Спросить Тимура про массив умных указателей
 
@@ -270,8 +274,8 @@ namespace nlohmann {
     }
 
 
-}
 
+}
 
 
 #endif //LOGIC_JSON_TOOLS_H

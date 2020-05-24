@@ -4,9 +4,15 @@
 #include "../base/includes.hpp"
 #include "parameter_map.hpp"
 
-namespace game {class base_game;}
+namespace game {class abstract_game;}
 
 namespace stts {
+    // JSON
+    namespace j_player {
+        const std::string team = TOSTRING(team);
+        const std::string parameters = TOSTRING(parameters); // : parameter_map
+    }
+
     class player : public iserializable {
     private:
         int team;
@@ -18,6 +24,8 @@ namespace stts {
         player& operator= (const player& copy);
         void serialize (json& package) const override;
         void deserialize (json& package) override;
+
+        int get_team();
 
         template<typename P>
         bool get (const std::string& name, P& result) {

@@ -1,36 +1,44 @@
 #include "json_tools.hpp"
-#include "../game/base_game.hpp"
+#include "../game/abstract_game.hpp"
 #include "../game/realtime.hpp"
 #include "../game/stepped.hpp"
 #include "../tilemap/abstract_tilemap.hpp"
 #include "../tilemap/hexagonal.hpp"
 #include "../tilemap/square.hpp"
+#include "../generators/simple_realtime_skirmish.hpp"
 
-std::unique_ptr<game::base_game> nlohmann::json_tools::unpack_game (json& package) {
-    if (!package.contains("type")) {
+std::unique_ptr<game::abstract_game> nlohmann::json_tools::unpack_game (json& package) {
+    if (!package.contains(j_typed::type)) {
         throw todo_exception("Add here more checks please");
     }
-    std::unique_ptr<game::base_game> result;
+    std::unique_ptr<game::abstract_game> result;
 
-    std::string type = package["type"];
-    if (type == game::base_game_type) result = std::make_unique<game::base_game>();
-    else if (type == game::realtime_type) result = std::make_unique<game::realtime>();
-    else if (type == game::stepped_type) result = std::make_unique<game::stepped>();
+    std::string type = package[j_typed::type];
+    if (type == game::j_stepped::type) result = std::make_unique<game::stepped>();
+    else if (type == game::j_realtime::type) result = std::make_unique<game::realtime>();
     else throw todo_exception("Unknown game type");
 
     result->deserialize(package);
     return result;
 }
 
+std::unique_ptr<generators::abstract_generator> json_tools::unpack_generator (json& package) {
+
+}
+
+std::unique_ptr<rules::abstract_rule> json_tools::unpack_rule (json& package) {
+
+}
+
 std::unique_ptr<tilemap::abstract_tilemap> nlohmann::json_tools::unpack_tilemap (json& package) {
-    if (!package.contains("type")) {
+    if (!package.contains(j_typed::type)) {
         throw todo_exception("Add here more checks please");
     }
     std::unique_ptr<tilemap::abstract_tilemap> result;
 
-    std::string type = package["type"];
-    if (type == tilemap::hexagonal_type) result = std::make_unique<tilemap::hexagonal>();
-    else if (type == tilemap::square_type) result = std::make_unique<tilemap::square>();
+    std::string type = package[j_typed::type];
+    if (type == tilemap::j_hexagonal::type) result = std::make_unique<tilemap::hexagonal>();
+    else if (type == tilemap::j_square::type) result = std::make_unique<tilemap::square>();
     else throw todo_exception("Unknown tilemap type");
 
     result->deserialize(package);
@@ -38,15 +46,15 @@ std::unique_ptr<tilemap::abstract_tilemap> nlohmann::json_tools::unpack_tilemap 
 }
 
 tile::base_tile* nlohmann::json_tools::unpack_tile (json& package) {
-    if (!package.contains("type")) {
+    if (!package.contains(j_typed::type)) {
         throw todo_exception("Add here more checks please");
     }
     tile::base_tile* result;
 
-    std::string type = package["type"];
-    if (type == tile::tile_type) result = new tile::base_tile();
-    else if (type == tile::damage_type) result = new tile::damage_dealer(0, 0);
-    else if (type == tile::money_type) result = new tile::money_dealer(0, 0);
+    std::string type = package[j_typed::type];
+    if (type == tile::j_base_tile::type) result = new tile::base_tile();
+    else if (type == tile::j_damage_dealer::type) result = new tile::damage_dealer(0, 0);
+    else if (type == tile::j_money_dealer::type) result = new tile::money_dealer(0, 0);
     else throw todo_exception("Unknown tile type");
 
     result->deserialize(package);

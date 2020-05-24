@@ -31,24 +31,35 @@ tilemap::abstract_tilemap::~abstract_tilemap () {
 }
 
 void tilemap::abstract_tilemap::serialize (json& package) const {
-    package["type"] = type();
-    scale.serialize(package["scale"]);
-    package["data"] = json::array();
+    package[j_typed::type] = type();
+    scale.serialize(package[j_abstract_tilemap::scale]);
+    package[j_abstract_tilemap::data] = json::array();
     for (int i = 0; i < tile_count(); ++i) {
         json j;
         data[i]->serialize(j); //TODO no alloc
-        package["data"].push_back(j);
+        package[j_abstract_tilemap::data].push_back(j);
     }
 }
 
 void tilemap::abstract_tilemap::deserialize (json& package) {
-    scale.deserialize(package["scale"]);
-    json j_data = package["data"];
+    scale.deserialize(package[j_abstract_tilemap::scale]);
+    json j_data = package[j_abstract_tilemap::data];
     delete [] data;
     data = new tile::base_tile*[tile_count()];
     for (int i = 0; i < tile_count(); ++i) {
         // TODO delete old tiles
         data[i] = nlohmann::json_tools::unpack_tile(j_data[i]);
+    }
+}
+
+void tilemap::abstract_tilemap::serialize_public (json& package) {
+    package[j_typed::type] = type();
+    scale.serialize(package[j_abstract_tilemap::scale]);
+    package[j_abstract_tilemap::data] = json::array();
+    for (int i = 0; i < tile_count(); ++i) {
+        json j;
+        data[i]->serialize_public(j); //TODO no alloc
+        package[j_abstract_tilemap::data].push_back(j);
     }
 }
 
@@ -88,9 +99,10 @@ void tilemap::abstract_tilemap::transpose (ent::unit& target, const stts::vector
     stts::vector2<int> previous_position = target.get_parameter<stts::vector2<int>>("position");
     if (is_valid(previous_position)) get_tile(previous_position).on_unit_exit(target);
     get_tile(to_position).on_unit_enter(target);
-    target.set_parameter("position", to_position);
+    target.set_parameter("position", to_position); // TODO don't use inline strings
     // TODO is it optimal
 }
+
 
 
 

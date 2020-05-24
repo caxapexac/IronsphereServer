@@ -7,7 +7,14 @@
 
 
 namespace ent {
-    class unit_prototype : public stts::parameter_map, public ityped {
+    // JSON
+    namespace j_unit_prototype { // : parameter_map
+        const std::string prototype = TOSTRING(prototype); // : string?
+        const std::string name = TOSTRING(name); // : string
+        const std::string components = TOSTRING(components); // : list<string>
+    }
+
+    class unit_prototype : public stts::parameter_map {
     private:
         unit_prototype* prototype;
         std::string name;
@@ -18,14 +25,14 @@ namespace ent {
         explicit unit_prototype (json& package);
         void serialize (json& package) const final;
         void deserialize (json& package) final;
-        const std::string& type () const final;
 
+        const std::string& get_name () const;
         void add_component (const std::string& component_name); // Experimental feature preview bugged like unity3d
 
         void get_cache_public(const unit& head, json& output) const;
-        void update (unit& head, game::base_game& game, int ttl = 128);
-        void signal (unit& head, game::base_game& game, json& input, int ttl = 128);
-        void command (unit& sender, unit& head, game::base_game& context, json& input, int ttl = 128);
+        void update (unit& head, game::abstract_game& game, int ttl = 128);
+        void signal (ent::unit& head, game::abstract_game& game, const std::string& component_name, json& component_data, int ttl = 128);
+        void command (ent::unit& sender, ent::unit& head, game::abstract_game& context, std::string component_name, json& component_data, int ttl = 128);
 
         template<typename T>
         bool has_parameter (const std::string& parameter_name, int ttl = 128);
@@ -44,30 +51,18 @@ namespace ent {
     bool unit_prototype::has_parameter (const std::string& parameter_name, int ttl) {
         if (--ttl <= 0) throw todo_exception("I don't know how but you have unit with 128 layers of inheritance");
         T result;
-        if (get<T>(parameter_name, result)) {
-            return true;
-        }
-        else if (prototype) {
-            return prototype->has_parameter<T>(parameter_name, ttl - 1);
-        }
-        else {
-            return false;
-        }
+        if (get<T>(parameter_name, result)) return true;
+        else if (prototype) return prototype->has_parameter<T>(parameter_name, ttl - 1);
+        else return false;
     }
 
     template<typename T>
     T unit_prototype::get_parameter (const std::string& parameter_name, int ttl) {
         if (--ttl <= 0) throw todo_exception("I don't know how but you have unit with 128 layers of inheritance");
         T result;
-        if (get<T>(parameter_name, result)) {
-            return result;
-        }
-        else if (prototype) {
-            return prototype->get_parameter<T>(parameter_name, ttl - 1);
-        }
-        else {
-            throw todo_exception(parameter_name + " parameter wasn't found");
-        }
+        if (get<T>(parameter_name, result)) return result;
+        else if (prototype) return prototype->get_parameter<T>(parameter_name, ttl - 1);
+        else throw todo_exception(parameter_name + " parameter wasn't found");
     }
 
     template<typename T>

@@ -5,6 +5,7 @@
 #include "../utils/timer.hpp"
 #include "../game/realtime.hpp"
 #include "../tilemap/square.hpp"
+#include "../components/component_storage.hpp"
 
 namespace unit_testing {
     void test_logic() {
@@ -14,7 +15,7 @@ namespace unit_testing {
         const stts::vector2<int> tilemap_scale = stts::vector2<int>(9, 12);
 
 
-        game::base_game game = game::base_game();
+        game::realtime game = game::realtime();
 
         // Tilemap
         std::unique_ptr<tilemap::abstract_tilemap> tilemap = std::make_unique<tilemap::square>(tilemap_scale);
@@ -34,7 +35,7 @@ namespace unit_testing {
 
         // Factory
         ent::unit_prototype p_runner = ent::unit_prototype("runner");
-        p_runner.add_component(com::move_type);
+        p_runner.add_component(com::j_move::type);
         game.set_prototype(&p_runner);
 
         // Units
@@ -74,12 +75,11 @@ namespace unit_testing {
             }
             else {
                 json input;
+                input[com::j_move_signal::is_moving] = true;
                 stts::vector2<int> position = stts::vector2<int>(rand() % tilemap_scale.x, rand() % tilemap_scale.y);
-                input[in_game_signal::command] = com::move_type;
-                input["is_moving"] = true;
-                position.serialize(input["move_target"]);
+                position.serialize(input[com::j_move_signal::move_target]);
                 json output;
-                u_runner_1.signal(game, input);
+                u_runner_1.signal(game, com::j_move::type, input);
                 //game.signal(input, output);
             }
             //

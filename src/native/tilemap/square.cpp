@@ -3,7 +3,7 @@
 tilemap::square::square (const stts::vector2<int>& nscale) : abstract_tilemap(nscale) { }
 
 const std::string& tilemap::square::type () const {
-    return square_type;
+    return j_square::type;
 }
 
 tile::base_tile& tilemap::square::get_tile (int x, int y) {

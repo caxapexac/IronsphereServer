@@ -14,7 +14,7 @@ namespace unit_testing {
         const int height = 100;
 
         tile::base_tile t = tile::base_tile(height);
-        assert(t.type() == tile::tile_type);
+        assert(t.type() == tile::j_base_tile::type);
         assert(t.get_height() == height);
         assert(t.is_occupied() == false);
 

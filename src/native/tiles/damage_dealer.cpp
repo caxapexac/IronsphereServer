@@ -5,16 +5,16 @@ tile::damage_dealer::damage_dealer (float nheight, int ndamage) : tile::base_til
 
 void tile::damage_dealer::serialize (json& package) const {
     base_tile::serialize(package);
-    package["damage"] = damage;
+    package[j_damage_dealer::damage] = damage;
 }
 
 void tile::damage_dealer::deserialize (json& package) {
     base_tile::deserialize(package);
-    damage = package["damage"].get<int>();
+    damage = package[j_damage_dealer::damage].get<int>();
 }
 
 const std::string& tile::damage_dealer::type () const {
-    return damage_type;
+    return j_damage_dealer::type;
 }
 
 void tile::damage_dealer::on_unit_enter (ent::unit& sender) {

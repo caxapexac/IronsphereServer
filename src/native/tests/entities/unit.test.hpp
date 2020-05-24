@@ -2,7 +2,7 @@
 #define LOGIC_UNIT_TEST_HPP
 
 #include "../../base/includes.hpp"
-#include "../../game/base_game.hpp"
+#include "../../game/abstract_game.hpp"
 
 namespace unit_testing {
     void test_unit() {

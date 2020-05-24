@@ -4,18 +4,25 @@
 #include "../base/includes.hpp"
 #include "unit_prototype.hpp"
 
-namespace game { class base_game; }
+namespace game { class abstract_game; }
 
 namespace ent {
+    // JSON
+    namespace j_unit {
+        const std::string prototype = TOSTRING(prototype); // : unit_prototype
+        const std::string player_uid = TOSTRING(player_uid); // : int
+        const std::string id = TOSTRING(id); // : int
+    }
+
     class unit : protected stts::parameter_map {
     private:
         unit_prototype* prototype;
-        int player_id;
+        int player_uid;
         int id;
 
-        N_S mutable bool is_dirty;
-        N_S mutable json cache;
-        N_S mutable json cache_public;
+        mutable bool is_dirty;
+        mutable json cache;
+        mutable json cache_public;
 
     public:
         explicit unit (unit_prototype* nprototype = nullptr, int nplayer_id = -1, int nid = -1);
@@ -29,9 +36,9 @@ namespace ent {
         int get_player_id ();
         int get_id ();
 
-        void update (game::base_game& context); // Server -> Unit
-        void signal (game::base_game& context, json& input); // User -> Unit
-        void command (unit& sender, game::base_game& context, json& input); // Unit -> Unit
+        void update (game::abstract_game& context); // Server -> Unit
+        void signal (game::abstract_game& context, std::string component_name, json& component_data); // User -> Unit
+        void command (unit& sender, game::abstract_game& context, std::string component_name, json& component_data); // Unit -> Unit
 
         template<typename T>
         bool has_parameter (const std::string& parameter_name) const;
@@ -52,29 +59,17 @@ namespace ent {
     template<typename T>
     bool unit::has_parameter (const std::string& parameter_name) const {
         T result;
-        if (get<T>(parameter_name, result)) {
-            return true;
-        }
-        else if (prototype) {
-            return prototype->has_parameter<T>(parameter_name);
-        }
-        else {
-            return false;
-        }
+        if (get<T>(parameter_name, result)) return true;
+        else if (prototype) return prototype->has_parameter<T>(parameter_name);
+        else return false;
     }
 
     template<typename T>
     T unit::get_parameter (const std::string& parameter_name) const {
         T result;
-        if (get<T>(parameter_name, result)) {
-            return result;
-        }
-        else if (prototype) {
-            return prototype->get_parameter<T>(parameter_name);
-        }
-        else {
-            throw todo_exception(parameter_name + " parameter wasn't found");
-        }
+        if (get<T>(parameter_name, result)) return result;
+        else if (prototype) return prototype->get_parameter<T>(parameter_name);
+        else throw todo_exception(parameter_name + " parameter wasn't found");
     }
 
     template<typename T>

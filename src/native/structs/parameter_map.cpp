@@ -11,23 +11,23 @@ stts::parameter_map::parameter_map () {
 }
 
 void stts::parameter_map::serialize (json& package) const {
-    package["parameters_bool"] = parameters_bool;
-    package["parameters_int"] = parameters_int;
-    package["parameters_float"] = parameters_float;
-    package["parameters_string"] = parameters_string;
-    json_tools::pack_map_string<vector2<int>>(parameters_vector2_int, package["parameters_vector2_int"]);
-    json_tools::pack_map_string<vector2<float>>(parameters_vector2_float, package["parameters_vector2_float"]);
-    json_tools::pack_map_string_list<vector2<int>>(parameters_list_vector2, package["parameters_list_vector2"]);
+    package[j_parameter_map::parameters_bool] = parameters_bool;
+    package[j_parameter_map::parameters_int] = parameters_int;
+    package[j_parameter_map::parameters_float] = parameters_float;
+    package[j_parameter_map::parameters_string] = parameters_string;
+    json_tools::pack_map_string<vector2<int>>(parameters_vector2_int, package[j_parameter_map::parameters_vector2_int]);
+    json_tools::pack_map_string<vector2<float>>(parameters_vector2_float, package[j_parameter_map::parameters_vector2_float]);
+    json_tools::pack_map_string_list<vector2<int>>(parameters_list_vector2, package[j_parameter_map::parameters_list_vector2]);
 }
 
 void stts::parameter_map::deserialize (json& package) {
-    parameters_bool = package["parameters_bool"].get<std::map<std::string, bool>>();
-    parameters_int = package["parameters_int"].get<std::map<std::string, int>>();
-    parameters_float = package["parameters_float"].get<std::map<std::string, float>>();
-    parameters_string = package["parameters_string"].get<std::map<std::string, std::string>>();
-    parameters_vector2_int = json_tools::unpack_map_string<vector2<int>>(package["parameters_vector2_int"]);
-    parameters_vector2_float = json_tools::unpack_map_string<vector2<float>>(package["parameters_vector2_float"]);
-    parameters_list_vector2 = json_tools::unpack_map_string_list<vector2<int>>(package["parameters_list_vector2"]);
+    parameters_bool = package[j_parameter_map::parameters_bool].get<std::map<std::string, bool>>();
+    parameters_int = package[j_parameter_map::parameters_int].get<std::map<std::string, int>>();
+    parameters_float = package[j_parameter_map::parameters_float].get<std::map<std::string, float>>();
+    parameters_string = package[j_parameter_map::parameters_string].get<std::map<std::string, std::string>>();
+    parameters_vector2_int = json_tools::unpack_map_string<vector2<int>>(package[j_parameter_map::parameters_vector2_int]);
+    parameters_vector2_float = json_tools::unpack_map_string<vector2<float>>(package[j_parameter_map::parameters_vector2_float]);
+    parameters_list_vector2 = json_tools::unpack_map_string_list<vector2<int>>(package[j_parameter_map::parameters_list_vector2]);
 }
 
 template<>

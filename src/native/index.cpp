@@ -1,9 +1,25 @@
 #include "napi.h"
 #include <string>
 #include "utils/json.hpp"
-#include "lobby/api.hpp"
+#include "online/api.hpp"
 
 // Arg0 - Json string
+void Start(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    if (info.Length() < 1) {
+        Napi::TypeError::New(env, "Wrong number of arguments is Start()").ThrowAsJavaScriptException();
+        return;
+    }
+    if (!info[0].IsString()) {
+        Napi::TypeError::New(env, "Argument isn't a string in Start()").ThrowAsJavaScriptException();
+        return;
+    }
+    json config = info[0].ToString();
+    game_lobby::get().start(config);
+    return;
+}
+
 Napi::String Update(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
@@ -30,7 +46,7 @@ Napi::String Signal(const Napi::CallbackInfo& info)
     }
     json input = info[0].ToString();
     json output;
-    //game_lobby::get().signal(input, output);
+    game_lobby::get().signal(input, output);
     return Napi::String::New(env, output.dump());
 }
 

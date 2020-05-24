@@ -5,10 +5,18 @@
 #include "../base/includes.hpp"
 
 namespace stts {
-    struct chat_message : public iserializable {
+    // JSON
+    namespace j_chat_message {
+        const std::string player_uid = TOSTRING(player_uid); // : int
+        const std::string message = TOSTRING(message); // : string
+    }
+
+    class chat_message : public iserializable {
+    public:
         int player_uid;
         std::string message;
 
+    public:
         explicit chat_message (int nplayer_uid, const std::string& nmessage);
         explicit chat_message (json& package);
         chat_message (const chat_message& other);

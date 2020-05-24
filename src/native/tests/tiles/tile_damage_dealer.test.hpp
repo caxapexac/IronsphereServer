@@ -10,7 +10,7 @@ namespace unit_testing {
         const int height = 100;
         const int damage = 200;
         tile::damage_dealer td = tile::damage_dealer(height, damage);
-        assert(td.type() == tile::damage_type);
+        assert(td.type() == tile::j_damage_dealer::type);
         assert(td.get_height() == height);
         assert(td.is_occupied() == false);
         //unit_prototype proto_1 = unit_prototype("test_proto_1");

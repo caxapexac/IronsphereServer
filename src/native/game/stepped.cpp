@@ -1,19 +1,14 @@
 #include "stepped.hpp"
 
 const std::string& game::stepped::type () const {
-    return game::stepped_type;
+    return j_stepped::type;
 }
 
-bool game::stepped::check_end_game (json& output) {
-    return false;
+void game::stepped::serialize_concrete_player (int player_uid, json& package) {
+    // TODO
 }
 
-void game::stepped::frame () {
-
+void game::stepped::update (json& output) {
+    // TODO
 }
-
-void game::stepped::calculate_client_data (int player_uid, json& output) {
-
-}
-
 

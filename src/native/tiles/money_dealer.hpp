@@ -4,7 +4,12 @@
 #include "base_tile.hpp"
 
 namespace tile {
-    const std::string money_type = "money_dealer";
+    // JSON
+    namespace j_money_dealer {
+        const std::string type = "money_dealer";
+        const std::string money = "money";
+    }
+
     class money_dealer : public base_tile {
     private:
         int money;

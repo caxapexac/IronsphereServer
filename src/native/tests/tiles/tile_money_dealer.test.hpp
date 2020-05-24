@@ -11,7 +11,7 @@ namespace unit_testing {
         const int money = 300;
 
         tile::money_dealer tm = tile::money_dealer(height, money);
-        assert(tm.type() == tile::money_type);
+        assert(tm.type() == tile::j_money_dealer::type);
         assert(tm.get_height() == height);
         assert(tm.is_occupied() == false);
         //unit_prototype proto_2 = unit_prototype("test_proto_1");

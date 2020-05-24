@@ -4,7 +4,11 @@
 #include "abstract_tilemap.hpp"
 
 namespace tilemap {
-    const std::string hexagonal_type = "tilemap_hexagonal";
+    // JSON
+    namespace j_hexagonal {
+        const std::string type = "hexagonal";
+    }
+
     class hexagonal : public abstract_tilemap {
     public:
         const std::string& type () const override;

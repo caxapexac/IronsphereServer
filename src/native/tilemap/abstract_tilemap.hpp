@@ -8,6 +8,11 @@
 #include "../tiles/damage_dealer.hpp"
 
 namespace tilemap {
+    namespace j_abstract_tilemap {
+        const std::string scale = "scale"; // : vector2
+        const std::string data = "data"; // : base_tile[]
+    }
+
     //TODO foreach iterator on tiles
     class abstract_tilemap : public iserializable, public ityped {
         OBSOLETE friend class nlohmann::json_tools;
@@ -22,6 +27,7 @@ namespace tilemap {
         ~abstract_tilemap () override;
         void serialize (json& package) const override; // TODO cache and set_dirty!
         void deserialize (json& package) override;
+        void serialize_public (json& package);
 
         tile::base_tile& operator[] (const stts::vector2<int>& position);
         tile::base_tile& get_tile (const stts::vector2<int>& position); // TODO into const tile&

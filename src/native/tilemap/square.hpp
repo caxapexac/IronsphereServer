@@ -4,7 +4,11 @@
 #include "abstract_tilemap.hpp"
 
 namespace tilemap {
-    const std::string square_type = "tilemap_square";
+    // JSON
+    namespace j_square {
+        const std::string type = "square";
+    }
+
     class square : public abstract_tilemap {
     public:
         explicit square(const stts::vector2<int>& nscale = stts::vector2<int>(0, 0));
