@@ -9,7 +9,7 @@ namespace game {class abstract_game;}
 namespace stts {
     // JSON
     namespace j_player {
-        const std::string team = TOSTRING(team);
+        const std::string team = TOSTRING(team); // : int
         const std::string parameters = TOSTRING(parameters); // : parameter_map
     }
 

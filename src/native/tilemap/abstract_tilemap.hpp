@@ -9,7 +9,7 @@
 
 namespace tilemap {
     namespace j_abstract_tilemap {
-        const std::string scale = TOSTRING(scale); // : vector2
+        const std::string scale = TOSTRING(scale); // : vector2<int>
         const std::string data = TOSTRING(data); // : base_tile[]
     }
 

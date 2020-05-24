@@ -62,32 +62,32 @@ function Signal(ws, message) {
 
     if (messageJson.version != config.version) {
         console.log(`! Message with version ${messageJson.version} from player ${messageJson.sender}`);
-        ws.send({error: "Please download the latest version of the game"});
+        ws.send(JSON.stringify({error: "Please download the latest version of the game"}));
+        return;
     }
 
-    if (!messageJson.has("sender")) {
-        if (!messageJson.has("nickname")) {
+    if (!messageJson.hasOwnProperty("sender")) {
+        if (!messageJson.hasOwnProperty("nickname")) {
             console.log(`! Message from unknown socket: ${message}`);
             ws.send({error: "Please send your nickname and then uid"});
             return;
         }
 
         let nickname = messageJson.nickname;
-        if (!database.users.has(nickname)) {
+        if (!database.users.includes(nickname)) {
             // Register
             database.users.push(nickname);
         }
 
         let result = {users: database.users};
-        ws.send(result); // SecurEEty
+        ws.send(JSON.stringify(result)); // SecurEEty
         return;
     }
-
     // Login
     connections[messageJson.sender] = ws;
 
     // Logic
-    let response = nativeoop.Signal(message);
+    let response = nativeoop.Signal(JSON.stringify(messageJson));
     ws.send(response);
 
     // TODO temporary
@@ -116,7 +116,7 @@ const GameLoop = function () {
     // Players handling:
     for (let sessionId in responseObj.players_sessions) {
         for (let playerId in responseObj.players_sessions[sessionId]) {
-            if (connections.has(playerId)) {
+            if (connections.hasOwnProperty(playerId)) {
                 connections[playerId].send(JSON.stringify(responseObj.players_sessions[sessionId][playerId]))
             }
             else {
