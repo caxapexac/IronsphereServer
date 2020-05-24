@@ -6,12 +6,13 @@
 namespace tilemap {
     // JSON
     namespace j_square {
-        const std::string type = "square";
+        const std::string type = TOSTRING(square);
     }
 
     class square : public abstract_tilemap {
     public:
         explicit square(const stts::vector2<int>& nscale = stts::vector2<int>(0, 0));
+        explicit square(json& package);
         const std::string& type () const override;
         tile::base_tile& get_tile (int x, int y) override;
         void set_tile (int x, int y, tile::base_tile* item) override;

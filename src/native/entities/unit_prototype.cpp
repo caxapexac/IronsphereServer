@@ -9,7 +9,7 @@ ent::unit_prototype::unit_prototype (const std::string& nname, unit_prototype* n
 }
 
 ent::unit_prototype::unit_prototype (json& package) {
-    deserialize(package);
+    unit_prototype::deserialize(package);
 }
 
 void ent::unit_prototype::serialize (json& package) const {

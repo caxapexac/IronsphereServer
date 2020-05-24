@@ -3,6 +3,9 @@
 stts::player::player (int nteam) : team(nteam) {
     parameters = parameter_map();
 }
+stts::player::player (json& package) {
+    player::deserialize(package);
+}
 
 stts::player::player (const player& copy) {
     *this = copy;
@@ -29,4 +32,5 @@ void stts::player::deserialize (json& package) {
 int stts::player::get_team () {
     return team;
 }
+
 

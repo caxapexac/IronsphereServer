@@ -20,6 +20,7 @@ namespace stts {
 
     public:
         explicit player (int nteam = 0);
+        explicit player (json& package);
         player (const player& copy);
         player& operator= (const player& copy);
         void serialize (json& package) const override;

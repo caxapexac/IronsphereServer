@@ -11,3 +11,8 @@ bool rules::skirmish::is_finished (std::map<int, stts::player*> players, std::ma
     }
     return alive.size() > 1;
 }
+
+rules::skirmish::skirmish (json& package) {
+    skirmish::deserialize(package);
+
+}

@@ -5,10 +5,15 @@
 
 // JSON
 
-namespace out_update { // : j_typed
+namespace out_update {
     const std::string delta_time = TOSTRING(delta_time); // : float
-    const std::string chat_buffer_updates = TOSTRING(chat_buffer_updates); // : int
-    const std::string players_sessions = TOSTRING(players_sessions); // : map<int = session_id, map<int, session>>
+    const std::string broadcast = TOSTRING(broadcast); // : out_broadcast
+    const std::string players_sessions = TOSTRING(players_sessions); // : map<int = session_id, map<int = player_id, session>>
+}
+
+namespace out_broadcast { // : j_typed
+    const std::string type = TOSTRING(out_broadcast);
+    const std::string chat_buffer_updates = TOSTRING(chat_buffer_updates); // : int (to read_chat on change)
 }
 
 namespace out_signal { // : j_typed

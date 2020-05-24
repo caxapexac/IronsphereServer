@@ -60,7 +60,7 @@ namespace stts {
 
     template<typename T>
     vector2<T>::vector2 (json& package) {
-        deserialize(package);
+        vector2::deserialize(package);
     }
 
     template<typename T>

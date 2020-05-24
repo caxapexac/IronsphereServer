@@ -1,5 +1,11 @@
 #include "realtime.hpp"
 
+game::realtime::realtime () : abstract_game() { }
+
+game::realtime::realtime (json& package) {
+    realtime::deserialize(package);
+}
+
 const std::string& game::realtime::type () const {
     return j_realtime::type;
 }
@@ -35,3 +41,6 @@ void game::realtime::update (json& output) {
         i.second->update(*this);
     }
 }
+
+
+

@@ -6,8 +6,8 @@
 namespace tile {
     // JSON
     namespace j_money_dealer {
-        const std::string type = "money_dealer";
-        const std::string money = "money";
+        const std::string type = TOSTRING(money_dealer);
+        const std::string money = TOSTRING(money);
     }
 
     class money_dealer : public base_tile {
@@ -15,6 +15,7 @@ namespace tile {
         int money;
     public:
         explicit money_dealer (float nheight = 0, int nmoney = 1);
+        explicit money_dealer (json& package);
         void serialize (json& package) const override;
         void deserialize (json& package) override;
         const std::string& type () const override;

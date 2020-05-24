@@ -2,6 +2,10 @@
 
 tilemap::square::square (const stts::vector2<int>& nscale) : abstract_tilemap(nscale) { }
 
+tilemap::square::square (json& package) {
+    square::deserialize(package);
+}
+
 const std::string& tilemap::square::type () const {
     return j_square::type;
 }
@@ -50,6 +54,8 @@ std::list<stts::vector2<int>> tilemap::square::get_path (int source_x, int sourc
     // TODO
     return path;
 }
+
+
 
 
 

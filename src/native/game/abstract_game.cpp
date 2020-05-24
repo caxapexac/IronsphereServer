@@ -10,7 +10,7 @@ game::abstract_game::abstract_game () {
 }
 
 game::abstract_game::abstract_game (json& package) {
-    deserialize(package);
+    abstract_game::deserialize(package);
 }
 
 void game::abstract_game::serialize (json& package) const {

@@ -11,6 +11,8 @@ namespace game {
 
     class stepped : public game::abstract_game {
     public:
+        explicit stepped();
+        explicit stepped(json& package);
         const std::string& type () const override;
         void serialize_concrete_player (int player_uid, json& package) override;
         void update (json& output) override;

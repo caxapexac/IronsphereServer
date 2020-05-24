@@ -1,27 +1,22 @@
 #ifndef LOGIC_SINGLETON_HPP
 #define LOGIC_SINGLETON_HPP
 
-#include <memory>
-
 namespace utils {
-    template<typename T> //Where T : new()
+    template<class Derived>
     class singleton {
+    private:
+        singleton (const singleton<Derived>&);
+        singleton<Derived>& operator= (const singleton<Derived>&);
     protected:
-        singleton () = default;
+        singleton () { }
 
     public:
-        singleton (const singleton&) = delete;
-        singleton& operator= (const singleton) = delete;
-        static T& get ();
+        static Derived& get () {
+            static Derived theInstance;
+            return theInstance;
+        }
     };
-
-    template<typename T>
-    T& singleton<T>::get () {
-        static T* instance = new T();
-        return *instance;
-    }
 }
-
 
 
 #endif //LOGIC_SINGLETON_HPP

@@ -26,6 +26,7 @@ namespace ent {
 
     public:
         explicit unit (unit_prototype* nprototype = nullptr, int nplayer_id = -1, int nid = -1);
+        explicit unit (game::abstract_game& context, json& package);
         void serialize (json& package) const final;
         void deserialize (json& package) final;
         void serialize_public(json& package) const;

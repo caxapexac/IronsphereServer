@@ -8,6 +8,14 @@ ent::unit::unit (unit_prototype* nprototype, int nplayer_id, int nid) {
     is_dirty = true;
 }
 
+ent::unit::unit (game::abstract_game& context, json& package) {
+    parameter_map::deserialize(package);
+    if (package.contains(j_unit::prototype)) prototype = context.get_prototype(package[j_unit::prototype]);
+    else prototype = nullptr; // TODO optimize
+    id = package[j_unit::id].get<int>();
+    player_uid = package[j_unit::player_uid].get<int>();
+}
+
 void ent::unit::serialize (json& package) const {
     ensure_cache();
     package = cache;
@@ -70,6 +78,7 @@ void ent::unit::ensure_cache () const {
         is_dirty = false;
     }
 }
+
 
 
 

@@ -9,8 +9,8 @@
 
 namespace tilemap {
     namespace j_abstract_tilemap {
-        const std::string scale = "scale"; // : vector2
-        const std::string data = "data"; // : base_tile[]
+        const std::string scale = TOSTRING(scale); // : vector2
+        const std::string data = TOSTRING(data); // : base_tile[]
     }
 
     //TODO foreach iterator on tiles

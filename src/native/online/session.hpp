@@ -34,7 +34,7 @@ namespace online {
 
         std::string get_session_name ();
         int get_player_count ();
-        void get_session_info(json& output);
+        void get_session_info (json& output);
         void get_game_info (json& output);
 
         void game_update (json& output) override;

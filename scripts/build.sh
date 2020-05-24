@@ -1,2 +1,2 @@
-node-gyp rebuild
+node-gyp build
 

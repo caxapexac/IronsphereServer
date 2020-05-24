@@ -10,13 +10,13 @@
 namespace online {
     namespace j_api { //
         const std::string delta_time = TOSTRING(delta_time); // : float
-        const std::string chat_capacity = TOSTRING(chat_buffer_updates); // : int
+        const std::string chat_capacity = TOSTRING(chat_capacity); // : int
         const std::string chat_buffer_updates = TOSTRING(chat_buffer_updates); // : int (readonly)
     }
 
     /// Facade of the game
     class api : public utils::singleton<api> {
-        friend class singleton;
+        friend class utils::singleton<api>;
     private:
         float delta_time;
         int chat_capacity;
@@ -25,7 +25,7 @@ namespace online {
         std::map<int, std::shared_ptr<session>> sessions;
         l::lll lllll;
 
-        api () noexcept;
+        api();
 
     public:
         static l::lll& get_logger() {

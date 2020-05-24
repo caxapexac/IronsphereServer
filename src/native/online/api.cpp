@@ -2,18 +2,18 @@
 #include "session.hpp"
 #include "../structs/chat_message.hpp"
 
-online::api::api () noexcept {
+online::api::api () {
     delta_time = 0;
     chat_buffer_updates = 0;
     chat_buffer = std::queue<stts::chat_message>();
     sessions = std::map<int, std::shared_ptr<session>>();
 
-    lllll.set_logger(new l::logger_server(), loggers::server_console_logger);
-    lllll.set_logger(new l::logger_client(), loggers::all_clients_logger);
-    lllll.set_logger(new l::logger_file(), loggers::server_file_logger);
+    // lllll.set_logger(new l::logger_server(), loggers::server_console_logger);
+    // lllll.set_logger(new l::logger_client(), loggers::all_clients_logger);
+    // lllll.set_logger(new l::logger_file(), loggers::server_file_logger);
 
-    std::string a = "Server started at XXX";
-    l::lll::say() << a << l::lll::out;
+    // std::string a = "Server started at XXX";
+    // l::lll::say() << a << l::lll::out;
     //TODO log it (server started at xx:xx xx.xx.xxxx)
 }
 
@@ -24,7 +24,8 @@ void online::api::start (json& config) {
 
 void online::api::update (json& output) {
     output[out_update::delta_time] = delta_time;
-    output[out_update::chat_buffer_updates] = chat_buffer_updates;
+    output[out_update::broadcast][j_typed::type] = out_broadcast::type;
+    output[out_update::broadcast][out_broadcast::chat_buffer_updates] = chat_buffer_updates;
     for (const auto& item : sessions) item.second->game_update(output[out_update::players_sessions][item.first]);
 }
 

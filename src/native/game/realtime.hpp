@@ -11,6 +11,8 @@ namespace game {
 
     class realtime : public game::abstract_game {
     public:
+        explicit realtime();
+        explicit realtime(json& package);
         const std::string& type () const override;
         void serialize_concrete_player (int player_uid, json& package) override;
         void update (json& output) override;

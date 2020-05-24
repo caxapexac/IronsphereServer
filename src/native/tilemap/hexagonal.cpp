@@ -1,5 +1,13 @@
 #include "hexagonal.hpp"
 
+tilemap::hexagonal::hexagonal (const stts::vector2<int>& nscale) : abstract_tilemap(nscale) {
+    // TODO
+}
+
+tilemap::hexagonal::hexagonal (json& package) {
+    hexagonal::deserialize(package);
+}
+
 const std::string& tilemap::hexagonal::type () const {
     return j_hexagonal::type;
 }
@@ -27,4 +35,6 @@ float tilemap::hexagonal::get_distance (int source_x, int source_y, int destinat
 std::list<stts::vector2<int>> tilemap::hexagonal::get_path (int source_x, int source_y, int destination_x, int destination_y) {
     return std::list<stts::vector2<int>>();
 }
+
+
 

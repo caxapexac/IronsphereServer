@@ -3,6 +3,10 @@
 
 tile::base_tile::base_tile (float nheight) : height(nheight), occupier_uid(0) { }
 
+tile::base_tile::base_tile (json& package) {
+    base_tile::deserialize(package);
+}
+
 tile::base_tile::base_tile (const base_tile& copy) {
     *this = copy;
 }
@@ -62,6 +66,8 @@ void tile::base_tile::on_unit_exit (ent::unit& sender) {
     occupier_uid = 0;
     // Do nothing
 }
+
+
 
 
 

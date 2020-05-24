@@ -15,8 +15,8 @@ void Start(const Napi::CallbackInfo& info)
         Napi::TypeError::New(env, "Argument isn't a string in Start()").ThrowAsJavaScriptException();
         return;
     }
-    json config = info[0].ToString();
-    game_lobby::get().start(config);
+    json config = json::parse(info[0].ToString().Utf8Value());
+    online::api::get().start(config);
     return;
 }
 
@@ -28,7 +28,7 @@ Napi::String Update(const Napi::CallbackInfo& info)
         return Napi::String::New(env, "Error");
     }
     json output;
-    game_lobby::get().update(output);
+    online::api::get().update(output);
     return Napi::String::New(env, output.dump());
 }
 
@@ -44,15 +44,19 @@ Napi::String Signal(const Napi::CallbackInfo& info)
         Napi::TypeError::New(env, "Argument isn't a string in Signal()").ThrowAsJavaScriptException();
         return Napi::String::New(env, "Error");
     }
-    json input = info[0].ToString();
+    json input = json::parse(info[0].ToString().Utf8Value());
     json output;
-    game_lobby::get().signal(input, output);
+    online::api::get().signal(input, output);
     return Napi::String::New(env, output.dump());
 }
 
 // Callback for registering module with node.js
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
+    exports.Set(
+        Napi::String::New(env, "Start"),
+        Napi::Function::New(env, Start)
+    );
     exports.Set(
         Napi::String::New(env, "Update"),
         Napi::Function::New(env, Update)

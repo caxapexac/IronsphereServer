@@ -21,6 +21,7 @@ namespace ent {
 
     public:
         explicit unit_factory ();
+        explicit unit_factory (json& package);
         void serialize (json& package) const override;
         void deserialize (json& package) override;
 

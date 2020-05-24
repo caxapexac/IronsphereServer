@@ -11,6 +11,10 @@ ent::unit_factory::unit_factory () {
     prototypes = std::map<std::string, unit_prototype*>();
 }
 
+ent::unit_factory::unit_factory (json& package) {
+    unit_factory::deserialize(package);
+}
+
 void ent::unit_factory::serialize (json& package) const {
     package[j_unit_factory::next_id] = next_id;
     for (const auto& i : prototypes) {
@@ -45,5 +49,6 @@ ent::unit* ent::unit_factory::make_unit (const std::string& prototype_name, int 
     }
     return new ent::unit(get_prototype(prototype_name), player_uid, get_id());
 }
+
 
 

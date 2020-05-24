@@ -67,7 +67,7 @@ namespace nlohmann {
         static std::map<int, V*> unpack_map_int_of_ptrs (json& package);
 
         template<typename V>
-        static std::map<std::string, std::__cxx11::list<V>> unpack_map_string_list (json& package);
+        static std::map<std::string, std::list<V>> unpack_map_string_list (json& package);
 
 
         // TODO make it in logger

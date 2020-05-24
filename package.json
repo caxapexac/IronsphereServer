@@ -26,6 +26,7 @@
     "test": "sh scripts/test.sh",
     "build": "sh scripts/build.sh",
     "build-prod": "sh scripts/build-prod.sh",
+    "rebuild": "sh scripts/rebuild.sh",
     "start": "sh scripts/start.sh",
     "start-prod": "sh scripts/start-prod.sh",
     "start-logic": "sh scripts/start-logic.sh",

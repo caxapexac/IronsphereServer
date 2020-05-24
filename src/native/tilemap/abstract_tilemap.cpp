@@ -42,13 +42,13 @@ void tilemap::abstract_tilemap::serialize (json& package) const {
 }
 
 void tilemap::abstract_tilemap::deserialize (json& package) {
-    scale.deserialize(package[j_abstract_tilemap::scale]);
+    scale = stts::vector2<int>(package[j_abstract_tilemap::scale]);
     json j_data = package[j_abstract_tilemap::data];
     delete [] data;
     data = new tile::base_tile*[tile_count()];
     for (int i = 0; i < tile_count(); ++i) {
         // TODO delete old tiles
-        data[i] = nlohmann::json_tools::unpack_tile(j_data[i]);
+        data[i] = json_tools::unpack_tile(j_data[i]);
     }
 }
 

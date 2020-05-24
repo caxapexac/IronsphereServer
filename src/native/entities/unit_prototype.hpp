@@ -23,8 +23,8 @@ namespace ent {
     public:
         explicit unit_prototype (const std::string& nname, unit_prototype* nprototype = nullptr);
         explicit unit_prototype (json& package);
-        void serialize (json& package) const final;
-        void deserialize (json& package) final;
+        void serialize (json& package) const override;
+        void deserialize (json& package) override;
 
         const std::string& get_name () const;
         void add_component (const std::string& component_name); // Experimental feature preview bugged like unity3d
