@@ -62,25 +62,29 @@ function Signal(ws, message) {
 
     if (messageJson.version != config.version) {
         console.log(`! Message with version ${messageJson.version} from player ${messageJson.sender}`);
-        ws.send(JSON.stringify({error: "Please download the latest version of the game"}));
+        ws.send(JSON.stringify({type: "out_connect", error: "Please download the latest version of the game"}));
         return;
     }
 
     if (!messageJson.hasOwnProperty("sender")) {
         if (!messageJson.hasOwnProperty("nickname")) {
             console.log(`! Message from unknown socket: ${message}`);
-            ws.send({error: "Please send your nickname and then uid"});
+            ws.send(JSON.stringify({type: "out_connect", error: "Please send your nickname and then uid"}));
             return;
         }
 
         let nickname = messageJson.nickname;
+        if (nickname == "") {
+            console.log(`! Message from unknown socket: ${message} with empty nickname`);
+            ws.send(JSON.stringify({type: "out_connect", error: "Please send your nickname and then uid"}));
+            return;
+        }
         if (!database.users.includes(nickname)) {
             // Register
             database.users.push(nickname);
         }
 
-        let result = {users: database.users};
-        ws.send(JSON.stringify(result)); // SecurEEty
+        ws.send(JSON.stringify({type: "out_connect", users: database.users})); // SecurEEty
         return;
     }
     // Login

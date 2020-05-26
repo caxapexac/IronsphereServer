@@ -25,7 +25,6 @@ namespace in_write_chat { // : in_signal
 
 namespace in_create_session { // : in_signal
     const std::string type = TOSTRING(in_create_session);
-    const std::string session_id = TOSTRING(session_id); // : int
     const std::string session_name = TOSTRING(session_name); // : string
 }
 

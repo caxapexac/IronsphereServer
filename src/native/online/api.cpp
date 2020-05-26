@@ -61,6 +61,10 @@ void online::api::write_chat (json& input, json& output) {
         output[out_signal::error] = LOCATED("Input isn't correct");
         return;
     }
+    if (input[in_write_chat::message] == "") {
+        output[out_signal::error] = LOCATED("Message is empty");
+        return;
+    }
     int player_uid = input[in_signal::sender].get<int>();
     chat_buffer.push(stts::chat_message(player_uid, input[in_write_chat::message]));
     if (chat_buffer.size() > chat_capacity) chat_buffer.pop();
@@ -71,18 +75,14 @@ void online::api::write_chat (json& input, json& output) {
 
 void online::api::create_session (json& input, json& output) {
     output[j_typed::type] = out_create_session::type;
-    if (input[in_create_session::session_id] == nullptr || input[in_create_session::session_name] == nullptr) {
+    if (input[in_create_session::session_name] == nullptr) {
         output[out_signal::error] = LOCATED("Input isn't correct");
         return;
     }
-    int session_id = input[in_create_session::session_id].get<int>();
-    if (sessions[session_id] != nullptr) {
-        output[out_signal::error] = LOCATED("Room is already exist");
-        return;
-    }
-
+    int session_id = 1;
+    while (sessions[session_id] != nullptr) session_id++;
     sessions[session_id] = std::make_shared<session>(input[in_create_session::session_name]);
-    sessions[session_id]->game_join(input[in_signal::sender], output);
+    output[out_create_session::session_id] = session_id;
 }
 
 void online::api::signal_session (json& input, json& output) {
