@@ -62,18 +62,19 @@ l::lll& l::lll::say_to (std::string& addressee, streams str) {
     return logger;
 }
 
+namespace l {
+    l::lll &operator<<(l::lll &out, json &object) {
+        //out.alpha << object.dump(2); FIXME
+        return out;
+    }
 
-l::lll& l::operator<<(l::lll &out, json &object) {
-    //out.alpha << object.dump(2); FIXME
-    return out;
-}
+    l::lll &operator<<(l::lll &out, l::lll &(*f)(l::lll &)) {
+        return f(out);
+    }
 
-l::lll& l::operator<<(l::lll &out, l::lll &(*f)(l::lll &)) {
-    return f(out);
-}
-
-void l::operator<<(l::lll &out, void (*f)(l::lll &)) {
-    f(out);
+    void operator<<(l::lll &out, void (*f)(l::lll &)) {
+        f(out);
+    }
 }
 
 
