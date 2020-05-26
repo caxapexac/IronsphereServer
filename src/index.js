@@ -15,7 +15,7 @@ if (!fs.existsSync("database.json")) {
 if (!fs.existsSync("config.json")) {
     fs.writeFileSync("config.json", JSON.stringify({
         title: "Ironsphere Game Server",
-        version: 104,
+        version: 105,
         port: 1109,
         delta_time: 1111,
         chat_capacity: 100
@@ -43,7 +43,6 @@ wss.on("connection", function connection(ws) {
     ws.on("message", function incoming(message) {
         Signal(ws, message);
     });
-    ws.send("I'm alive");
 });
 
 wss.on("close", function connection(ws) {
@@ -59,6 +58,7 @@ wss.on("error", function connection(ws) {
 
 function Signal(ws, message) {
     let messageJson = JSON.parse(message);
+    console.log(JSON.stringify(messageJson, null, 2));
 
     if (messageJson.version != config.version) {
         console.log(`! Message with version ${messageJson.version} from player ${messageJson.sender}`);

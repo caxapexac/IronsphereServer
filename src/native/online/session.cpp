@@ -33,6 +33,7 @@ void online::session::get_game_info (json& output) {
 }
 
 void online::session::game_update (json& output) {
+    std::cout << "updating" << session_name;
     state->game_update(output);
 }
 

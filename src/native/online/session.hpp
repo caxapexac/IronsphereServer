@@ -13,7 +13,7 @@ namespace online {
         const std::string type = TOSTRING(session); // : string
         const std::string session_name = TOSTRING(session_name); // : string?
         const std::string players_uid = TOSTRING(players_uid); // : list<int>?
-        const std::string state = TOSTRING(state); // : ihandler
+        const std::string state = TOSTRING(state); // : string
         const std::string game = TOSTRING(game); // : abstract_game?
     }
 

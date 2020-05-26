@@ -23,10 +23,12 @@ void online::api::start (json& config) {
 }
 
 void online::api::update (json& output) {
-    output[out_update::delta_time] = delta_time;
+    output[out_update::delta_time] = delta_time + 1;
     output[out_update::broadcast][j_typed::type] = out_broadcast::type;
     output[out_update::broadcast][out_broadcast::chat_buffer_updates] = chat_buffer_updates;
-    for (const auto& item : sessions) item.second->game_update(output[out_update::players_sessions][item.first]);
+    for (const auto& item : sessions) {
+        item.second->game_update(output[out_update::players_sessions][std::to_string(item.first)]);
+    }
 }
 
 void online::api::signal (json& input, json& output) {
@@ -47,7 +49,9 @@ void online::api::signal (json& input, json& output) {
 void online::api::server_info (json& output) {
     output[j_typed::type] = out_server_info::type;
     output[out_server_info::sessions] = json::object();
-    for (const auto& item : sessions) item.second->get_session_info(output[out_server_info::sessions][item.first]);
+    for (const auto& item : sessions) {
+        item.second->get_session_info(output[out_server_info::sessions][std::to_string(item.first)]);
+    }
 }
 
 void online::api::read_chat (json& output) {
@@ -91,12 +95,14 @@ void online::api::signal_session (json& input, json& output) {
         output[out_signal::error] = LOCATED("Input isn't correct");
         return;
     }
+
     int session_id = input[in_signal_session::session_id].get<int>();
-    std::shared_ptr<session> session = sessions[session_id];
-    if (session == nullptr) {
+    auto iter = sessions.find(session_id);
+    if (iter == sessions.end()) {
         output[out_signal::error] = LOCATED("Session wasn't found");
         return;
     }
+    std::shared_ptr<session> session = iter->second;
 
     std::string type = input[j_typed::type];
     if (type == in_game_info::type) session->get_game_info(output);
