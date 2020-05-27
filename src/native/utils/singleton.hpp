@@ -4,13 +4,14 @@
 namespace utils {
     template<class Derived>
     class singleton {
-    private:
-        singleton (const singleton<Derived>&);
-        singleton<Derived>& operator= (const singleton<Derived>&);
     protected:
         singleton () { }
 
     public:
+        // For sum kind o safety.
+        singleton (const singleton<Derived>&) = delete;
+        singleton<Derived>& operator= (const singleton<Derived>&) = delete;
+
         static Derived& get () {
             static Derived theInstance;
             return theInstance;

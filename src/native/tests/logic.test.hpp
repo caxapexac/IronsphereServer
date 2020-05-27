@@ -9,6 +9,8 @@
 
 namespace unit_testing {
     void test_logic() {
+
+
         std::cout << "* test_logic [started]" << std::endl; //TODO logger
 
         srand(time(nullptr));

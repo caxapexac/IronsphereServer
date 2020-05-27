@@ -7,10 +7,10 @@
 namespace l {
     class logger_user : public l::abstract_logger {
     private:
-        std::string addressee;
+        int addressee;
 
     public:
-        void change_addressee (std::string& newcomer);
+        void change_addressee (int newcomer);
         void let (std::string& verbal, streams stream) override;
     };
 }

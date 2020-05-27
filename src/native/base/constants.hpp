@@ -3,10 +3,6 @@
 
 #include "third_party_includes.hpp"
 
-enum loggers { // FIXME into loggers folder and namespace
-    server_console_logger = 1, all_clients_logger = 2, server_file_logger = 4
-};
-
 enum streams : char { // FIXME into loggers folder and namespace
     error = 'E', warning = 'W', debug = 'D', message = 'M', special = 'S'
 };

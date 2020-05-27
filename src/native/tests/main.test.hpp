@@ -28,7 +28,7 @@
 #include "lobby/game_lobby.test.hpp"
 #include "lobby/game_session.test.hpp"
 
-//#include "logger/" TODO
+#include "logger/logger.test.hpp"
 
 #include "structs/parameter_map.test.hpp"
 #include "structs/player.test.hpp"
@@ -45,7 +45,7 @@
 namespace unit_testing {
     void unit_test_all () {
         std::cout << "***STARTING UNIT TESTING***" << std::endl;
-        // TODO
+        test_logger();
         std::cout << "***UNIT TESTING SUCCESS***" << std::endl;
     }
 

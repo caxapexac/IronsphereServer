@@ -5,6 +5,6 @@ void l::logger_user::let (std::string& verbal, streams stream) {
     //transmitter::transmit(addressee, verbal);
 }
 
-void l::logger_user::change_addressee (std::string& newcomer) {
+void l::logger_user::change_addressee (int newcomer) {
     addressee = newcomer;
 }

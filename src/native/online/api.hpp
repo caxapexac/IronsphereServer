@@ -4,7 +4,7 @@
 #include "session.hpp"
 #include "../base/includes.hpp"
 #include "../utils/singleton.hpp"
-#include "../logger/lll.hpp"
+#include "../logger/on.hpp"
 #include "../structs/chat_message.hpp"
 
 namespace online {
@@ -23,14 +23,10 @@ namespace online {
         mutable int chat_buffer_updates;
         std::queue<stts::chat_message> chat_buffer;
         std::map<int, std::shared_ptr<session>> sessions;
-        l::lll lllll;
 
         api();
 
     public:
-        static l::lll& get_logger() {
-            return get().lllll; // TODO into cpp declaration
-        }
 
         /// One server frame
         void start (json& config);
