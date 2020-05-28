@@ -3,10 +3,6 @@
 
 #include "third_party_includes.hpp"
 
-enum streams : char { // FIXME into loggers folder and namespace
-    error = 'E', warning = 'W', debug = 'D', message = 'M', special = 'S'
-};
-
 
 /*Patterns
  * L1 Unit attributes, abilities (components(?)) (?)

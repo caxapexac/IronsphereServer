@@ -5,16 +5,10 @@
 
 namespace unit_testing {
     void test_logger() {
-        l::on::set_server_logger(new l::logger_server);
-        l::on::set_client_logger(new l::logger_client);
-        l::on::set_file_logger(new l::logger_file);
-        l::on::toggle_loggers(true, true, true);
-
-        l::on::say() << "Server started at XXX" << l::on::out;
-
-        l::on::set_user_logger(new l::logger_user);
-        std::string lol = "LOL";
-        l::on::say_to(12, lol);
+        // maybe add some sample json and iserializable objects to test? Haven't found any with obvious constructors.
+        l::on::say() << "Message sent via SO operator, also includes numbers, characters, whatever:" << 'a' << " " << 128 << l::on::over << "And one another string too" << l::on::out;
+        l::on::say("Warning string via say operator", l::warning);
+        l::on::say(404, l::error);
     }
 }
 

@@ -8,7 +8,7 @@ void l::logger_file::write_to_file (std::string& filename, std::string& verbal) 
     out.close();
 }
 
-void l::logger_file::let (std::string& verbal, streams stream) {
+void l::logger_file::let (std::string& verbal, streams stream, bool decorated) {
     std::string PATH = std::string(R"(C:\Users\miles\Documents\untitled\)");
 
     std::string this_file_name = PATH + get_time_name(false);
@@ -32,6 +32,8 @@ void l::logger_file::let (std::string& verbal, streams stream) {
             break;
     }
 
-    write_to_file(this_file_name, verbal);
-    write_to_file(all_file_name, verbal);
+    std::string timed_verbal = "! " + abstract_logger::get_time_name(true) + ": " + verbal + "\n";
+    timed_verbal.insert(timed_verbal.begin(), (char) stream);
+    write_to_file(this_file_name, timed_verbal);
+    write_to_file(all_file_name, timed_verbal);
 }

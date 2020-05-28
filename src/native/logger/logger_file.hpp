@@ -10,7 +10,7 @@ namespace l {
         static void write_to_file (std::string& filename, std::string& verbal);
 
     public:
-        void let (std::string& verbal, streams stream) override;
+        void let (std::string& verbal, streams stream, bool decorated) override;
     };
 }
 

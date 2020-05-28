@@ -7,7 +7,7 @@
 
 #include "abstract_logger.hpp"
 #include "logger_server.hpp"
-#include "logger_client.hpp"
+#include "logger_broadcast.hpp"
 #include "logger_user.hpp"
 #include "logger_file.hpp"
 
@@ -15,40 +15,34 @@ namespace l {
     class on : public utils::singleton<on> {
         friend class utils::singleton<on>;
     private:
-        void send (std::string& verbal);
+        void send (bool decorated);
 
-        bool serverL, clientL, fileL;
-        logger_server* SL{};
-        logger_client* CL{};
-        logger_file* FL{};
-        logger_user* UL{};
-
+        abstract_logger** logs;
         streams stream;
         std::ostringstream alpha;
 
         using utils::singleton<on>::get;
 
     protected:
-        on();
+        on ();
 
     public:
-        ~on () = default;
+        ~on ();
 
-        static void set_server_logger (logger_server* log);
-        static void set_client_logger (logger_client* log);
-        static void set_file_logger (logger_file* log);
-        static void set_user_logger (logger_user* log);
-        static void toggle_loggers (bool server, bool client, bool file);
+        static void enable_logger (bool enabled, streams logger);
 
         static on& say (streams str = message);
-        static void say_to (int addressee, std::string& msg, streams str = message);
+        template<typename T>
+        static void say (const T& value, streams str = message);
+        static void say (json& object, streams str = message);
+        static void say (iserializable& object, streams str = message);
 
         template<typename T>
         friend l::on& operator<< (l::on& out, const T& value);
         friend l::on& operator<< (l::on& out, json& object);
+        friend l::on& operator<< (l::on& out, iserializable& object);
         friend l::on& operator<< (l::on& out, l::on& (* f) (l::on&));
         friend void operator<< (l::on& out, void (* f) (l::on&));
-        //TODO: for iSerializable,  any object to say
 
         static on& over (on& out);
         static void out (on& out);
@@ -57,9 +51,17 @@ namespace l {
 
 
     template<typename T>
-    l::on& l::operator<<(l::on &out, const T &value) {
+    l::on& operator<< (l::on &out, const T &value) {
         out.alpha << value;
         return out;
+    }
+
+    template<typename T>
+    void l::on::say (const T &value, l::streams str) {
+        on& fin = utils::singleton<on>::get();
+        fin.stream = str;
+        fin.alpha << value;
+        fin.send(true);
     }
 }
 

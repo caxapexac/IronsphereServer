@@ -5,60 +5,38 @@
 
 l::on::on () : utils::singleton<on>() {
     stream = message;
-    serverL = false;
-    clientL = false;
-    fileL = false;
-    SL = nullptr;
-    CL = nullptr;
-    FL = nullptr;
-    UL = nullptr;
+    logs = new abstract_logger*[4];
+    logs[server_console_logger] = new logger_server();
+    logs[broadcast_logger] = new logger_broadcast();
+    logs[server_file_logger] = new logger_file();
+    logs[user_logger] = new logger_user();
     alpha = std::ostringstream();
 }
 
-
-
-void l::on::set_server_logger (logger_server* log) {
-    on& fin = utils::singleton<on>::get();
-    fin.SL = log;
+l::on::~on () {
+    delete logs[server_console_logger];
+    delete logs[broadcast_logger];
+    delete logs[server_file_logger];
+    delete logs[user_logger];
+    delete[] logs;
 }
 
-void l::on::set_client_logger (logger_client* log) {
-    on& fin = utils::singleton<on>::get();
-    fin.CL = log;
+void l::on::enable_logger(bool enabled, l::streams logger) {
+    utils::singleton<on>::get().logs[logger]->set_enabled(enabled);
 }
 
-void l::on::set_file_logger (logger_file* log) {
-    on& fin = utils::singleton<on>::get();
-    fin.FL = log;
-}
-
-void l::on::set_user_logger (logger_user* log) {
-    on& fin = utils::singleton<on>::get();
-    fin.UL = log;
-}
-
-void l::on::toggle_loggers(bool server, bool client, bool file) {
-    on& fin = utils::singleton<on>::get();
-    fin.serverL = server;
-    fin.clientL = client;
-    fin.fileL = file;
-}
-
-
-
-void l::on::send (std::string& verbal) {
-    if (serverL)
-        if (SL) SL->let(verbal, stream);
-        //else raise Exception;
-    if (clientL)
-        if (CL) CL->let(verbal, stream);
-        //else raise Exception;
-    if (fileL)
-        if (FL) FL->let(verbal, stream);
-        //else raise Exception;
+void l::on::send (bool decorated) {
+    std::string verbal = this->alpha.str();
+    if (logs[server_console_logger]->is_enabled())
+        logs[server_console_logger]->let(verbal, stream, decorated);
+    if (logs[broadcast_logger]->is_enabled())
+        logs[broadcast_logger]->let(verbal, stream, decorated);
+    if (logs[server_file_logger]->is_enabled())
+        logs[server_file_logger]->let(verbal, stream, decorated);
+    if (logs[user_logger]->is_enabled())
+        logs[user_logger]->let(verbal, stream, decorated);
     alpha = std::ostringstream();
 }
-
 
 l::on& l::on::say (streams str) {
     on& fin = utils::singleton<on>::get();
@@ -66,20 +44,36 @@ l::on& l::on::say (streams str) {
     return fin;
 }
 
-void l::on::say_to (int addressee, std::string& msg, streams str) {
+void l::on::say (json &object, l::streams str) {
     on& fin = utils::singleton<on>::get();
-    //if (!UL) raise Exception;
-    fin.UL->change_addressee(addressee);
-    fin.UL->let(msg, str);
+    fin.stream = str;
+    fin.alpha << object.dump(2);
+    fin.send(true);
+}
+
+void l::on::say (iserializable &object, l::streams str) {
+    on& fin = utils::singleton<on>::get();
+    fin.stream = str;
+    json package;
+    object.serialize(package);
+    fin.alpha << package.dump(2);
+    fin.send(true);
 }
 
 namespace l {
-    l::on &operator<<(l::on &out, json &object) {
+    l::on& operator<<(l::on &out, json &object) {
         out.alpha << object.dump(2);
         return out;
     }
 
-    l::on &operator<<(l::on &out, l::on &(*f)(l::on &)) {
+    l::on& operator<<(l::on &out, iserializable &object) {
+        json package;
+        object.serialize(package);
+        out.alpha << package.dump(2);
+        return out;
+    }
+
+    l::on& operator<<(l::on &out, l::on &(*f)(l::on &)) {
         return f(out);
     }
 
@@ -90,13 +84,10 @@ namespace l {
 
 
 l::on& l::on::over (on& out) {
-    std::string verbal = out.alpha.str();
-    out.send(verbal);
+    out.send(false);
     return out;
 }
 
 void l::on::out (on& out) {
-    std::string timed_verbal = "! " + abstract_logger::get_time_name(true) + ": " + out.alpha.str();
-    timed_verbal.insert(timed_verbal.begin(), (char)out.stream);
-    out.send(timed_verbal);
+    out.send(true);
 }

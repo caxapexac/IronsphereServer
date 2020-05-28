@@ -7,7 +7,7 @@
 namespace l {
     class logger_server : public l::abstract_logger {
     public:
-        void let(std::string& verbal, streams stream) override;
+        void let(std::string& verbal, streams stream, bool decorated) override;
     };
 }
 
