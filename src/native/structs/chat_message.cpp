@@ -21,11 +21,11 @@ stts::chat_message& stts::chat_message::operator= (const chat_message& other) {
 }
 
 void stts::chat_message::serialize (json& package) const {
-    package[chat_message::player_uid] = player_uid;
-    package[chat_message::message] = message;
+    package[j_chat_message::player_uid] = player_uid;
+    package[j_chat_message::message] = message;
 }
 
 void stts::chat_message::deserialize (json& package) {
-    player_uid = package[chat_message::player_uid].get<int>();
-    message = package[chat_message::message].get<std::string>();
+    player_uid = package[j_chat_message::player_uid].get<int>();
+    message = package[j_chat_message::message].get<std::string>();
 }

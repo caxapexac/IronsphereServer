@@ -21,7 +21,7 @@ l::on::~on () {
     delete[] logs;
 }
 
-void l::on::enable_logger(bool enabled, l::streams logger) {
+void l::on::enable_logger(bool enabled, l::loggers logger) {
     utils::singleton<on>::get().logs[logger]->set_enabled(enabled);
 }
 

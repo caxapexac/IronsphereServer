@@ -4,7 +4,6 @@
 #include "session.hpp"
 #include "../base/includes.hpp"
 #include "../utils/singleton.hpp"
-#include "../logger/on.hpp"
 #include "../structs/chat_message.hpp"
 
 namespace online {
@@ -12,16 +11,20 @@ namespace online {
         const std::string delta_time = TOSTRING(delta_time); // : float
         const std::string chat_capacity = TOSTRING(chat_capacity); // : int
         const std::string chat_buffer_updates = TOSTRING(chat_buffer_updates); // : int (readonly)
+        const std::string root_folder = TOSTRING(root_folder); // : std::string
     }
 
     /// Facade of the game
     class api : public utils::singleton<api> {
         friend class utils::singleton<api>;
+        friend class l::logger_user;
+        friend class l::logger_broadcast;
     private:
         float delta_time;
         int chat_capacity;
         mutable int chat_buffer_updates;
         std::queue<stts::chat_message> chat_buffer;
+        std::queue<stts::chat_message> broadcast_buffer;
         std::map<int, std::shared_ptr<session>> sessions;
 
         api();

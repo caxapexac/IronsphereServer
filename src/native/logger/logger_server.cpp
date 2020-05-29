@@ -1,23 +1,40 @@
 #include "logger_server.hpp"
 
+#define ERROR 31
+#define SPECIAL 32
+#define WARNING 33
+#define DEBUG 34
+#define MESSAGE 38
+
+
+
+void l::logger_server::print_color(std::string &verbal, int color) { // TODO addind terminal type check maybe?..
+    std::cout << "\033[" << color << "m" << verbal << "\033[m" << std::endl;
+}
+
 void l::logger_server::let(std::string &verbal, streams stream, bool decorated) {
-    std::string timed_verbal = "! " + abstract_logger::get_time_name(true) + ": " + verbal;
-    timed_verbal.insert(timed_verbal.begin(), (char) stream);
-    switch (stream) {
-        case error:
-            std::cout << "\\033[31m" << timed_verbal << "\\033[m\"" << std::endl;
-            break;
-        case warning:
-            std::cout << "\\033[33m" << timed_verbal << "\\033[m\"" << std::endl;
-            break;
-        case debug:
-            std::cout << "\\033[34m" << timed_verbal << "\\033[m\"" << std::endl;
-            break;
-        case message:
-            std::cout << "\\033[38m" << timed_verbal << "\\033[m\"" << std::endl;
-            break;
-        case special:
-            std::cout << "\\033[32m" << timed_verbal << "\\033[m\"" << std::endl;
-            break;
+    if (decorated) {
+        std::stringstream ss;
+        ss << (char) stream << "! " << abstract_logger::get_time_name(true) << ": " << verbal;
+        std::string timed_verbal = ss.str();
+        switch (stream) {
+            case error:
+                print_color(timed_verbal, ERROR);
+                break;
+            case warning:
+                print_color(timed_verbal, WARNING);
+                break;
+            case debug:
+                print_color(timed_verbal, DEBUG);
+                break;
+            case message:
+                print_color(timed_verbal, MESSAGE);
+                break;
+            case special:
+                print_color(timed_verbal, SPECIAL);
+                break;
+        }
+    } else {
+        std::cout << verbal << std::endl;
     }
 }

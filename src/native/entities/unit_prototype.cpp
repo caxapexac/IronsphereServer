@@ -40,7 +40,7 @@ void ent::unit_prototype::add_component (const std::string& component_name) {
 }
 
 void ent::unit_prototype::get_cache_public (const ent::unit& head, json& output) const {
-    for (const auto& i : components) i.second->serialize_public(head, output);
+    for (const auto& i : components) i.second->serialize_public(head, output); // TODO recursive
 }
 
 void ent::unit_prototype::update (ent::unit& head, game::abstract_game& game, int ttl) {

@@ -2,7 +2,8 @@
 #define LOGIC_LOG_HPP
 
 // TODO logger should be accesible using base/includes import, includes should be changed to avoid forward declaration
-#include "../base/includes.hpp"
+#include "../base/third_party_includes.hpp"
+#include "../base/interfaces.hpp"
 #include "../utils/singleton.hpp"
 
 #include "abstract_logger.hpp"
@@ -29,7 +30,7 @@ namespace l {
     public:
         ~on ();
 
-        static void enable_logger (bool enabled, streams logger);
+        static void enable_logger (bool enabled, loggers logger);
 
         static on& say (streams str = message);
         template<typename T>

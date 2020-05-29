@@ -1,7 +1,6 @@
 #ifndef LOGIC_LOGGER_FILE_HPP
 #define LOGIC_LOGGER_FILE_HPP
 
-#include "../base/includes.hpp"
 #include "abstract_logger.hpp"
 
 namespace l {

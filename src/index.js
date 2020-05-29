@@ -18,7 +18,8 @@ if (!fs.existsSync("config.json")) {
         version: 105,
         port: 1109,
         delta_time: 1111,
-        chat_capacity: 100
+        chat_capacity: 100,
+        root_folder: "./root/"
     }, null, 2));
 }
 
