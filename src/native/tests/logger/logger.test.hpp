@@ -29,7 +29,6 @@ namespace unit_testing {
         logger::say(j, l::special);
         logger::say("Logger testing finished!");
         logger::say() << logger::over;
-        logger::say(file::file_gate::ROOT);
     }
 }
 

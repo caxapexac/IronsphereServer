@@ -17,8 +17,6 @@ namespace online {
     /// Facade of the game
     class api : public utils::singleton<api> {
         friend class utils::singleton<api>;
-        friend class l::logger_user;
-        friend class l::logger_broadcast;
     private:
         float delta_time;
         int chat_capacity;
@@ -30,6 +28,9 @@ namespace online {
         api();
 
     public:
+
+        void to_chat(stts::chat_message& msg);
+        void to_broadcast(stts::chat_message& msg);
 
         /// One server frame
         void start (json& config);

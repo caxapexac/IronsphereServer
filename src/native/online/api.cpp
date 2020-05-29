@@ -7,14 +7,27 @@ online::api::api () {
     chat_buffer = std::queue<stts::chat_message>();
     broadcast_buffer = std::queue<stts::chat_message>();
     sessions = std::map<int, std::shared_ptr<session>>();
-
-    logger::say("Server started", l::special);
 }
 
+void online::api::to_chat(stts::chat_message &msg) {
+    broadcast_buffer.push(msg);
+}
+
+void online::api::to_broadcast(stts::chat_message &msg) {
+    chat_buffer.push(msg);
+    if (chat_buffer.size() > chat_capacity) chat_buffer.pop();
+    chat_buffer_updates++;
+}
+
+
+
 void online::api::start (json& config) {
+    logger::say("Server started", l::special);
+
     delta_time = config[j_api::delta_time].get<float>();
     chat_capacity = config[j_api::chat_capacity].get<int>();
-    file::file_gate::ROOT = config[j_api::root_folder].get<std::string>(); //WTF?? hode-gyp compiler fails here as if in file_gate.cpp was not defined ROOT. BUT IT IS!!!
+    logger::say(config, l::warning);
+    file::file_gate::ROOT = config[j_api::root_folder].get<std::string>();
     logger::say(file::file_gate::ROOT, l::debug);
 }
 

@@ -5,9 +5,7 @@
 
 namespace file {
     class file_gate {
-        friend class online::api;
-
-    private:
+    public:
         static std::string ROOT;
     };
 }
