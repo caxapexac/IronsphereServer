@@ -36,12 +36,10 @@ namespace l {
         template<typename T>
         static void say (const T& value, streams str = message);
         static void say (json& object, streams str = message);
-        static void say (iserializable& object, streams str = message);
 
         template<typename T>
         friend l::on& operator<< (l::on& out, const T& value);
         friend l::on& operator<< (l::on& out, json& object);
-        friend l::on& operator<< (l::on& out, iserializable& object);
         friend l::on& operator<< (l::on& out, l::on& (* f) (l::on&));
         friend void operator<< (l::on& out, void (* f) (l::on&));
 

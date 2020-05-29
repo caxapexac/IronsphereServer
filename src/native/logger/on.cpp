@@ -51,25 +51,9 @@ void l::on::say (json &object, l::streams str) {
     fin.send(true);
 }
 
-void l::on::say (iserializable &object, l::streams str) {
-    on& fin = utils::singleton<on>::get();
-    fin.stream = str;
-    json package;
-    object.serialize(package);
-    fin.alpha << package.dump(2);
-    fin.send(true);
-}
-
 namespace l {
     l::on& operator<<(l::on &out, json &object) {
         out.alpha << object.dump(2);
-        return out;
-    }
-
-    l::on& operator<<(l::on &out, iserializable &object) {
-        json package;
-        object.serialize(package);
-        out.alpha << package.dump(2);
         return out;
     }
 
