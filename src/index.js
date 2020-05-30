@@ -8,7 +8,7 @@ const nativeoop = require("bindings")("nativeoop");
 
 if (!fs.existsSync("database.json")) {
     fs.writeFileSync("database.json", JSON.stringify({
-        users : []
+        users : [ "NPC" ]
     }, null, 2));
 }
 

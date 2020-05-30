@@ -38,7 +38,7 @@ void states::choosing::game_join (int player_uid, json& output) {
         output[out_signal::success] = LOCATED("Player was added into the room");
     }
     else {
-        output[out_signal::error] = LOCATED("Player was already in the room");
+        output[out_signal::success] = LOCATED("Player was already in the room...");
     }
 }
 

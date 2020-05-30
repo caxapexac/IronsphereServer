@@ -80,7 +80,6 @@ void online::api::write_chat (json& input, json& output) {
     chat_buffer.push(stts::chat_message(player_uid, input[in_write_chat::message]));
     if (chat_buffer.size() > chat_capacity) chat_buffer.pop();
     chat_buffer_updates++;
-    output[out_signal::success] = "Message has been sent";
     //TODO important game events into write_chat (or log) (for example, logger::setup_lobby(this) then use logger::log_chat();
 }
 

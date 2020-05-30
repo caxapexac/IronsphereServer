@@ -28,7 +28,7 @@ using json = nlohmann::json; // Because I use this too frequently
 
 #define STRINGIFY(x) #x // Deserved. (this cool feature translates literal to "literal")
 #define TOSTRING(x) STRINGIFY(x) // Because cpp compiler is too stupid and can't in macro recursion
-#define AT __FILE__ ":" TOSTRING(__func__) ":" TOSTRING(__LINE__) " - " // Because debugger kinda sucks when I use C# & JS & C++ at the same time
+#define AT __FILE__ ":" TOSTRING(__LINE__) "\n - " // Because debugger kinda sucks when I use C# & JS & C++ at the same time
 #define TRACE(x) std::cout << "TRACE: " << AT << (x) << std::endl // Just a little happy obsolete macro
 #define LOCATED(x) AT x // Because it looks pretty cool
 
