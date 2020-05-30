@@ -109,3 +109,7 @@ CMakeCache.txt
 build/
 .idea/
 cmake-build-debug/
+
+#generated files
+config.json
+database.json

@@ -1,8 +1,0 @@
-{
-  "title": "Ironsphere Game Server",
-  "version": 105,
-  "port": 1109,
-  "delta_time": 1112,
-  "chat_capacity": 100,
-  "root_folder": "./root/"
-}
