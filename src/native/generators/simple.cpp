@@ -1,6 +1,7 @@
 #include "simple.hpp"
 #include "../game/realtime.hpp"
 #include "../tilemap/square.hpp"
+#include "../rules/skirmish.hpp"
 
 
 stts::vector2<int> generators::simple::cir_set (int number, int total) {
@@ -65,7 +66,7 @@ std::unique_ptr<game::abstract_game> generators::simple::generate () {
             game->get_tilemap().set_tile(nx, ny, tile);
         }
     }
-
+    //game->set_rule(rules::skirmish());
 
     // Factory
     ent::unit_prototype p_runner = ent::unit_prototype("runner");
