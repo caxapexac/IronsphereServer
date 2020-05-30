@@ -42,6 +42,10 @@ float tile::base_tile::get_height () const {
     return height;
 }
 
+void tile::base_tile::set_height (float nheight) {
+    height = nheight;
+}
+
 int tile::base_tile::get_occupier_id () const {
     return occupier_uid;
 }

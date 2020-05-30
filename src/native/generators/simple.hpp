@@ -18,6 +18,9 @@ namespace generators {
         int seed;
         int players_count;
         stts::vector2<int> tilemap_scale;
+
+        stts::vector2<int> cir_set (int number, int total);
+
     public:
         simple(int nseed, int nplayers_count, const stts::vector2<int>& ntilemap_scale);
         explicit simple(json& package);

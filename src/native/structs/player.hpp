@@ -13,6 +13,10 @@ namespace stts {
         const std::string parameters = TOSTRING(parameters); // : parameter_map
     }
 
+    namespace player_params {
+        const std::string money = TOSTRING(money); // : int
+    }
+
     class player : public iserializable {
     private:
         int team;

@@ -37,7 +37,7 @@ namespace stts {
 
         bool operator== (const vector2& other) const { return x == other.x && y == other.y; }
 
-        bool operator!= (const vector2& other) const { return !(this == other); }
+        bool operator!= (const vector2& other) const { return !(*this == other); }
 
         friend std::ostream& operator<< (std::ostream& os, const vector2& vec) {
             json j;

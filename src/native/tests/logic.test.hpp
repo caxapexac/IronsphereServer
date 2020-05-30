@@ -6,6 +6,7 @@
 #include "../game/realtime.hpp"
 #include "../tilemap/square.hpp"
 #include "../components/component_storage.hpp"
+#include "../generators/simple.hpp"
 
 namespace unit_testing {
     void test_logic() {
@@ -13,6 +14,11 @@ namespace unit_testing {
 
         std::cout << "* test_logic [started]" << std::endl; //TODO logger
 
+        stts::vector2<int> size {12, 9};
+        generators::simple gen(42, 4, size);
+        std::unique_ptr<game::abstract_game> game = gen.generate();
+
+        /*
         srand(time(nullptr));
         const stts::vector2<int> tilemap_scale = stts::vector2<int>(9, 12);
 
@@ -45,6 +51,7 @@ namespace unit_testing {
         game.get_tilemap().transpose(u_runner_1, stts::vector2<int>(0, 0));
         ent::unit& u_runner_2 = game.make_unit("runner", 2);
         game.get_tilemap().transpose(u_runner_2, stts::vector2<int>(6, 7));
+         */
 
         // saving
         //json k;
@@ -70,22 +77,22 @@ namespace unit_testing {
 
             if (command.empty()) {
                 json j;
-                game.update(j);
+                game->update(j);
             }
             else if (command == "q") {
                 break;
             }
             else {
-                json input;
+                /*json input;
                 input[com::j_move_signal::is_moving] = true;
                 stts::vector2<int> position = stts::vector2<int>(rand() % tilemap_scale.x, rand() % tilemap_scale.y);
                 position.serialize(input[com::j_move_signal::move_target]);
                 json output;
-                u_runner_1.signal(game, com::j_move::type, input);
+                u_runner_1.signal(game, com::j_move::type, input);*/
                 //game.signal(input, output);
             }
             //
-            nlohmann::json_tools::print_tilemap(game.get_tilemap());
+            nlohmann::json_tools::print_tilemap(game->get_tilemap());
             //
         }
         std::cout << "* test_logic [success]" << std::endl;

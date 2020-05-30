@@ -27,7 +27,6 @@ void online::api::start (json& config) {
     delta_time = config[j_api::delta_time].get<float>();
     chat_capacity = config[j_api::chat_capacity].get<int>();
     file::file_gate::ROOT = config[j_api::root_folder].get<std::string>();
-    logger::say(file::file_gate::ROOT, l::debug);
 }
 
 void online::api::update (json& output) {

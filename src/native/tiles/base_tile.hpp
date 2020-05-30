@@ -29,6 +29,7 @@ namespace tile {
         const std::string& type () const override;
 
         float get_height () const;
+        void set_height (float nheight);
         int get_occupier_id () const;
         bool is_occupied () const;
 
