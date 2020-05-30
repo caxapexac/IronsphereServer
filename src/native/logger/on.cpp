@@ -47,13 +47,13 @@ l::on& l::on::say (streams str) {
 void l::on::say (json &object, l::streams str) {
     on& fin = utils::singleton<on>::get();
     fin.stream = str;
-    fin.alpha << object.dump(2);
+    fin.alpha << object.dump(4);
     fin.send(true);
 }
 
 namespace l {
     l::on& operator<<(l::on &out, json &object) {
-        out.alpha << object.dump(2);
+        out.alpha << object.dump(4);
         return out;
     }
 

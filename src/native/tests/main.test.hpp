@@ -29,6 +29,7 @@
 #include "lobby/game_session.test.hpp"
 
 #include "logger/logger.test.hpp"
+#include "filesys/file_gate.test.hpp"
 
 #include "structs/parameter_map.test.hpp"
 #include "structs/player.test.hpp"
@@ -46,6 +47,7 @@ namespace unit_testing {
     void unit_test_all () {
         std::cout << "***STARTING UNIT TESTING***" << std::endl;
         test_logger();
+        test_file_gate();
         std::cout << "***UNIT TESTING SUCCESS***" << std::endl;
     }
 
