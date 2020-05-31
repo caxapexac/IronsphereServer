@@ -11,6 +11,7 @@ namespace rules {
 
     class skirmish : public abstract_rule {
     public:
+        explicit skirmish();
         explicit skirmish(json& package);
         const std::string& type () const override;
     private:

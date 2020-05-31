@@ -9,20 +9,20 @@ namespace generators {
     namespace j_simple {
         const std::string type = TOSTRING(simple);
         const std::string seed = TOSTRING(seed); // : int
-        const std::string players_count = TOSTRING(players_count); // : int
+        const std::string players_uid = TOSTRING(players_uid); // : list<int>
         const std::string tilemap_scale = TOSTRING(tilemap_scale); // : vector2<int>
     }
 
     class simple : public abstract_generator {
     private:
         int seed;
-        int players_count;
+        std::set<int> players_uid;
         stts::vector2<int> tilemap_scale;
 
         stts::vector2<int> cir_set (int number, int total);
 
     public:
-        simple(int nseed, int nplayers_count, const stts::vector2<int>& ntilemap_scale);
+        simple(int nseed, std::set<int> nplayers_uid, const stts::vector2<int>& ntilemap_scale);
         explicit simple(json& package);
         void serialize (json& package) const override;
         void deserialize (json& package) override;

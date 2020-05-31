@@ -53,7 +53,7 @@ std::list<stts::vector2<int>> tilemap::square::get_path (int source_x, int sourc
         path.emplace_back(source_x, source_y);
     }*/
     pathfinder pth(*this);
-    pth.find_path(stts::vector2(source_x, source_y), stts::vector2(destination_x, destination_y));
+    pth.find_path(stts::vector2<int>(source_x, source_y), stts::vector2<int>(destination_x, destination_y));
     // TODO
     return path;
 }

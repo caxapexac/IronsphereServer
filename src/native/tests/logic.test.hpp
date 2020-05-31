@@ -10,18 +10,17 @@
 
 namespace unit_testing {
     void test_logic() {
-
-
         std::cout << "* test_logic [started]" << std::endl; //TODO logger
 
-        stts::vector2<int> size {12, 9};
-        generators::simple gen(42, 1, size);
+        stts::vector2<int> size {20, 10};
+        std::set<int> players;
+        players.emplace(1);
+        generators::simple gen(1, players, size);
         std::unique_ptr<game::abstract_game> game = gen.generate();
 
         /*
         srand(time(nullptr));
         const stts::vector2<int> tilemap_scale = stts::vector2<int>(9, 12);
-
 
         game::realtime game = game::realtime();
 

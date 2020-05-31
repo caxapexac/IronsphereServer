@@ -11,10 +11,10 @@ const std::string& game::realtime::type () const {
 }
 
 void game::realtime::serialize_concrete_player (int player_uid, json& package) {
+    package[j_typed::type] = j_realtime::type;
     if (player_uid == 0) {
         // TODO it is admin, return all
     }
-
     if (players[player_uid] == nullptr) {
         throw todo_exception(std::to_string(player_uid) + " player isn't in lobby");
     }

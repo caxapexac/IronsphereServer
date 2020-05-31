@@ -6,6 +6,7 @@
 #define PI double(3.1415926)
 
 
+// TODO into utils
 stts::vector2<int> generators::simple::cir_set (int number, int total) {
     double ang = 360.0 / total * number;
     double trueAng = 3.14159265358979323846 * (0.5 - 2.0 * (ang / 360.0));
@@ -16,9 +17,9 @@ stts::vector2<int> generators::simple::cir_set (int number, int total) {
 
 
 
-generators::simple::simple (int nseed, int nplayers_count, const stts::vector2<int>& ntilemap_scale) {
+generators::simple::simple (int nseed, std::set<int> nplayers_uid, const stts::vector2<int>& ntilemap_scale) {
     seed = nseed;
-    players_count = nplayers_count;
+    players_uid = nplayers_uid;
     tilemap_scale = ntilemap_scale;
 }
 
@@ -29,15 +30,15 @@ generators::simple::simple (json& package) {
 void generators::simple::serialize (json& package) const {
     abstract_generator::serialize(package);
     package[j_simple::seed] = seed;
-    package[j_simple::players_count] = players_count;
+    package[j_simple::players_uid] = players_uid;
     tilemap_scale.serialize(package[j_simple::tilemap_scale]);
 }
 
 void generators::simple::deserialize (json& package) {
     abstract_generator::deserialize(package);
     seed = package[j_simple::seed];
-    players_count = package[j_simple::players_count];
-    tilemap_scale.deserialize(package[j_simple::tilemap_scale]);
+    players_uid = package[j_simple::players_uid].get<std::set<int>>();
+    tilemap_scale = stts::vector2<int>(package[j_simple::tilemap_scale]);
 }
 
 const std::string& generators::simple::type () const {
@@ -68,21 +69,21 @@ std::unique_ptr<game::abstract_game> generators::simple::generate () {
             game->get_tilemap().set_tile(nx, ny, tile);
         }
     }
-    //game->set_rule(rules::skirmish());
+    game->set_rule(std::make_unique<rules::skirmish>());
 
     // Factory
-    ent::unit_prototype p_runner = ent::unit_prototype("runner");
-    p_runner.add_component(com::j_move::type);
-    game->set_prototype(&p_runner);
+    ent::unit_prototype* p_runner = new ent::unit_prototype("runner");
+    p_runner->add_component(com::j_move::type);
+    game->set_prototype(p_runner);
 
 
     // Players
-    for (int i = 1; i <= players_count; ++i) {
+    for (auto i : players_uid) {
         stts::player *player = new stts::player(i);
         player->set(stts::player_params::money, seed % 400 + 100);
         game->set_player(i, player);
 
-        stts::vector2<int> spawn = cir_set(i-1, players_count);
+        stts::vector2<int> spawn = cir_set(i-1, players_uid.size());
         int radius = tilemap_scale.x / 16;
 
         float middle_height = 0.0;
