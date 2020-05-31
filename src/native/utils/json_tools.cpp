@@ -67,7 +67,7 @@ void nlohmann::json_tools::print_tilemap (tilemap::abstract_tilemap& tilemap) {
                  std::cout << t.get_occupier_id() << "\t";
             }
             else {
-                std::cout << ".\t";
+                std::cout << t.get_height() << "\t";
             }
         }
         std::cout << std::endl;

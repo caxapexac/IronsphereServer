@@ -8,32 +8,29 @@
 // TODO iserializable constructor exception
 // TODO tryso
 struct shared_pointer_exception : public std::exception {
-    std::string info;
+    mutable std::string info;
 
-    explicit shared_pointer_exception (const std::string& msg) : info(msg) {
-    }
+    explicit shared_pointer_exception (const std::string& msg) : info(msg) { }
 
     const char* what () const noexcept override {
-        return ("[shared pointer exception] " + info).c_str();
+        return info.insert(0, "[Shared pointer exception] ").c_str();
     }
 };
 
 struct serialization_exception : public std::exception {
-    std::string info;
+    mutable std::string info;
 
-    explicit serialization_exception (const std::string& msg) : info(msg) {
-    }
+    explicit serialization_exception (const std::string& msg) : info(msg) { }
 
     const char* what () const noexcept override {
-        return ("[Serialization exception] " + info).c_str();
+        return info.insert(0, "[Serialization exception] ").c_str();
     }
 };
 
 struct todo_exception : public std::exception {
     std::string info;
 
-    explicit todo_exception (const std::string& msg) : info(msg) {
-    }
+    explicit todo_exception (const std::string& msg) : info(msg) { }
 
     const char* what () const noexcept override {
         std::cout << info;

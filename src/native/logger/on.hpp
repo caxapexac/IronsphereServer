@@ -1,7 +1,6 @@
 #ifndef LOGIC_LOG_HPP
 #define LOGIC_LOG_HPP
 
-// TODO logger should be accesible using base/includes import, includes should be changed to avoid forward declaration
 #include "../base/third_party_includes.hpp"
 #include "../base/interfaces.hpp"
 #include "../utils/singleton.hpp"

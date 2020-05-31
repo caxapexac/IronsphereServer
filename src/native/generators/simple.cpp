@@ -53,7 +53,7 @@ std::unique_ptr<game::abstract_game> generators::simple::generate () {
         for (int nx = 0; nx < tilemap_scale.x; nx++) {
             int per_seed = rand() / seed;
             int tile_seed = (abs(per_seed * nx * ny)) % 10;
-            float height = (float) (per_seed % 200) - 100;
+            float height = (float) (per_seed % 50) - 25;
 
             tile::base_tile* tile;
             if (tile_seed % 5 == 0) {
