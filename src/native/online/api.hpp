@@ -5,6 +5,7 @@
 #include "../base/includes.hpp"
 #include "../utils/singleton.hpp"
 #include "../structs/chat_message.hpp"
+#include "../structs/broadcast_message.hpp"
 
 namespace online {
     namespace j_api { //
@@ -22,7 +23,7 @@ namespace online {
         int chat_capacity;
         mutable int chat_buffer_updates;
         std::queue<stts::chat_message> chat_buffer;
-        std::queue<stts::chat_message> broadcast_buffer;
+        std::queue<stts::broadcast_message> broadcast_buffer;
         std::map<int, std::shared_ptr<session>> sessions;
 
         api();
@@ -30,7 +31,7 @@ namespace online {
     public:
 
         void to_chat(stts::chat_message& msg);
-        void to_broadcast(stts::chat_message& msg);
+        void to_broadcast(stts::broadcast_message& msg);
 
         /// One server frame
         void start (json& config);

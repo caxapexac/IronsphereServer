@@ -5,18 +5,18 @@ online::api::api () {
     delta_time = 0;
     chat_buffer_updates = 0;
     chat_buffer = std::queue<stts::chat_message>();
-    broadcast_buffer = std::queue<stts::chat_message>();
+    broadcast_buffer = std::queue<stts::broadcast_message>();
     sessions = std::map<int, std::shared_ptr<session>>();
 }
 
 void online::api::to_chat(stts::chat_message &msg) {
-    broadcast_buffer.push(msg);
-}
-
-void online::api::to_broadcast(stts::chat_message &msg) {
     chat_buffer.push(msg);
     if (chat_buffer.size() > chat_capacity) chat_buffer.pop();
     chat_buffer_updates++;
+}
+
+void online::api::to_broadcast(stts::broadcast_message &msg) {
+    broadcast_buffer.push(msg);
 }
 
 

@@ -3,10 +3,12 @@
 #include "../tilemap/square.hpp"
 #include "../rules/skirmish.hpp"
 
+#define PI double(3.1415926)
+
 
 stts::vector2<int> generators::simple::cir_set (int number, int total) {
     double ang = 360.0 / total * number;
-    double trueAng = M_PI * (0.5 - 2.0 * (ang / 360.0));
+    double trueAng = PI * (0.5 - 2.0 * (ang / 360.0));
     int x = tilemap_scale.x / 2 + (int) (cos(trueAng) * tilemap_scale.x / 8 * 3);
     int y = tilemap_scale.y / 2 - (int) (sin(trueAng) * tilemap_scale.y / 8 * 3);
     return stts::vector2<int>(x, y);
