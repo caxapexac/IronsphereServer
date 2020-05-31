@@ -8,7 +8,7 @@
 
 stts::vector2<int> generators::simple::cir_set (int number, int total) {
     double ang = 360.0 / total * number;
-    double trueAng = PI * (0.5 - 2.0 * (ang / 360.0));
+    double trueAng = 3.14159265358979323846 * (0.5 - 2.0 * (ang / 360.0));
     int x = tilemap_scale.x / 2 + (int) (cos(trueAng) * tilemap_scale.x / 8 * 3);
     int y = tilemap_scale.y / 2 - (int) (sin(trueAng) * tilemap_scale.y / 8 * 3);
     return stts::vector2<int>(x, y);

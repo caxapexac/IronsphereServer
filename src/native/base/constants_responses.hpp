@@ -24,7 +24,7 @@ namespace out_signal { // : j_typed
 
 namespace out_server_info { // : out_signal
     const std::string type = TOSTRING(out_server_info);
-    const std::string sessions = TOSTRING(sessions); // : map<int, session>
+    const std::string sessions = TOSTRING(sessions); // : map<int, out_session_info>
 }
 
 namespace out_read_chat { // : out_signal
@@ -43,6 +43,11 @@ namespace out_create_session { // : out_signal
 
 namespace out_signal_session { // : out_signal
     const std::string type = TOSTRING(out_signal_session);
+}
+
+namespace out_session_info { // : out_signal_session
+    const std::string type = TOSTRING(out_session_info);
+    const std::string session = TOSTRING(session); // : session
 }
 
 namespace out_game_info { // : out_signal_session

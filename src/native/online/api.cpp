@@ -111,7 +111,8 @@ void online::api::signal_session (json& input, json& output) {
     std::shared_ptr<session> session = iter->second;
 
     std::string type = input[j_typed::type];
-    if (type == in_game_info::type) session->get_game_info(output);
+    if (type == in_session_info::type) session->get_session_info(output);
+    else if (type == in_game_info::type) session->get_game_info(output);
     else if (type == in_game_load::type) session->game_load(input, output);
     else if (type == in_game_save::type) session->game_save(output);
     else if (type == in_game_join::type) session->game_join(input[in_signal::sender].get<int>(), output);

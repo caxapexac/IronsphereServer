@@ -33,6 +33,10 @@ namespace in_signal_session { // : in_signal
     const std::string session_id = TOSTRING(session_id); // : int
 }
 
+namespace in_session_info { // : in_signal_session
+    const std::string type = TOSTRING(in_session_info);
+}
+
 namespace in_game_info { // : in_signal_session
     const std::string type = TOSTRING(in_game_info);
 }

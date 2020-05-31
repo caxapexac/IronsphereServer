@@ -14,8 +14,8 @@ if (!fs.existsSync("database.json")) {
 
 if (!fs.existsSync("config.json")) {
     fs.writeFileSync("config.json", JSON.stringify({
-        title: "Ironsphere Game Server",
-        version: 105,
+        title: "Best Game Server",
+        version: 106,
         port: 1109,
         delta_time: 1111,
         chat_capacity: 100,
@@ -96,10 +96,10 @@ function Signal(ws, message) {
     ws.send(response);
 
     // TODO temporary
-    let responseJson = JSON.parse(response);
-    console.log(
-        `signal ${message} \nRESPONSE\n ${JSON.stringify(responseJson, null, 2)} \n`
-    );
+    //let responseJson = JSON.parse(response);
+    //console.log(
+    //    `signal ${message} \nRESPONSE\n ${JSON.stringify(responseJson, null, 2)} \n`
+    //);
     // TODO
 }
 
@@ -109,7 +109,7 @@ const GameLoop = function () {
 
     // Server handling:
     config.delta_time = responseObj.delta_time;
-    console.log(`Loop ${config.delta_time}`);
+    //console.log(`Loop ${config.delta_time}`);
 
     // Broadcast handling:
     wss.clients.forEach(function each(client) {
@@ -119,9 +119,12 @@ const GameLoop = function () {
     });
 
     // Players handling:
+
+    console.log("=====" + JSON.stringify(responseObj));
     for (let sessionId in responseObj.players_sessions) {
         for (let playerId in responseObj.players_sessions[sessionId]) {
             if (connections.hasOwnProperty(playerId)) {
+                console.log(`\nsending ${JSON.stringify(responseObj.players_sessions[sessionId][playerId])}\n`)
                 connections[playerId].send(JSON.stringify(responseObj.players_sessions[sessionId][playerId]))
             }
             else {

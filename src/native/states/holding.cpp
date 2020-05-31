@@ -11,7 +11,14 @@ const std::string& states::holding::type () const {
 }
 
 void states::holding::game_update (json& output) {
-    // Nothing
+    bool is_finished = session.game->is_finished();
+    for (const auto& i : session.players_uid) {
+        std::string uid = std::to_string(i);
+        output[uid][j_typed::type] = online::j_session::type;
+        output[uid][online::j_session::state] = session.state->type();
+        if (is_finished) session.game->serialize(output[uid][online::j_session::game]);
+        else session.game->serialize_concrete_player(i, output[uid][online::j_session::game]);
+    }
 }
 
 void states::holding::game_load (json& input, json& output) {

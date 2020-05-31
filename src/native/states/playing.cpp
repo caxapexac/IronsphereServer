@@ -14,8 +14,8 @@ void states::playing::game_update (json& output) {
     session.game->update(output);
     bool is_finished = session.game->is_finished();
     for (const auto& i : session.players_uid) {
-        output[j_typed::type] = online::j_session::type;
         std::string uid = std::to_string(i);
+        output[uid][j_typed::type] = online::j_session::type;
         output[uid][online::j_session::state] = session.state->type();
         if (is_finished) session.game->serialize(output[uid][online::j_session::game]);
         else session.game->serialize_concrete_player(i, output[uid][online::j_session::game]);
