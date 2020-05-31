@@ -15,7 +15,7 @@ namespace unit_testing {
         std::cout << "* test_logic [started]" << std::endl; //TODO logger
 
         stts::vector2<int> size {12, 9};
-        generators::simple gen(42, 4, size);
+        generators::simple gen(42, 1, size);
         std::unique_ptr<game::abstract_game> game = gen.generate();
 
         /*

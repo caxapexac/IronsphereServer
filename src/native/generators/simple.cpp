@@ -53,7 +53,7 @@ std::unique_ptr<game::abstract_game> generators::simple::generate () {
     game->set_tilemap(std::move(tilemap));
     for (int ny = 0; ny < tilemap_scale.y; ny++) {
         for (int nx = 0; nx < tilemap_scale.x; nx++) {
-            int per_seed = rand() / seed;
+            int per_seed = rand();
             int tile_seed = (abs(per_seed * nx * ny)) % 10;
             float height = (float) (per_seed % 50) - 25;
 
@@ -86,7 +86,7 @@ std::unique_ptr<game::abstract_game> generators::simple::generate () {
         int radius = tilemap_scale.x / 16;
 
         float middle_height = 0.0;
-        float square = radius*radius*4.0;
+        double square = radius*radius*4.0;
         for (int j = spawn.y - radius; j < spawn.y + radius; ++j) {
             for (int k = spawn.x - radius; k < spawn.y + radius; ++k) {
                 middle_height += game->get_tilemap().get_tile(k, j).get_height();
