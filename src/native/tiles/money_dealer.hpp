@@ -7,7 +7,7 @@ namespace tile {
     // JSON
     namespace j_money_dealer {
         const std::string type = TOSTRING(money_dealer);
-        const std::string money = TOSTRING(money);
+        const std::string money = TOSTRING(money); // : int
     }
 
     class money_dealer : public base_tile {

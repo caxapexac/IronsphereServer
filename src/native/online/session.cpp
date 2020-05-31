@@ -21,10 +21,11 @@ int online::session::get_player_count () {
 }
 
 void online::session::get_session_info (json& output) {
-    output[j_typed::type] = j_session::type;
-    output[j_session::session_name] = get_session_name();
-    output[j_session::state] = state->type();
-    output[j_session::players_uid] = players_uid;
+    output[j_typed::type] = out_session_info::type;
+    output[out_session_info::session][j_typed::type] = j_session::type;
+    output[out_session_info::session][j_session::session_name] = get_session_name();
+    output[out_session_info::session][j_session::state] = state->type();
+    output[out_session_info::session][j_session::players_uid] = players_uid;
 }
 
 void online::session::get_game_info (json& output) {

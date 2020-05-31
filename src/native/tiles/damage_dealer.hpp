@@ -7,7 +7,7 @@ namespace tile {
     // JSON
     namespace j_damage_dealer {
         const std::string type = TOSTRING(damage_dealer);
-        const std::string damage = TOSTRING(damage);
+        const std::string damage = TOSTRING(damage); // : int
     }
 
     class damage_dealer : public base_tile {

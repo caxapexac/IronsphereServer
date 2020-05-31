@@ -14,7 +14,11 @@ const std::string& states::choosing::type () const {
 }
 
 void states::choosing::game_update (json& output) {
-    // Nothing
+    for (const auto& i : session.players_uid) {
+        std::string uid = std::to_string(i);
+        output[uid][j_typed::type] = online::j_session::type;
+        output[uid][online::j_session::state] = session.state->type();
+    }
 }
 
 void states::choosing::game_load (json& input, json& output) {
