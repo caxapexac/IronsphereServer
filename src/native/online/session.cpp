@@ -83,8 +83,8 @@ void online::session::game_signal (json& input, json& output) {
 }
 
 void online::session::transition_to (std::unique_ptr<ihandler> nstate) {
+    logger::say() << "Game state changed to " << nstate->type() << logger::out;
     state = std::move(nstate);
-    //TODO log?
 }
 
 
