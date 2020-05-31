@@ -45,6 +45,9 @@ namespace tilemap {
         virtual float get_distance (int source_x, int source_y, int destination_x, int destination_y) = 0;
         virtual std::list<stts::vector2<int>> get_path(int source_x, int source_y, int destination_x, int destination_y) = 0;
 
+        void clear_tiles();
+        stts::vector2<int>& get_scale();
+
     protected:
         int tile_count() const;
     };

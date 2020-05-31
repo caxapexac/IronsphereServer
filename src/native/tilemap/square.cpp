@@ -1,4 +1,5 @@
 #include "square.hpp"
+#include "../_temp/pathfinder.hpp"
 
 tilemap::square::square (const stts::vector2<int>& nscale) : abstract_tilemap(nscale) { }
 
@@ -44,13 +45,15 @@ std::list<stts::vector2<int>> tilemap::square::get_path (int source_x, int sourc
     std::list<stts::vector2<int>> path = std::list<stts::vector2<int>>();
     if (!is_valid(source_x, source_y) || !is_valid(destination_x, destination_y)) return path;
     // TODO
-    while (source_x != destination_x && source_y != destination_y) {
+    /*while (source_x != destination_x && source_y != destination_y) {
         if (source_x > destination_x) source_x--;
         else if (source_x < destination_x) source_x++;
         if (source_y > destination_y) source_y--;
         else if (source_y < destination_y) source_y++;
         path.emplace_back(source_x, source_y);
-    }
+    }*/
+    pathfinder pth(*this);
+    pth.find_path(stts::vector2(source_x, source_y), stts::vector2(destination_x, destination_y));
     // TODO
     return path;
 }

@@ -2,6 +2,7 @@
 #define LOGIC_BASE_TILE_HPP
 
 #include "../base/includes.hpp"
+#include "../structs/vector2.hpp"
 
 namespace ent { class unit; }
 
@@ -19,6 +20,18 @@ namespace tile {
         int occupier_uid;
 
     public:
+        // FOR PATH SEARCHING PURPOSES!!!
+
+        int f, g, h;
+        stts::vector2<int> position;
+        bool opened;
+        bool closed;
+        base_tile* parent;
+
+        void clear();
+
+        // FOR PATH SEARCHING PURPOSES NO MORE!!!
+
         explicit base_tile (float nheight = 0);
         explicit base_tile(json& package);
         base_tile (const base_tile& copy);

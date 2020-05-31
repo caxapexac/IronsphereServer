@@ -105,4 +105,16 @@ void tilemap::abstract_tilemap::transpose (ent::unit& target, const stts::vector
 
 
 
+void tilemap::abstract_tilemap::clear_tiles() {
+    for (int i = 0; i < tile_count(); ++i) {
+        data[i]->clear();
+    }
+}
+
+stts::vector2<int> &tilemap::abstract_tilemap::get_scale() {
+    return scale;
+}
+
+
+
 

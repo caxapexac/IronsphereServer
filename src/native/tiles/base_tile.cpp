@@ -1,6 +1,19 @@
 #include "base_tile.hpp"
 #include "../entities/unit.hpp"
 
+
+
+void tile::base_tile::clear() {
+    f = 0;
+    g = 0;
+    h = 0;
+    opened = false;
+    closed = false;
+    parent = nullptr;
+}
+
+
+
 tile::base_tile::base_tile (float nheight) : height(nheight), occupier_uid(0) { }
 
 tile::base_tile::base_tile (json& package) {
