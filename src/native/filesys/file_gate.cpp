@@ -1,6 +1,6 @@
 #include "file_gate.hpp"
 //#include <experimental/filesystem>
-#include <direct.h>
+//#include <direct.h>
 
 
 std::string file::file_gate::ROOT;
@@ -105,5 +105,5 @@ void file::file_gate::prove_path(std::string& path) {
     if (!fs::is_directory(path) || !fs::exists(path)) {
         fs::create_directory(path);
     }*/
-    mkdir(path.c_str());
+    //mkdir(path.c_str());
 }
