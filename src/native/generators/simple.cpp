@@ -35,9 +35,9 @@ void generators::simple::serialize (json& package) const {
 
 void generators::simple::deserialize (json& package) {
     abstract_generator::deserialize(package);
-    package[j_simple::seed] = seed;
-    package[j_simple::players_count] = players_count;
-    tilemap_scale.serialize(package[j_simple::tilemap_scale]);
+    seed = package[j_simple::seed];
+    players_count = package[j_simple::players_count];
+    tilemap_scale.deserialize(package[j_simple::tilemap_scale]);
 }
 
 const std::string& generators::simple::type () const {
