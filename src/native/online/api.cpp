@@ -11,7 +11,7 @@ online::api::api () {
 
 void online::api::to_chat(stts::chat_message &msg) {
     chat_buffer.push(msg);
-    if (chat_buffer.size() > chat_capacity) chat_buffer.pop();
+    if (chat_buffer.size() > (unsigned int)chat_capacity) chat_buffer.pop();
     chat_buffer_updates++;
 }
 
@@ -78,7 +78,7 @@ void online::api::write_chat (json& input, json& output) {
     }
     int player_uid = input[in_signal::sender].get<int>();
     chat_buffer.push(stts::chat_message(player_uid, input[in_write_chat::message]));
-    if (chat_buffer.size() > chat_capacity) chat_buffer.pop();
+    if (chat_buffer.size() > (size_t)chat_capacity) chat_buffer.pop();
     chat_buffer_updates++;
     //TODO important game events into write_chat (or log) (for example, logger::setup_lobby(this) then use logger::log_chat();
 }
