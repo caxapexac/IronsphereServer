@@ -7,31 +7,34 @@
 // TODO make it more complex and useful
 // TODO iserializable constructor exception
 // TODO tryso
-struct shared_pointer_exception : public std::exception {
+class shared_pointer_exception : public std::exception {
+private:
     mutable std::string info;
 
+public:
     explicit shared_pointer_exception (const std::string& msg) : info(msg) { }
-
     const char* what () const noexcept override {
         return info.insert(0, "[Shared pointer exception] ").c_str();
     }
 };
 
-struct serialization_exception : public std::exception {
+class serialization_exception : public std::exception {
+private:
     mutable std::string info;
 
+public:
     explicit serialization_exception (const std::string& msg) : info(msg) { }
-
     const char* what () const noexcept override {
         return info.insert(0, "[Serialization exception] ").c_str();
     }
 };
 
-struct todo_exception : public std::exception {
+class todo_exception : public std::exception {
+private:
     std::string info;
 
+public:
     explicit todo_exception (const std::string& msg) : info(msg) { }
-
     const char* what () const noexcept override {
         std::cout << info;
         return "help";
