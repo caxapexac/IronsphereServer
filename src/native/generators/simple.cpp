@@ -3,8 +3,6 @@
 #include "../tilemap/square.hpp"
 #include "../rules/skirmish.hpp"
 
-#define PI double(3.1415926)
-
 
 // TODO into utils
 stts::vector2<int> generators::simple::cir_set (int number, int total) {
@@ -39,6 +37,8 @@ void generators::simple::deserialize (json& package) {
     seed = package[j_simple::seed];
     players_uid = package[j_simple::players_uid].get<std::set<int>>();
     tilemap_scale = stts::vector2<int>(package[j_simple::tilemap_scale]);
+    if (tilemap_scale.x < 0) tilemap_scale.x = -tilemap_scale.x;
+    if (tilemap_scale.y < 0) tilemap_scale.y = -tilemap_scale.y;
 }
 
 const std::string& generators::simple::type () const {
