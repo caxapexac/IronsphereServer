@@ -25,7 +25,6 @@ void com::move::command (ent::unit& sender, ent::unit& owner, game::abstract_gam
 
 void com::move::signal (ent::unit& owner, game::abstract_game& context, json& input) {
     if (input.contains(j_move::is_moving)) {
-        bool moving = input[j_move::is_moving].get<bool>();
         owner.set_parameter(j_move::is_moving, input[j_move::is_moving].get<bool>());
     }
     if (input.contains(j_move::move_target)) {

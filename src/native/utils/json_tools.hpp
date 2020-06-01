@@ -2,6 +2,7 @@
 #define LOGIC_JSON_TOOLS_H
 
 #include "../base/third_party_includes.hpp"
+#include "../base/errors.hpp"
 
 namespace game { class abstract_game; }
 namespace generators { class abstract_generator; }
@@ -257,8 +258,12 @@ namespace nlohmann {
         std::map<int, V*> map = std::map<int, V*>();
         for (auto const& i : package.items()) {
             V* element = new V();
-            element->deserialize(i.value());
-            map[std::stoi(i.key())] = element;
+            try {
+                element->deserialize(i.value());
+                map[std::stoi(i.key())] = element;
+            } catch (std::exception e) {
+                continue;
+            }
         }
         return map;
     }

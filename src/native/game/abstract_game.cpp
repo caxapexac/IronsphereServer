@@ -1,5 +1,7 @@
 #include "abstract_game.hpp"
 #include "../rules/abstract_rule.hpp"
+#include "../rules/skirmish.hpp"
+#include "../tilemap/square.hpp"
 
 game::abstract_game::abstract_game () {
     factory = ent::unit_factory();
@@ -23,11 +25,28 @@ void game::abstract_game::serialize (json& package) const {
 }
 
 void game::abstract_game::deserialize (json& package) {
-    factory = ent::unit_factory(package[j_abstract_game::factory]);
-    rule = json_tools::unpack_rule(package[j_abstract_game::rule]);
-    units = json_tools::unpack_map_int_of_ptrs<ent::unit>(package[j_abstract_game::units]);
-    players = json_tools::unpack_map_int_of_ptrs<stts::player>(package[j_abstract_game::players]);
-    if (package.contains(j_abstract_game::tilemap)) tilemap = json_tools::unpack_tilemap(package["tilemap"]);
+    try {
+        factory = ent::unit_factory(package[j_abstract_game::factory]);
+    } catch (std::exception& e) {
+        factory = ent::unit_factory();
+    } try {
+        rule = json_tools::unpack_rule(package[j_abstract_game::rule]);
+    } catch (std::exception& e) {
+        rule = std::make_unique<rules::skirmish>();
+    } try {
+        units = json_tools::unpack_map_int_of_ptrs<ent::unit>(package[j_abstract_game::units]);
+    } catch (std::exception& e) {
+        units = std::map<int, ent::unit*>();
+    } try {
+        players = json_tools::unpack_map_int_of_ptrs<stts::player>(package[j_abstract_game::players]);
+    } catch (std::exception& e) {
+        players = std::map<int, stts::player*>();
+    }
+    if (package.contains(j_abstract_game::tilemap)) try {
+        tilemap = json_tools::unpack_tilemap(package["tilemap"]);
+    } catch (std::exception e) {
+        tilemap = std::make_unique<tilemap::square>(stts::vector2<int>(10, 10));
+    }
 }
 
 void game::abstract_game::serialize_public (json& package) const {

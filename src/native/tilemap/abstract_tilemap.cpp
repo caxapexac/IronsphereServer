@@ -47,12 +47,17 @@ void tilemap::abstract_tilemap::serialize (json& package) const {
 
 void tilemap::abstract_tilemap::deserialize (json& package) {
     scale = stts::vector2<int>(package[j_abstract_tilemap::scale]);
+    if (scale.x <= 0 || scale.y <= 0) throw out_of_bounds_exception("Wrong tilemap scaling");
     json j_data = package[j_abstract_tilemap::data];
     delete [] data;
     data = new tile::base_tile*[tile_count()];
     for (int i = 0; i < tile_count(); ++i) {
         // TODO delete old tiles
-        data[i] = json_tools::unpack_tile(j_data[i]);
+        try {
+            data[i] = json_tools::unpack_tile(j_data[i]);
+        } catch (std::exception e) {
+            data[i] = new tile::base_tile(10.0);
+        }
     }
 }
 

@@ -34,11 +34,16 @@ void generators::simple::serialize (json& package) const {
 
 void generators::simple::deserialize (json& package) {
     abstract_generator::deserialize(package);
-    seed = package[j_simple::seed];
-    players_uid = package[j_simple::players_uid].get<std::set<int>>();
+    try {
+        seed = package[j_simple::seed];
+    } catch (std::exception& e) {
+        seed = 42;
+    }
     tilemap_scale = stts::vector2<int>(package[j_simple::tilemap_scale]);
     if (tilemap_scale.x < 0) tilemap_scale.x = -tilemap_scale.x;
+    if (tilemap_scale.x == 0) tilemap_scale.x = 10;
     if (tilemap_scale.y < 0) tilemap_scale.y = -tilemap_scale.y;
+    if (tilemap_scale.y == 0) tilemap_scale.y = 10;
 }
 
 const std::string& generators::simple::type () const {
