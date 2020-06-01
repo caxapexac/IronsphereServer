@@ -18,8 +18,8 @@ if (!fs.existsSync("config.json")) {
     fs.writeFileSync("config.json", JSON.stringify({
         title: "Best Game Server",
         version: 106,
-        ssl_key_linux: "/home/cax/openssl.key",
-        ssl_cert_linux: "/home/cax/openssl.crt",
+        ssl_key_linux: "../openssl.key",
+        ssl_cert_linux: "../openssl.crt",
         ssl_key_win: "D:/openssl.key",
         ssl_cert_win: "D:/openssl.crt",
         port: 1109,

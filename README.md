@@ -44,6 +44,16 @@
 
 # Линки #
 
+## Сертификаты ##
+- [openssl (working)](https://helpcenter.gsx.com/hc/en-us/articles/115015960428-How-to-Generate-a-Self-Signed-Certificate-and-Private-Key-using-OpenSSL)
+- [openssl other 1](https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs)
+- [openssl other 2](https://medium.com/the-new-control-plane/generating-self-signed-certificates-on-windows-7812a600c2d8)
+- [certbot](https://blog.zackad.dev/en/2017/08/19/create-websocket-with-nodejs.html)
+- [ws examples](https://www.npmjs.com/package/ws)
+- []()
+- []()
+
+
 ## Алгоритмы
 - [Алгоритмы + гексы](https://www.redblobgames.com/)
 - []()
@@ -56,7 +66,7 @@
 
 ## C#
 - [.NET Networking](https://metanit.com/sharp/net/1.1.php)
-- []()
+- [NativeWebSocket (WebGL+)](https://github.com/endel/NativeWebSocket)
 - []()
 
 ## Node js
