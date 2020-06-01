@@ -55,16 +55,16 @@ const requestListener = function (req, res) {
 const httpServer = http.createServer(requestListener);
 httpServer.listen(1107);
 //********************************************************************************** */
-var handler2 = function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Панки хой\n');
-};
-const httpsPublic = https.createServer({
-    cert: fs.readFileSync(isWin ? config.ssl_cert_win : config.ssl_cert_linux, "utf8"),
-    key: fs.readFileSync(isWin ? config.ssl_key_win : config.ssl_key_linux, "utf8")
-});
-httpsPublic.addListener("request", handler2);
-httpsPublic.listen(443);
+// var handler2 = function (req, res) {
+//     res.writeHead(200, {'Content-Type': 'text/plain'});
+//     res.end('Панки хой\n');
+// };
+// const httpsPublic = https.createServer({
+//     cert: fs.readFileSync(isWin ? config.ssl_cert_win : config.ssl_cert_linux, "utf8"),
+//     key: fs.readFileSync(isWin ? config.ssl_key_win : config.ssl_key_linux, "utf8")
+// });
+// httpsPublic.addListener("request", handler2);
+// httpsPublic.listen(443);
 //********************************************************************************** */
 var handler = function (req, res) {
     res.writeHead(200, {'Content-Type': 'text/plain'});
