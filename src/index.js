@@ -19,8 +19,8 @@ if (!fs.existsSync("config.json")) {
     fs.writeFileSync("config.json", JSON.stringify({
         title: "Best Game Server",
         version: 106,
-        ssl_key_linux: "../0006_key-certbot.pem",
-        ssl_cert_linux: "../0006_csr-certbot.pem",
+        ssl_key_linux: "../privkey.pem",
+        ssl_cert_linux: "../fullchain.pem",
         ssl_key_win: "D:/openssl.key",
         ssl_cert_win: "D:/openssl.crt",
         port: 1109,
@@ -41,20 +41,31 @@ console.log(`Database loaded. ${Object.keys(database.users).length} users was re
 const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 console.log(`Config of ${config.title} was loaded. Opening ${config.port} port. Server tick every ${config.delta_time} ms`);
 nativeoop.Start(JSON.stringify(config));
-
+//********************************************************************************** */
 // TEMP
 // const wsstest = new WebSocket.Server({port: 1108});
 // wsstest.on("connection", function connection(ws) {
 //     console.log("RECIEVED TEST");
 // });
-
+//********************************************************************************** */
 const requestListener = function (req, res) {
     res.writeHead(200);
     res.end('Hello, World!');
 }
 const httpServer = http.createServer(requestListener);
 httpServer.listen(1107);
-
+//********************************************************************************** */
+var handler2 = function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('Панки хой\n');
+};
+const httpsPublic = https.createServer({
+    cert: fs.readFileSync(isWin ? config.ssl_cert_win : config.ssl_cert_linux, "utf8"),
+    key: fs.readFileSync(isWin ? config.ssl_key_win : config.ssl_key_linux, "utf8")
+});
+httpsPublic.addListener("request", handler2);
+httpsPublic.listen(443);
+//********************************************************************************** */
 var handler = function (req, res) {
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('Hello World\n');
@@ -63,10 +74,9 @@ const httpsServerTest = https.createServer({
     cert: fs.readFileSync(isWin ? config.ssl_cert_win : config.ssl_cert_linux, "utf8"),
     key: fs.readFileSync(isWin ? config.ssl_key_win : config.ssl_key_linux, "utf8")
 });
-httpsServerTest.on('request', app);
 httpsServerTest.addListener("request", handler);
 httpsServerTest.listen(1108);
-
+//********************************************************************************** */
 // TEMP
 
 const httpsServer = https.createServer({
