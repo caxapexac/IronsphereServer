@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const http = require('http');
 const https = require('https');
 const WebSocket = require("ws");
 const query = require("cli-interact").getYesNo;
@@ -46,6 +47,13 @@ nativeoop.Start(JSON.stringify(config));
 // wsstest.on("connection", function connection(ws) {
 //     console.log("RECIEVED TEST");
 // });
+
+const requestListener = function (req, res) {
+    res.writeHead(200);
+    res.end('Hello, World!');
+}
+const httpServer = http.createServer(requestListener);
+httpServer.listen(1107);
 
 var handler = function (req, res) {
     res.writeHead(200, {'Content-Type': 'text/plain'});
