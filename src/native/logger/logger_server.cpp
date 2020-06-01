@@ -3,7 +3,7 @@
 #define ERROR 31
 #define SPECIAL 32
 #define WARNING 33
-#define DEBUG 34
+#define DEBUG 96
 #define MESSAGE 38
 
 

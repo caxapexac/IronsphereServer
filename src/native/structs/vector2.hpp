@@ -39,20 +39,13 @@ namespace stts {
 
         bool operator!= (const vector2& other) const { return !(*this == other); }
 
-        friend std::ostream& operator<< (std::ostream& os, const vector2& vec) {
-            json j;
-            vec.serialize(j);
-            return os << j;
-            // TODO is needed?
-        }
-
         bool is_set ();
 
         /// \return squared length of the vector
         T sqr_magnitude () { return x * x + y * y; }
 
         /// \return length of the vector
-        T magniture () { return sqrtf(sqr_magnitude()); }
+        T magnitude () { return sqrtf(sqr_magnitude()); }
     };
 
     template<typename T>

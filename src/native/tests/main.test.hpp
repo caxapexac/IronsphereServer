@@ -31,8 +31,10 @@
 #include "logger/logger.test.hpp"
 #include "filesys/file_gate.test.hpp"
 
-#include "structs/parameter_map.test.hpp"
-#include "structs/player.test.hpp"
+#include "structs/chat_message.test.hpp"
+#include "structs/broadcast_message.test.hpp"
+//#include "structs/parameter_map.test.hpp"
+//#include "structs/player.test.hpp"
 #include "structs/vector2.test.hpp"
 
 #include "tilemap/tilemap_hexagonal.test.hpp"
@@ -48,6 +50,12 @@ namespace unit_testing {
         std::cout << "***STARTING UNIT TESTING***" << std::endl;
         test_logger();
         test_file_gate();
+        logger::say(l::debug) << "Testing structures..." << logger::out;
+        test_chat_message();
+        test_broadcast_message();
+        //test_parameter_map();
+        //test_player();
+        test_vector2();
         std::cout << "***UNIT TESTING SUCCESS***" << std::endl;
     }
 
