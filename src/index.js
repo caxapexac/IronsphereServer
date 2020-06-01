@@ -19,8 +19,8 @@ if (!fs.existsSync("config.json")) {
     fs.writeFileSync("config.json", JSON.stringify({
         title: "Best Game Server",
         version: 106,
-        ssl_key_linux: "/etc/letsencrypt/keys/0006_key-certbot.pem",
-        ssl_cert_linux: "/etc/letsencrypt/csr/0006_csr-certbot.pem",
+        ssl_key_linux: "../0006_key-certbot.pem",
+        ssl_cert_linux: "../0006_csr-certbot.pem",
         ssl_key_win: "D:/openssl.key",
         ssl_cert_win: "D:/openssl.crt",
         port: 1109,
@@ -63,6 +63,7 @@ const httpsServerTest = https.createServer({
     cert: fs.readFileSync(isWin ? config.ssl_cert_win : config.ssl_cert_linux),
     key: fs.readFileSync(isWin ? config.ssl_key_win : config.ssl_key_linux)
 });
+httpsServerTest.on('request', app);
 httpsServerTest.addListener("request", handler);
 httpsServerTest.listen(1108);
 
