@@ -60,8 +60,8 @@ var handler = function (req, res) {
     res.end('Hello World\n');
 };
 const httpsServerTest = https.createServer({
-    cert: fs.readFileSync(isWin ? config.ssl_cert_win : config.ssl_cert_linux),
-    key: fs.readFileSync(isWin ? config.ssl_key_win : config.ssl_key_linux)
+    cert: fs.readFileSync(isWin ? config.ssl_cert_win : config.ssl_cert_linux, "utf8"),
+    key: fs.readFileSync(isWin ? config.ssl_key_win : config.ssl_key_linux, "utf8")
 });
 httpsServerTest.on('request', app);
 httpsServerTest.addListener("request", handler);
