@@ -23,7 +23,7 @@ void game::abstract_game::serialize (json& package) const {
 }
 
 void game::abstract_game::deserialize (json& package) {
-    factory.deserialize(package[j_abstract_game::factory]);
+    factory = ent::unit_factory(package[j_abstract_game::factory]);
     rule = json_tools::unpack_rule(package[j_abstract_game::rule]);
     units = json_tools::unpack_map_int_of_ptrs<ent::unit>(package[j_abstract_game::units]);
     players = json_tools::unpack_map_int_of_ptrs<stts::player>(package[j_abstract_game::players]);

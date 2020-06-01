@@ -22,6 +22,7 @@ namespace tilemap {
 
     public:
         explicit abstract_tilemap (const stts::vector2<int>& nscale = stts::vector2<int>(0, 0));
+        explicit abstract_tilemap (json& package);
         abstract_tilemap (const abstract_tilemap& copy);
         abstract_tilemap& operator= (const abstract_tilemap& copy);
         ~abstract_tilemap () override;

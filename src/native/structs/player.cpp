@@ -26,7 +26,7 @@ void stts::player::serialize (json& package) const {
 
 void stts::player::deserialize (json& package) {
     team = package[j_player::team].get<int>();
-    parameters.deserialize(package[j_player::parameters]);
+    parameters = parameter_map(package[j_player::parameters]);
 }
 
 int stts::player::get_team () {

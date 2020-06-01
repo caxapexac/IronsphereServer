@@ -10,6 +10,10 @@ stts::parameter_map::parameter_map () {
     parameters_list_vector2 = std::map<std::string, std::list<vector2<int>>>();
 }
 
+stts::parameter_map::parameter_map(json &package) {
+    stts::parameter_map::deserialize(package);
+}
+
 void stts::parameter_map::serialize (json& package) const {
     package[j_parameter_map::parameters_bool] = parameters_bool;
     package[j_parameter_map::parameters_int] = parameters_int;

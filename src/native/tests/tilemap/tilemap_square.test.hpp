@@ -27,8 +27,7 @@ namespace unit_testing {
         std::cout << j.dump(2) << std::endl;
         //
         delete t_square;
-        t_square = new tilemap::square();
-        t_square->deserialize(j);
+        t_square = new tilemap::square(j);
         j = {};
         t_square->serialize(j);
         std::cout << j.dump(2) << std::endl;

@@ -25,6 +25,10 @@ tilemap::abstract_tilemap& tilemap::abstract_tilemap::operator= (const abstract_
     return *this;
 }
 
+tilemap::abstract_tilemap::abstract_tilemap(json &package) {
+    tilemap::abstract_tilemap::deserialize(package);
+}
+
 tilemap::abstract_tilemap::~abstract_tilemap () {
     for (int i = 0; i < tile_count(); ++i) delete data[i];
     delete[] data;
@@ -114,7 +118,3 @@ void tilemap::abstract_tilemap::clear_tiles() {
 stts::vector2<int> &tilemap::abstract_tilemap::get_scale() {
     return scale;
 }
-
-
-
-

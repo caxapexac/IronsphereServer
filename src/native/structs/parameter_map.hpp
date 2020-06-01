@@ -29,6 +29,7 @@ namespace stts {
 
     public:
         parameter_map (); // TODO copy constructor (player uses)
+        parameter_map (json& package);
         void serialize (json& package) const override;
         void deserialize (json& package) override;
 
