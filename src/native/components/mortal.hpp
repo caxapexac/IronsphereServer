@@ -7,6 +7,17 @@ namespace com {
     // JSON
     namespace j_mortal {
         const std::string type = TOSTRING(mortal);
+        const std::string armor = TOSTRING(armor); // float
+        const std::string hp = TOSTRING(hp); // float
+        const std::string evading_chance = TOSTRING(evading_chance); // float [0, 1]
+        const std::string is_alive = TOSTRING(is_alive); // bool
+    }
+
+    namespace j_mortal_signal {
+        const std::string type = TOSTRING(mortal);
+        const std::string armor = TOSTRING(armor); // float
+        const std::string hp = TOSTRING(hp); // float
+        const std::string evading_chance = TOSTRING(evading_chance); // float [0, 1]
     }
 
     class mortal : public icomponent {

@@ -7,6 +7,15 @@ namespace com {
     // JSON
     namespace j_attack {
         const std::string type = TOSTRING(attack);
+        const std::string damage = TOSTRING(damage); // : float
+        const std::string attack_target = TOSTRING(attack_target); // : int (unit id)
+        const std::string is_attacking = TOSTRING(is_attacking); // : bool
+    }
+
+    namespace j_attack_signal { // TODO (maybe use mutable as flag
+        const std::string type = TOSTRING(attack);
+        const std::string attack_target = TOSTRING(attack_target); // : int (unit id)
+        const std::string is_attacking = TOSTRING(is_attacking); // : bool
     }
 
     class attack : public icomponent {

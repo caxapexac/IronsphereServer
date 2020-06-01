@@ -24,11 +24,11 @@ void com::move::command (ent::unit& sender, ent::unit& owner, game::abstract_gam
 }
 
 void com::move::signal (ent::unit& owner, game::abstract_game& context, json& input) {
-    if (input.contains(j_move::is_moving)) {
-        owner.set_parameter(j_move::is_moving, input[j_move::is_moving].get<bool>());
+    if (input.contains(j_move_signal::is_moving)) {
+        owner.set_parameter(j_move::is_moving, input[j_move_signal::is_moving].get<bool>());
     }
-    if (input.contains(j_move::move_target)) {
-        stts::vector2<int> move_target = stts::vector2<int>(input[j_move::move_target]);
+    if (input.contains(j_move_signal::move_target)) {
+        stts::vector2<int> move_target = stts::vector2<int>(input[j_move_signal::move_target]);
         owner.set_parameter(j_move::move_target, move_target);
         stts::vector2<int> position = owner.get_parameter<stts::vector2<int>>(j_move::position);
         owner.set_parameter(j_move::move_path, context.get_tilemap().get_path(position, move_target));
