@@ -18,8 +18,8 @@ if (!fs.existsSync("config.json")) {
     fs.writeFileSync("config.json", JSON.stringify({
         title: "Best Game Server",
         version: 106,
-        ssl_key_linux: "../openssl.key",
-        ssl_cert_linux: "../openssl.crt",
+        ssl_key_linux: "/etc/letsencrypt/keys/0006_key-certbot.pem",
+        ssl_cert_linux: "/etc/letsencrypt/csr/0006_csr-certbot.pem",
         ssl_key_win: "D:/openssl.key",
         ssl_cert_win: "D:/openssl.crt",
         port: 1109,
@@ -42,10 +42,22 @@ console.log(`Config of ${config.title} was loaded. Opening ${config.port} port. 
 nativeoop.Start(JSON.stringify(config));
 
 // TEMP
-const wsstest = new WebSocket.Server({port: 1108});
-wsstest.on("connection", function connection(ws) {
-    console.log("RECIEVED TEST");
+// const wsstest = new WebSocket.Server({port: 1108});
+// wsstest.on("connection", function connection(ws) {
+//     console.log("RECIEVED TEST");
+// });
+
+var handler = function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('Hello World\n');
+};
+const httpsServerTest = https.createServer({
+    cert: fs.readFileSync(isWin ? config.ssl_cert_win : config.ssl_cert_linux),
+    key: fs.readFileSync(isWin ? config.ssl_key_win : config.ssl_key_linux)
 });
+httpsServerTest.addListener("request", handler);
+httpsServerTest.listen(1108);
+
 // TEMP
 
 const httpsServer = https.createServer({
