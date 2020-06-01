@@ -1,8 +1,10 @@
-const WebSocket = require("ws");
 const fs = require("fs");
 const path = require("path");
+const https = require('https');
+const WebSocket = require("ws");
 const query = require("cli-interact").getYesNo;
 const nativeoop = require("bindings")("nativeoop");
+const isWin = process.platform === "win32"; // https://stackoverflow.com/a/8684009/9398364
 
 // Default data
 
@@ -16,10 +18,15 @@ if (!fs.existsSync("config.json")) {
     fs.writeFileSync("config.json", JSON.stringify({
         title: "Best Game Server",
         version: 106,
+        ssl_key_linux: "/home/cax/openssl.key",
+        ssl_cert_linux: "/home/cax/openssl.crt",
+        ssl_key_win: "D:/openssl.key",
+        ssl_cert_win: "D:/openssl.crt",
         port: 1109,
         delta_time: 1111,
         chat_capacity: 100,
-        root_folder: "./root/"
+        root_folder: "./root/",
+        
     }, null, 2));
 }
 
@@ -34,13 +41,20 @@ const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 console.log(`Config of ${config.title} was loaded. Opening ${config.port} port. Server tick every ${config.delta_time} ms`);
 nativeoop.Start(JSON.stringify(config));
 
+const httpsServer = https.createServer({
+    cert: fs.readFileSync(isWin ? config.ssl_cert_win : config.ssl_cert_linux),
+    key: fs.readFileSync(isWin ? config.ssl_key_win : config.ssl_key_linux)
+});
+httpsServer.listen(config.port);
+
 const connections = {};
-const wss = new WebSocket.Server({ port: config.port });
+const wss = new WebSocket.Server({ server: httpsServer });
 
 console.time("uptime");
 console.log(`-=${config.title} has started=-`);
 
 wss.on("connection", function connection(ws) {
+    console.log("RECIEVED")
     ws.on("message", function incoming(message) {
         Signal(ws, message);
     });
