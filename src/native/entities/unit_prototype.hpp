@@ -49,7 +49,7 @@ namespace ent {
 
     template<typename T>
     bool unit_prototype::has_parameter (const std::string& parameter_name, int ttl) {
-        if (--ttl <= 0) throw todo_exception("I don't know how but you have unit with 128 layers of inheritance");
+        if (--ttl <= 0) throw recursion_exception("128 layers of inheritance reached!");
         T result;
         if (get<T>(parameter_name, result)) return true;
         else if (prototype) return prototype->has_parameter<T>(parameter_name, ttl - 1);
@@ -58,11 +58,11 @@ namespace ent {
 
     template<typename T>
     T unit_prototype::get_parameter (const std::string& parameter_name, int ttl) {
-        if (--ttl <= 0) throw todo_exception("I don't know how but you have unit with 128 layers of inheritance");
+        if (--ttl <= 0) throw recursion_exception("128 layers of inheritance reached!");
         T result;
         if (get<T>(parameter_name, result)) return result;
         else if (prototype) return prototype->get_parameter<T>(parameter_name, ttl - 1);
-        else throw todo_exception(parameter_name + " parameter wasn't found");
+        else throw null_pointer_exception(parameter_name + " parameter wasn't found");
     }
 
     template<typename T>

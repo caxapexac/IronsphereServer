@@ -12,12 +12,12 @@ const std::string& tilemap::square::type () const {
 }
 
 tile::base_tile& tilemap::square::get_tile (int x, int y) {
-    if (!is_valid(x, y)) throw todo_exception("setting tile square tilemap out of range exception");
+    if (!is_valid(x, y)) throw out_of_bounds_exception("Tile out of tilemap borders");
     return *data[y * scale.x + x];
 }
 
 void tilemap::square::set_tile (int x, int y, tile::base_tile* item) {
-    if (!is_valid(x, y)) throw todo_exception("setting tile square tilemap out of range exception");
+    if (!is_valid(x, y)) throw out_of_bounds_exception("Tile out of tilemap borders");
     delete data[y * scale.x + x];
     data[y * scale.x + x] = item;
 }

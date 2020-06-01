@@ -10,6 +10,6 @@ std::map<std::string, icomponent*> com::component_storage::components = {{j_atta
                                                                          {j_storage::type, new storage()}};
 
 icomponent* com::component_storage::get_component (const std::string& component_name) {
-    if (components[component_name] == nullptr) throw todo_exception(component_name + " component is invalid individ inclusive intensive imperative impossible interface is insane");
+    if (components[component_name] == nullptr) throw null_pointer_exception(component_name + " component is invalid");
     return components[component_name];
 }

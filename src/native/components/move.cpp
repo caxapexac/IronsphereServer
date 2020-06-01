@@ -20,7 +20,7 @@ void com::move::setup_prototype (ent::unit_prototype& prototype) {
 }
 
 void com::move::command (ent::unit& sender, ent::unit& owner, game::abstract_game& context, json& input) {
-    throw todo_exception("Nobody can stop me");
+    throw unimplemented_exception("com::move::command was not implemented");
 }
 
 void com::move::signal (ent::unit& owner, game::abstract_game& context, json& input) {

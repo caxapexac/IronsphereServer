@@ -16,7 +16,7 @@ void game::realtime::serialize_concrete_player (int player_uid, json& package) {
         // TODO it is admin, return all
     }
     if (players[player_uid] == nullptr) {
-        throw todo_exception(std::to_string(player_uid) + " player isn't in lobby");
+        throw null_pointer_exception(std::to_string(player_uid) + " player isn't in lobby");
     }
 
     json_tools::pack_map_int_of_ptrs(players, package[j_abstract_game::players]); // TODO serialize_public

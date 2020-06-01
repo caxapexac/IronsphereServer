@@ -70,7 +70,7 @@ namespace ent {
         T result;
         if (get<T>(parameter_name, result)) return result;
         else if (prototype) return prototype->get_parameter<T>(parameter_name);
-        else throw todo_exception(parameter_name + " parameter wasn't found");
+        else throw null_pointer_exception(parameter_name + " parameter wasn't found");
     }
 
     template<typename T>

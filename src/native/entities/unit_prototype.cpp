@@ -44,13 +44,13 @@ void ent::unit_prototype::get_cache_public (const ent::unit& head, json& output)
 }
 
 void ent::unit_prototype::update (ent::unit& head, game::abstract_game& game, int ttl) {
-    if (--ttl <= 0) throw todo_exception("I don't know how but you have unit with 128 layers of inheritance");
+    if (--ttl <= 0) throw recursion_exception("128 layers of inheritance reached!");
     for (const auto& i : components) i.second->update(head, game);
     if (prototype) prototype->update(head, game, ttl);
 }
 
 void ent::unit_prototype::signal (ent::unit& head, game::abstract_game& game, const std::string& component_name, json& component_data, int ttl) {
-    if (--ttl <= 0) throw todo_exception("I don't know how but you have unit with 128 layers of inheritance");
+    if (--ttl <= 0) throw recursion_exception("128 layers of inheritance reached!");
     if (components[component_name] != nullptr) {
         components[component_name]->signal(head, game, component_data);
     }
@@ -64,7 +64,7 @@ void ent::unit_prototype::signal (ent::unit& head, game::abstract_game& game, co
 }
 
 void ent::unit_prototype::command (ent::unit& sender, ent::unit& head, game::abstract_game& context, std::string component_name, json& component_data, int ttl) {
-    if (--ttl <= 0) throw todo_exception("I don't know how but you have unit with 128 layers of inheritance");
+    if (--ttl <= 0) throw recursion_exception("128 layers of inheritance reached!");
     if (components[component_name] != nullptr) {
         components[component_name]->command(sender, head, context, component_data);
     }

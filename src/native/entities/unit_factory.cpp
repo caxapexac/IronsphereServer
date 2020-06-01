@@ -31,21 +31,21 @@ void ent::unit_factory::deserialize (json& package) {
 
 ent::unit_prototype* ent::unit_factory::get_prototype (const std::string& prototype_name) {
     if (prototypes[prototype_name] == nullptr) {
-        throw todo_exception("Yo n**igga you can't get this stuff cuz it gonna blow your mind in segfault");
+        throw null_pointer_exception("No such prototype " + prototype_name);
     }
     return prototypes[prototype_name];
 }
 
 void ent::unit_factory::set_prototype (unit_prototype* prototype) {
     if (prototypes[prototype->get_name()] != nullptr) {
-        throw todo_exception("Double kill");
+        throw conflict_exception("This prototype already set");
     }
     prototypes[prototype->get_name()] = prototype; // FIXME memory leak
 }
 
 ent::unit* ent::unit_factory::make_unit (const std::string& prototype_name, int player_uid) {
     if (prototypes[prototype_name] == nullptr) {
-        throw todo_exception("This freaking prototype wasn't literally exist. Im not torch just sweet throwed");
+        throw null_pointer_exception("Prototype for this unit does not exist " + prototype_name);
     }
     return new ent::unit(get_prototype(prototype_name), player_uid, get_id());
 }

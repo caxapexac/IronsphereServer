@@ -68,7 +68,7 @@ bool tile::base_tile::is_occupied () const {
 }
 
 void tile::base_tile::on_unit_enter (ent::unit& sender) {
-    if (is_occupied() && sender.get_id() != occupier_uid) throw todo_exception("Uh, sama lamaa duma lama you assuming I'm a human\n What I gotta do to get it through to you I'm superhuman\nInnovative and I'm made of rubber\nSo that anything you say is ricocheting off of me and it'll glue to you\nI'm devastating, more than ever demonstrating\nHow to give a motherfuckin' audience a feeling like it's levitating\nNever fading, and I know the haters are forever waiting\nFor the day that they can say I fell off, they'd be celebrating\nCause I know the way to get 'em motivated\nI make elevating music, you make elevator music");
+    if (is_occupied() && sender.get_id() != occupier_uid) throw conflict_exception("Units crossed each other");
     occupier_uid = sender.get_id();
     // Do nothing
 }
@@ -79,7 +79,7 @@ void tile::base_tile::on_unit_touch (ent::unit& sender) {
 }
 
 void tile::base_tile::on_unit_exit (ent::unit& sender) {
-    if (occupier_uid != sender.get_id()) throw todo_exception("What is the strength, bro?");
+    if (occupier_uid != sender.get_id()) throw rights_exception("Player has no rights to move the unit");
     occupier_uid = 0;
     // Do nothing
 }

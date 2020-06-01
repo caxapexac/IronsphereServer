@@ -100,7 +100,7 @@ stts::player& game::abstract_game::get_player (int uid) {
 }
 
 void game::abstract_game::set_player (int uid, stts::player* nplayer) {
-    if (players[uid] != nullptr) throw todo_exception("Player with this uid is already exist");
+    if (players[uid] != nullptr) throw conflict_exception("Player with this uid is already exist");
     // TODO maybe replace instead of exception
     players[uid] = nplayer;
 }
