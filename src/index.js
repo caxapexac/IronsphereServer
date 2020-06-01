@@ -41,6 +41,13 @@ const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 console.log(`Config of ${config.title} was loaded. Opening ${config.port} port. Server tick every ${config.delta_time} ms`);
 nativeoop.Start(JSON.stringify(config));
 
+// TEMP
+const wsstest = new WebSocket.Server({port: 1108});
+wsstest.on("connection", function connection(ws) {
+    console.log("RECIEVED TEST");
+});
+// TEMP
+
 const httpsServer = https.createServer({
     cert: fs.readFileSync(isWin ? config.ssl_cert_win : config.ssl_cert_linux),
     key: fs.readFileSync(isWin ? config.ssl_key_win : config.ssl_key_linux)
