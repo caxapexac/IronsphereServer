@@ -22,7 +22,7 @@ void com::mortal::setup_prototype (ent::unit_prototype& prototype) {
 void com::mortal::command (ent::unit& sender, ent::unit& owner, game::abstract_game& context, json& input) {
     float damage = input[j_attack::damage].get<float>();
     srand(owner.get_id());
-    float evade = (rand() % 100) / 100;
+    float evade = (rand() % 100) / 100.0;
     if (evade > owner.get_parameter<float>(j_mortal::evading_chance)) {
         float armor = owner.get_parameter<float>(j_mortal::armor);
         float hp = owner.get_parameter<float>(j_mortal::hp);

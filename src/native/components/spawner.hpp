@@ -11,7 +11,7 @@ namespace com {
         const std::string production_line = TOSTRING(production_line); // : int
         const std::string production_tikz = TOSTRING(production_tikz); // : int
         const std::string production_cost = TOSTRING(production_cost); // : int
-        const std::string is_producing = TOSTRING(production_cost); // : bool
+        const std::string is_producing = TOSTRING(is_producing); // : bool
     }
 
     namespace j_spawner_signal { // TODO (maybe use mutable as flag

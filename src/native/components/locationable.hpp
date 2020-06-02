@@ -7,7 +7,7 @@
 namespace com {
     // JSON
     namespace j_locationable {
-        const std::string type = TOSTRING(move);
+        const std::string type = TOSTRING(locationable);
         const std::string position = TOSTRING(position); // : vector2<int>
     }
 
