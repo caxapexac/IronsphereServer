@@ -9,7 +9,7 @@ void tile::base_tile::clear() {
     h = 0;
     opened = false;
     closed = false;
-    parent = nullptr;
+    parent = stts::vector2<int>(-1, -1);
 }
 
 

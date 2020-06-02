@@ -18,35 +18,21 @@ public:
     std::list<stts::vector2<int>> find_path(const stts::vector2<int>& from, const stts::vector2<int>& to);
 
 private:
-    tilemap::square& map;
-    std::list<tile::base_tile*> open_list;
-    tile::base_tile* begin_node;
-    tile::base_tile* end_node;
-    std::list<tile::base_tile*> free_list;
+    static tilemap::abstract_tilemap* map;
+    std::list<stts::vector2<int>> open_list;
+    stts::vector2<int> begin_node;
+    stts::vector2<int> end_node;
+    std::list<stts::vector2<int>> free_list;
     std::list<stts::vector2<int>> path;
 
     bool can_walk(const stts::vector2<int>& from, const stts::vector2<int>& to);
 
-    void identify_successors(tile::base_tile* node);
+    void identify_successors(stts::vector2<int>& node);
     stts::vector2<int> jump(int x, int y, int px, int py);
-    std::vector<tile::base_tile*> find_neighbors(tile::base_tile* cellNode);
-    void backtrace(tile::base_tile* node);
+    std::vector<stts::vector2<int>> find_neighbors(stts::vector2<int>& cellNode);
+    void backtrace(const stts::vector2<int>& node);
     std::list<stts::vector2<int>> expand_path();
     std::vector<stts::vector2<int>> interpolate(int x0, int y0, int x1, int y1);
-
-    void realse(tile::base_tile* node) { // TODO: (probably) (re)move this when WE will be done.
-        free_list.push_back(node);
-    }
-    tile::base_tile* create() { // TODO: (probably) (re)move this when WE will be done.
-        if (!free_list.empty()) {
-            tile::base_tile* node = free_list.front();
-            free_list.pop_front();
-            node->clear();
-            return node;
-        }
-
-        return new tile::base_tile();
-    }
 
 
     int manhattan(int x, int y) { // TODO: (probably) move this to a_tilemap when WE will be done.

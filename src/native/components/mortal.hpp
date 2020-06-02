@@ -15,9 +15,6 @@ namespace com {
 
     namespace j_mortal_signal {
         const std::string type = TOSTRING(mortal);
-        const std::string armor = TOSTRING(armor); // float
-        const std::string hp = TOSTRING(hp); // float
-        const std::string evading_chance = TOSTRING(evading_chance); // float [0, 1]
     }
 
     class mortal : public icomponent {

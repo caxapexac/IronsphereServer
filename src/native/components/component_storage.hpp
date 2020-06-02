@@ -2,10 +2,13 @@
 #define LOGIC_COMPONENT_STORAGE_HPP
 
 #include "../base/includes.hpp"
-#include "attack.hpp"
-#include "mortal.hpp"
-#include "move.hpp"
 #include "storage.hpp"
+#include "move.hpp"
+#include "mortal.hpp"
+#include "attack.hpp"
+#include "spawner.hpp"
+#include "locationable.hpp"
+
 
 namespace com {
     class component_storage {

@@ -7,7 +7,6 @@ namespace com {
     // JSON
     namespace j_move {
         const std::string type = TOSTRING(move);
-        const std::string position = TOSTRING(position); // : vector2<int>
         const std::string is_moving = TOSTRING(is_moving); // : bool
         const std::string move_target = TOSTRING(move_target); // : vector2<int>
         const std::string move_path = TOSTRING(move_path); // list<vector2<int>>

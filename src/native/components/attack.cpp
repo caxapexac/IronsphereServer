@@ -14,7 +14,7 @@ void com::attack::serialize_public (const ent::unit& owner, json& package) const
 void com::attack::setup_prototype (ent::unit_prototype& prototype) {
     prototype.set_parameter(j_attack::attack_target, -1);
     prototype.set_parameter(j_attack::is_attacking, false);
-    prototype.set_parameter(j_attack::damage, 1.0);
+    prototype.set_parameter(j_attack::damage, (float) 2.0);
 }
 
 void com::attack::command (ent::unit& sender, ent::unit& owner, game::abstract_game& context, json& input) {

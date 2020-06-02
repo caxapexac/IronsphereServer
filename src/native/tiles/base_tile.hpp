@@ -23,10 +23,10 @@ namespace tile {
         // FOR PATH SEARCHING PURPOSES!!!
 
         int f, g, h;
-        stts::vector2<int> position;
+        //stts::vector2<int> position;
         bool opened;
         bool closed;
-        base_tile* parent;
+        stts::vector2<int> parent;
 
         void clear();
 

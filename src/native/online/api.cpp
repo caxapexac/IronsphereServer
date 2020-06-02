@@ -36,6 +36,7 @@ void online::api::update (json& output) {
     for (const auto& item : sessions) {
         item.second->game_update(output[out_update::players_sessions][std::to_string(item.first)]);
     }
+    logger::say() << output.dump() << logger::out;
 }
 
 void online::api::signal (json& input, json& output) {

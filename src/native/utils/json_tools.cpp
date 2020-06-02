@@ -64,10 +64,10 @@ void nlohmann::json_tools::print_tilemap (tilemap::abstract_tilemap& tilemap) {
         for (int nx = 0; nx < tilemap.scale.x; ++nx) {
             tile::base_tile& t = tilemap.get_tile(nx, ny);
             if (t.is_occupied()) {
-                 std::cout << t.get_occupier_id() << "\t";
+                 std::cout << t.get_occupier_id() << "  ";
             }
             else {
-                std::cout << t.get_height() << "\t";
+                std::cout << ".  ";
             }
         }
         std::cout << std::endl;

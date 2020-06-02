@@ -2,32 +2,38 @@
 
 // TODO: (probably) clear this when WE will be done.
 
-pathfinder::pathfinder(tilemap::square &map) : map(map) {}
+tilemap::abstract_tilemap* pathfinder::map;
+
+
+pathfinder::pathfinder(tilemap::square &nmap) {
+    map = &nmap;
+}
 
 std::list<stts::vector2<int>> pathfinder::find_path(const stts::vector2<int>& from, const stts::vector2<int>& to) {
-     map.clear_tiles();
+     map->clear_tiles();
      path.clear();
 
-     begin_node = &map.get_tile(from.x, from.y);
-     end_node = &map.get_tile(to.x, to.y);
+     begin_node = from;
+     end_node = to;
 
      // set the `g` and `f` value of the start node to be zero
-     begin_node->g = 0;
-     begin_node->f = 0;
+     map->get_tile(begin_node).g = 0;
+     map->get_tile(begin_node).f = 0;
 
      // push the begin node into the open list
-     open_list.push_back(begin_node);
-     begin_node->opened = true;
+     open_list.push_back(from);
+     map->get_tile(begin_node).opened = true;
 
-    tile::base_tile* node = nullptr;
+     stts::vector2<int> node;
 
      while (!open_list.empty()) {
          // pop the position of node which has the minimum `f` value.
          node = open_list.front();
          open_list.pop_front();
-         node->closed = true;
-         if (node == end_node) {
-             backtrace(end_node);
+         map->get_tile(node).closed = true;
+         if (node == to) {
+             path.push_back(from);
+             backtrace(to);
              return expand_path();
          }
 
@@ -40,47 +46,47 @@ std::list<stts::vector2<int>> pathfinder::find_path(const stts::vector2<int>& fr
 
 
 bool pathfinder::can_walk(const stts::vector2<int>& from, const stts::vector2<int>& to) {
-     if (((to.x < 0) || (to.x >= map.get_scale().x)) || ((to.y < 0) || (to.y >= map.get_scale().y))) return false;
-     tile::base_tile* node = &map.get_tile(to.x, to.y);
-     return node && !node->is_occupied() && (abs(map.get_tile(to.x, to.y).get_height() - node->get_height()) < 20);
+     if (((to.x < 0) || (to.x >= map->get_scale().x)) || ((to.y < 0) || (to.y >= map->get_scale().y))) return false;
+     tile::base_tile* node = &map->get_tile(to.x, to.y);
+     return node && !node->is_occupied() && (abs(map->get_tile(to.x, to.y).get_height() - node->get_height()) < 20);
 }
 
-void pathfinder::identify_successors(tile::base_tile* node) {
-     tile::base_tile* jumpnode = nullptr;
+void pathfinder::identify_successors(stts::vector2<int>& node) {
+     stts::vector2<int> jumpnode;
      int d = 0;
      int g = 0;
 
-     std::vector<tile::base_tile*> cells = find_neighbors(node);
+     std::vector<stts::vector2<int>> cells = find_neighbors(node);
      for (auto itr = cells.begin(); itr != cells.end(); ++itr) {
-         auto result = jump((*itr)->position.x, (*itr)->position.y, node->position.x, node->position.y);
+         auto result = jump((*itr).x, (*itr).y, node.x, node.y);
 
          int jx = result.x;
          int jy = result.y;
          if (jx < 0) // NEEDED????
              continue;
 
-         jumpnode = &map.get_tile(jx, jy);
-         if (jumpnode->closed) continue;
+         jumpnode = result;
+         if (map->get_tile(jumpnode).closed) continue;
 
          // include distance, as parent may not be immediately adjacent:
-         d = octile(abs(jx - node->position.x), abs(jy - node->position.y));
-         g = node->g + d;
+         d = octile(abs(jx - node.x), abs(jy - node.y));
+         g = map->get_tile(node).g + d;
 
-         if (!jumpnode->opened || g < jumpnode->g) {
-             jumpnode->g = g;
-             if (jumpnode->h == 0)
-                 jumpnode->h = manhattan(abs(jx - end_node->position.x), abs(jy - end_node->position.y));
-             jumpnode->f = jumpnode->g + jumpnode->h;
-             jumpnode->parent = node;
+         if (!map->get_tile(jumpnode).opened || g < map->get_tile(jumpnode).g) {
+             map->get_tile(jumpnode).g = g;
+             if (map->get_tile(jumpnode).h == 0)
+                 map->get_tile(jumpnode).h = manhattan(abs(jx - end_node.x), abs(jy - end_node.y));
+             map->get_tile(jumpnode).f = map->get_tile(jumpnode).g + map->get_tile(jumpnode).h;
+             map->get_tile(jumpnode).parent = node;
 
-             if (!jumpnode->opened) {
+             if (!map->get_tile(jumpnode).opened) {
                  open_list.push_back(jumpnode);
-                 open_list.sort([] (const tile::base_tile* a, const tile::base_tile* b)->bool // TODO: replace with in-place search.
+                 open_list.sort([] (const stts::vector2<int> a, const stts::vector2<int> b)->bool // TODO: replace with in-place search.
                                  {
-                                     return a->f < b->f;
+                                     return map->get_tile(a).f < map->get_tile(b).f;
                                  });
 
-                 jumpnode->opened = true;
+                 map->get_tile(jumpnode).opened = true;
              }
          }
      }
@@ -93,7 +99,7 @@ stts::vector2<int> pathfinder::jump(int x, int y, int px, int py) {
      if (!can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x, y)))
          return stts::vector2<int>(-1, -1);
 
-     if (&map.get_tile(x, y) == end_node)
+     if (stts::vector2<int>(x, y) == end_node)
          return stts::vector2<int>(x, y);
 
      // check for forced neighbors
@@ -122,60 +128,60 @@ stts::vector2<int> pathfinder::jump(int x, int y, int px, int py) {
      return jump(x + dx, y + dy, x, y);
  }
 
- std::vector<tile::base_tile*> pathfinder::find_neighbors(tile::base_tile* cellNode) {
-     std::vector<tile::base_tile*> neighbours;
+ std::vector<stts::vector2<int>> pathfinder::find_neighbors(stts::vector2<int>& cellNode) {
+     std::vector<stts::vector2<int>> neighbours;
 
-     int x = cellNode->position.x;
-     int y = cellNode->position.y;
+     int x = cellNode.x;
+     int y = cellNode.y;
 
      // directed pruning: can ignore most neighbors, unless forced.
-     if ( cellNode->parent ) {
+     if (map->get_tile(cellNode).parent.is_set()) {
          // get the normalized direction of travel
-         int dx = (x - cellNode->parent->position.x) / m_max(abs(x - cellNode->parent->position.x), 1);
-         int dy = (y - cellNode->parent->position.y) / m_max(abs(y - cellNode->parent->position.y), 1);
+         int dx = (x - map->get_tile(cellNode).parent.x) / m_max(abs(x - map->get_tile(cellNode).parent.x), 1);
+         int dy = (y - map->get_tile(cellNode).parent.y) / m_max(abs(y - map->get_tile(cellNode).parent.y), 1);
 
          // search diagonally
          if ( dx != 0 && dy != 0 ) {
              if (can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x, y + dy))) // down
-                 neighbours.push_back(&map.get_tile(x, y + dy));
+                 neighbours.push_back(stts::vector2<int>(x, y + dy));
 
              if (can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x + dx, y))) // right
-                 neighbours.push_back(&map.get_tile(x + dx, y));
+                 neighbours.push_back(stts::vector2<int>(x + dx, y));
 
              if (can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x + dx, y + dy))) // right down
-                 neighbours.push_back(&map.get_tile(x + dx, y + dy));
+                 neighbours.push_back(stts::vector2<int>(x + dx, y + dy));
 
              if (!can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x - dx, y))) // 0 1
-                 neighbours.push_back(&map.get_tile(x - dx, y + dy));
+                 neighbours.push_back(stts::vector2<int>(x - dx, y + dy));
 
              if (!can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x, y - dy))) // 1 0
-                 neighbours.push_back(&map.get_tile(x + dx, y - dy));
+                 neighbours.push_back(stts::vector2<int>(x + dx, y - dy));
          } else { // search horizontally/vertically
              if ( dx == 0 ) {
                  if (can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x, y + dy)))
-                     neighbours.push_back(&map.get_tile(x, y + dy));
+                     neighbours.push_back(stts::vector2<int>(x, y + dy));
 
                  if (!can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x + 1, y)))
-                     neighbours.push_back(&map.get_tile(x + 1, y + dy));
+                     neighbours.push_back(stts::vector2<int>(x + 1, y + dy));
 
                  if (!can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x - 1, y)))
-                     neighbours.push_back(&map.get_tile(x - 1, y + dy));
+                     neighbours.push_back(stts::vector2<int>(x - 1, y + dy));
              } else {
                  if (can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x + dx, y)))
-                     neighbours.push_back(&map.get_tile(x + dx, y));
+                     neighbours.push_back(stts::vector2<int>(x + dx, y));
 
                  if (!can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x, y + 1)))
-                     neighbours.push_back(&map.get_tile(x + dx, y + 1));
+                     neighbours.push_back(stts::vector2<int>(x + dx, y + 1));
 
                  if (!can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x, y - 1)))
-                     neighbours.push_back(&map.get_tile(x + dx, y - 1));
+                     neighbours.push_back(stts::vector2<int>(x + dx, y - 1));
              }
          }
      } else {
          for (int i = -1; i <= 1; ++i) {
              for (int j = -1; j <= 1; ++j) {
                  if ((i == 0) && (j == 0)) continue;
-                 if (can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x + i, y + j))) neighbours.push_back(&map.get_tile(x + i, y + j));
+                 if (can_walk(stts::vector2<int>(x, y), stts::vector2<int>(x + i, y + j))) neighbours.push_back(stts::vector2<int>(x + i, y + j));
              }
          }
      }
@@ -183,16 +189,17 @@ stts::vector2<int> pathfinder::jump(int x, int y, int px, int py) {
      return neighbours;
  }
 
- void pathfinder::backtrace(tile::base_tile* node) {
+ void pathfinder::backtrace(const stts::vector2<int>& node) {
+     stts::vector2<int> node2(node);
      stts::vector2<int> point;
 
      do {
-         point.x = node->position.x;
-         point.y = node->position.y;
+         point.x = node2.x;
+         point.y = node2.y;
          path.push_back(point);
 
-         node = node->parent;
-     } while (node->parent);
+         node2 = map->get_tile(node2).parent;
+     } while (map->get_tile(node2).parent.is_set());
 
      path.reverse();
  }

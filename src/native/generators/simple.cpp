@@ -77,9 +77,18 @@ std::unique_ptr<game::abstract_game> generators::simple::generate () {
     game->set_rule(std::make_unique<rules::skirmish>());
 
     // Factory
-    ent::unit_prototype* p_runner = new ent::unit_prototype("runner");
-    p_runner->add_component(com::j_move::type);
-    game->set_prototype(p_runner);
+    ent::unit_prototype* base = new ent::unit_prototype("base");
+    base->add_component(com::j_locationable::type);
+    base->add_component(com::j_mortal::type);
+    base->add_component(com::j_spawner::type);
+    game->set_prototype(base);
+
+    ent::unit_prototype* solemn = new ent::unit_prototype("solemn");
+    base->add_component(com::j_locationable::type);
+    solemn->add_component(com::j_move::type);
+    base->add_component(com::j_mortal::type);
+    base->add_component(com::j_attack::type);
+    game->set_prototype(solemn);
 
 
     // Players
@@ -88,7 +97,7 @@ std::unique_ptr<game::abstract_game> generators::simple::generate () {
         player->set(stts::player_params::money, seed % 400 + 100);
         game->set_player(i, player);
 
-        stts::vector2<int> spawn = cir_set(i-1, players_uid.size());
+        stts::vector2<int> spawn = cir_set(i, players_uid.size());
         int radius = tilemap_scale.x / 16;
 
         float middle_height = 0.0;
@@ -109,14 +118,18 @@ std::unique_ptr<game::abstract_game> generators::simple::generate () {
 
         stts::vector2<int> unit1_offset(-radius/2, 0), unit2_offset(radius/2, 0);
 
+        // Base
+        ent::unit &u_base = game->make_unit("base", i);
+        game->get_tilemap().transpose(u_base, spawn + stts::vector2<int>(radius / 2, 0));
+
         // Units
-        ent::unit &u_runner_1 = game->make_unit("runner", i);
+        ent::unit &u_runner_1 = game->make_unit("solemn", i);
         game->get_tilemap().transpose(u_runner_1, spawn + stts::vector2<int>(-radius/2, 0));
 
-        if (unit1_offset != unit2_offset) { // TODO: remove this to test on SANE-SIZED maps
-            ent::unit &u_runner_2 = game->make_unit("runner", i);
+        /*if (unit1_offset != unit2_offset) { // TODO: remove this to test on SANE-SIZED maps
+            ent::unit &u_runner_2 = game->make_unit("solemn", i);
             game->get_tilemap().transpose(u_runner_2, spawn + stts::vector2<int>(radius / 2, 0));
-        }
+        }*/
     }
 
     return std::move(game);

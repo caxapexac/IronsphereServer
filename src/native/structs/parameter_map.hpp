@@ -42,12 +42,12 @@ namespace stts {
 
     template<typename T>
     bool parameter_map::get (const std::string& name, T& data) const {
-        throw unimplemented_exception(name + "parameter_map::get was not implemented yet");
+        throw unimplemented_exception(name + " parameter_map::get was not implemented yet");
     }
 
     template<typename T>
     void parameter_map::set (const std::string& name, const T data) {
-        throw unimplemented_exception(name + "parameter_map::set was not implemented yet");
+        throw unimplemented_exception(name + " parameter_map::set was not implemented yet");
     }
 
     template <>

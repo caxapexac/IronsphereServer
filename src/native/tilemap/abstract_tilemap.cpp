@@ -105,10 +105,10 @@ int tilemap::abstract_tilemap::tile_count () const {
 }
 
 void tilemap::abstract_tilemap::transpose (ent::unit& target, const stts::vector2<int>& to_position) {
-    stts::vector2<int> previous_position = target.get_parameter<stts::vector2<int>>("position");
+    stts::vector2<int> previous_position = target.get_parameter<stts::vector2<int>>(com::j_locationable::position);
     if (is_valid(previous_position)) get_tile(previous_position).on_unit_exit(target);
     get_tile(to_position).on_unit_enter(target);
-    target.set_parameter("position", to_position); // TODO don't use inline strings
+    target.set_parameter(com::j_locationable::position, to_position);
     // TODO is it optimal
 }
 

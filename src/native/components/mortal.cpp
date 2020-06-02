@@ -13,9 +13,9 @@ void com::mortal::serialize_public (const ent::unit& owner, json& package) const
 }
 
 void com::mortal::setup_prototype (ent::unit_prototype& prototype) {
-    prototype.set_parameter(j_mortal::armor, 0.0);
-    prototype.set_parameter(j_mortal::hp, 1.0);
-    prototype.set_parameter(j_mortal::evading_chance, 0.0);
+    prototype.set_parameter(j_mortal::armor, (float) 10.0);
+    prototype.set_parameter(j_mortal::hp, (float) 10.0);
+    prototype.set_parameter(j_mortal::evading_chance, (float) 0.25);
     prototype.set_parameter(j_mortal::is_alive, true);
 }
 
@@ -34,20 +34,15 @@ void com::mortal::command (ent::unit& sender, ent::unit& owner, game::abstract_g
         }
         owner.set_parameter(j_mortal::armor, armor);
         owner.set_parameter(j_mortal::hp, hp);
-        if (hp <= 0) owner.set_parameter(j_mortal::is_alive, false);
+        if (hp <= 0) {
+            owner.set_parameter(j_mortal::is_alive, false);
+            context.get_tilemap().get_tile(owner.get_parameter<stts::vector2<int>>(j_locationable::position)).on_unit_exit(owner);
+        }
     }
 }
 
 void com::mortal::signal (ent::unit& owner, game::abstract_game& context, json& input) {
-    if (input.contains(j_mortal_signal::armor)) {
-        owner.set_parameter(j_mortal::armor, input[j_mortal_signal::armor].get<float>());
-    }
-    if (input.contains(j_mortal_signal::hp)) {
-        owner.set_parameter(j_mortal::hp, input[j_mortal_signal::hp].get<float>());
-    }
-    if (input.contains(j_mortal_signal::evading_chance)) {
-        owner.set_parameter(j_mortal::evading_chance, input[j_mortal_signal::evading_chance].get<float>());
-    }
+    // FIXME: nothing??
 }
 
 void com::mortal::update (ent::unit& owner, game::abstract_game& context) {
