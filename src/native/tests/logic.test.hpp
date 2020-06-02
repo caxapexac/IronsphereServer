@@ -12,7 +12,7 @@ namespace unit_testing {
     void test_logic() {
         std::cout << "* test_logic [started]" << std::endl; //TODO logger
 
-        stts::vector2<int> size {40, 40};
+        stts::vector2<int> size {35, 35};
         std::set<int> players;
         players.emplace(1);
         generators::simple gen(1, players, size);
@@ -48,13 +48,18 @@ namespace unit_testing {
                 break;
             }
             else {
-                json input;
-                input[com::j_move_signal::is_moving] = true;
+                json input2;
+                input2[com::j_move_signal::is_moving] = true;
                 stts::vector2<int> position = stts::vector2<int>(rand() % game->get_tilemap().get_scale().x, rand() % game->get_tilemap().get_scale().y);
-                position.serialize(input[com::j_move_signal::move_target]);
+                position.serialize(input2[com::j_move_signal::move_target]);
                 json output;
-                game->get_unit(2)->signal(*(game.get()), com::j_move::type, input);
-                game->signal(input, output);
+                game->get_unit(2)->signal(*(game.get()), com::j_move::type, input2);
+
+                json input1;
+                input1[com::j_spawner_signal::production_line] = 3;
+                output = {};
+                game->get_unit(1)->signal(*(game.get()), com::j_spawner::type, input1);
+                //game->signal(input, output);
             }
             //
             nlohmann::json_tools::print_tilemap(game->get_tilemap());

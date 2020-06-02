@@ -45,18 +45,16 @@ void com::move::update (ent::unit& owner, game::abstract_game& context) {
         if (context.get_tilemap().get_distance(position, move_target) <= 1) { // TODO normal float distance and parameters
             owner.set_parameter<bool>(j_move::is_moving, false);
             context.get_tilemap()[position].on_unit_enter(owner);
-        }
-        else {
+        } else {
             // TODO is it fast enough?
             std::list<stts::vector2<int>> path = owner.get_parameter<std::list<stts::vector2<int>>>(j_move::move_path);
             if (path.empty()) {
                 owner.set_parameter<bool>(j_move::is_moving, false);
                 context.get_tilemap()[position].on_unit_enter(owner);
                 // TODO check if occupied then find another tile without units
-            }
-            else {
-                stts::vector2<int> next_position = path.front();
-                path.pop_front();
+            } else {
+                stts::vector2<int> next_position = path.back();
+                path.pop_back();
                 owner.set_parameter<std::list<stts::vector2<int>>>(j_move::move_path, path);
                 tile::base_tile& t = context.get_tilemap()[position];
                 if (t.get_occupier_id() == owner.get_id()) t.on_unit_exit(owner);

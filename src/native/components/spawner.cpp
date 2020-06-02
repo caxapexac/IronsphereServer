@@ -38,11 +38,22 @@ void com::spawner::update (ent::unit& owner, game::abstract_game& context) {
         int tikz = owner.get_parameter<int>(j_spawner::production_tikz);
         int line = owner.get_parameter<int>(j_spawner::production_line);
         if (tikz == 10) { // FIXME random tikz value?
+            int money;
+            context.get_player(owner.get_player_id()).get(stts::player_params::money, money);
+            money -= 10;
+            if (money < 0) {
+                return;
+            } else {
+                context.get_player(owner.get_player_id()).set(stts::player_params::money, money);
+            }
+
             stts::vector2<int> pos = owner.get_parameter<stts::vector2<int>>(j_locationable::position);
             std::vector<stts::vector2<int>> nei = context.get_tilemap().get_neighbours(pos);
             for (int i = 0; i < nei.size(); ++i)
-                if (!context.get_tilemap().get_tile(nei[i]).is_occupied())
+                if (!context.get_tilemap().get_tile(nei[i]).is_occupied()) {
                     context.get_tilemap().transpose(context.make_unit("solemn", i), nei[i]);
+                    break;
+                }
 
             if (line == 0) owner.set_parameter(j_spawner::is_producing, false);
             else owner.set_parameter(j_spawner::production_line, line - 1);
