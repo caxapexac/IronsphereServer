@@ -1,5 +1,5 @@
-#ifndef LOGIC_SIMPLE_HPP
-#define LOGIC_SIMPLE_HPP
+#ifndef LOGIC_PERLIN_HPP
+#define LOGIC_PERLIN_HPP
 
 #include "abstract_generator.hpp"
 #include "../base/includes.hpp"
@@ -35,4 +35,4 @@ namespace generators {
 }
 
 
-#endif //LOGIC_SIMPLE_HPP
+#endif //LOGIC_PERLIN_HPP

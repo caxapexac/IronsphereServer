@@ -6,6 +6,7 @@
 #include "../tilemap/hexagonal.hpp"
 #include "../tilemap/square.hpp"
 #include "../generators/abstract_generator.hpp"
+#include "../generators/perlin.hpp"
 #include "../generators/simple.hpp"
 #include "../rules/abstract_rule.hpp"
 #include "../rules/deadmatch.hpp"
@@ -27,6 +28,7 @@ std::unique_ptr<generators::abstract_generator> json_tools::unpack_generator (js
 
     std::string type = package[j_typed::type];
     if (type == generators::j_simple::type) return std::make_unique<generators::simple>(package);
+    else if (type == generators::j_perlin::type) return std::make_unique<generators::perlin>(package);
     else throw type_exception("Unknown generator type");
 }
 
