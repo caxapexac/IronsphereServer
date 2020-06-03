@@ -2,18 +2,7 @@
 #include "../game/realtime.hpp"
 #include "../tilemap/square.hpp"
 #include "../rules/skirmish.hpp"
-
-
-// TODO into utils
-stts::vector2<int> generators::simple::cir_set (int number, int total) {
-    double ang = 360.0 / total * number;
-    double trueAng = 3.14159265358979323846 * (0.5 - 2.0 * (ang / 360.0));
-    int x = tilemap_scale.x / 2 + (int) (cos(trueAng) * tilemap_scale.x / 8 * 3);
-    int y = tilemap_scale.y / 2 - (int) (sin(trueAng) * tilemap_scale.y / 8 * 3);
-    return stts::vector2<int>(x, y);
-}
-
-
+#include "../utils/mathematics.hpp"
 
 generators::simple::simple (int nseed, std::set<int> nplayers_uid, const stts::vector2<int>& ntilemap_scale) {
     seed = nseed;
@@ -97,7 +86,7 @@ std::unique_ptr<game::abstract_game> generators::simple::generate () {
         player->set(stts::player_params::money, seed % 400 + 100);
         game->set_player(i, player);
 
-        stts::vector2<int> spawn = cir_set(i, players_uid.size());
+        stts::vector2<int> spawn = mathematics::circle_set(tilemap_scale, i, players_uid.size());
         int radius = tilemap_scale.x / 16;
 
         float middle_height = 0.0;
