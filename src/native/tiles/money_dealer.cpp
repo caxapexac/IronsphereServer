@@ -28,10 +28,9 @@ void tile::money_dealer::on_unit_enter (ent::unit& sender) {
 
 void tile::money_dealer::on_unit_touch (ent::unit& sender, game::abstract_game& context) {
     base_tile::on_unit_touch(sender, context);
-    //json package;
-    //package[j_money_dealer::money] = money;
-    //sender.command(sender, context, com::j_mortal::type, package);
-    // TODO FIXME
+    json package;
+    package[j_money_dealer::money] = money;
+    sender.command(sender, context, com::j_miner::type, package);
 }
 
 void tile::money_dealer::on_unit_exit (ent::unit& sender) {

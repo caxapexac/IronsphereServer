@@ -24,7 +24,7 @@ void com::spawner::command (ent::unit& sender, ent::unit& owner, game::abstract_
 
 void com::spawner::signal (ent::unit& owner, game::abstract_game& context, json& input) {
     if (input.contains(j_spawner_signal::production_line)) {
-        int com_line = input[j_spawner_signal::production_line].get<int>();
+        int com_line = input[j_spawner_signal::production_line].get<int>() - 1;
         if (com_line >= 0) {
             owner.set_parameter(j_spawner::production_line, com_line);
             owner.set_parameter(j_spawner::is_producing, (com_line > 0));

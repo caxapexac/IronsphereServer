@@ -64,12 +64,11 @@ void com::move::update (ent::unit& owner, game::abstract_game& context) {
                     tile::base_tile &t = context.get_tilemap()[position];
                     if (t.get_occupier_id() == owner.get_id()) t.on_unit_exit(owner);
 
-                    context.get_tilemap()[next_position].on_unit_touch(owner, context);
                     owner.set_parameter(j_locationable::position, next_position);
                 } else {
                     json j;
                     context.get_unit(nt.get_occupier_id())->command(owner, context, j_storage::type, j);
-                    if (j[j_storage::stored].get<bool>() == true) {
+                    if ((j.contains(j_storage::stored)) && (j[j_storage::stored].get<bool>() == true)) {
                         tile::base_tile& t = context.get_tilemap()[owner.get_parameter<stts::vector2<int>>(j_locationable::position)];
                         if (t.get_occupier_id() == owner.get_id()) t.on_unit_exit(owner);
                         owner.set_parameter(j_locationable::position, stts::vector2<int>(-1, -1));

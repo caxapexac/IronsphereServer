@@ -15,7 +15,7 @@ void game::realtime::serialize_concrete_player (int player_uid, json& package) {
     if (player_uid == 0) {
         // TODO it is admin, return all
     }
-    if (players[player_uid] == nullptr) {
+    if (players.count(player_uid) != 1) {
         throw null_pointer_exception(std::to_string(player_uid) + " player isn't in lobby");
     }
 

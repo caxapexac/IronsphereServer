@@ -69,6 +69,8 @@ std::unique_ptr<game::abstract_game> generators::simple::generate () {
     base->add_component(com::j_locationable::type);
     base->add_component(com::j_mortal::type);
     base->add_component(com::j_spawner::type);
+    base->add_component(com::j_storage::type);
+    base->add_component(com::j_base::type);
     game->set_prototype(base);
 
     ent::unit_prototype* solemn = new ent::unit_prototype("solemn");

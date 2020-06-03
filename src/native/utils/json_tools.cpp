@@ -68,8 +68,14 @@ void nlohmann::json_tools::print_tilemap (tilemap::abstract_tilemap& tilemap) {
             if (t.is_occupied()) {
                  std::cout << t.get_occupier_id() << "  ";
             }
+            else if (t.type() == tile::j_damage_dealer::type) {
+                std::cout << "-  ";
+            }
+            else if (t.type() == tile::j_money_dealer::type) {
+                std::cout << "+  ";
+            }
             else {
-                std::cout << ".  ";
+                std::cout << ",  ";
             }
         }
         std::cout << std::endl;

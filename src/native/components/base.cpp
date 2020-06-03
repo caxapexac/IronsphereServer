@@ -38,8 +38,9 @@ void com::base::update (ent::unit& owner, game::abstract_game& context) {
     }
     if (!is_defeated) {
         int units = 1;
-        for (int i = 0; i < context.get_units_count(); ++i) {
-            if (context.get_unit(i)->get_player_id() == owner.get_player_id()) units++;
+        for (int i = 1; i < context.get_units_count(); ++i) {
+            if (context.get_unit(i))
+                if (context.get_unit(i)->get_player_id() == owner.get_player_id()) units++;
         }
         owner.set_parameter<bool>(j_base::is_defeated, units < 2);
     }
