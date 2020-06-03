@@ -37,7 +37,7 @@ void com::attack::update (ent::unit& owner, game::abstract_game& context) {
         int attack_target = owner.get_parameter<int>(j_attack::attack_target);
         json package;
         package[j_attack::damage] = owner.get_parameter<float>(j_attack::damage);
-        context.get_unit(attack_target)->command(owner, context, j_mortal::type, package);
+        if (context.get_unit(attack_target)) context.get_unit(attack_target)->command(owner, context, j_mortal::type, package);
     }
 }
 
