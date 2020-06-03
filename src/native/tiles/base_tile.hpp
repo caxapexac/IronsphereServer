@@ -47,7 +47,7 @@ namespace tile {
         bool is_occupied () const;
 
         virtual void on_unit_enter (ent::unit& sender);
-        virtual void on_unit_touch (ent::unit& sender);
+        virtual void on_unit_touch (ent::unit& sender, game::abstract_game& context);
         virtual void on_unit_exit (ent::unit& sender);
     };
 }

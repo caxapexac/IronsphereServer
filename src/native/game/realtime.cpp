@@ -24,11 +24,12 @@ void game::realtime::serialize_concrete_player (int player_uid, json& package) {
     // TODO Smoke of war
     int team = players[player_uid]->get_team();
     for (const auto& i : units) {
-        if (players[i.second->get_player_id()]->get_team() == team) {
-            i.second->serialize(package[j_abstract_game::units][std::to_string(i.first)]);
-        }
-        else {
-            i.second->serialize_public(package[j_abstract_game::units][std::to_string(i.first)]);
+        if (i.second) {
+            if (players[i.second->get_player_id()]->get_team() == team) {
+                i.second->serialize(package[j_abstract_game::units][std::to_string(i.first)]);
+            } else {
+                i.second->serialize_public(package[j_abstract_game::units][std::to_string(i.first)]);
+            }
         }
     }
     // TODO
@@ -38,7 +39,7 @@ void game::realtime::serialize_concrete_player (int player_uid, json& package) {
 
 void game::realtime::update (json& output) {
     for (const auto& i : units) {
-        i.second->update(*this);
+        if (i.second) i.second->update(*this);
     }
 }
 

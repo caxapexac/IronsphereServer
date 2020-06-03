@@ -5,6 +5,7 @@
 #include "../base/includes.hpp"
 
 namespace com {
+    // WARNING: ALWAYS set FIRST
     // JSON
     namespace j_locationable {
         const std::string type = TOSTRING(locationable);

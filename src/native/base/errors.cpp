@@ -5,59 +5,67 @@ const char *basic_exception::what() const noexcept {
     return info.c_str();
 }
 
-basic_exception::basic_exception(const std::string &msg) {
-    this->info = "[General exception] " + msg;
-    logger::say(info, l::error, true);
+basic_exception::basic_exception(const std::string &msg) { }
+
+void basic_exception::log() {
+    logger::enable_all(false);
+    logger::enable_logger(true, l::server_console_logger);
+    logger::say(info, l::error);
+    logger::enable_all(true);
+}
+
+void basic_exception::pass() {
+    // Actually really do nothing. Do not give a shit about the exception.
 }
 
 
 
 shared_pointer_exception::shared_pointer_exception(const std::string &msg) : basic_exception(msg) {
     this->info = "[Shared pointer exception] " + msg;
-    logger::say(info, l::error, true);
+    log();
 }
 
 serialization_exception::serialization_exception(const std::string &msg) : basic_exception(msg) {
     this->info = "[Serialization exception] " + msg;
-    logger::say(info, l::error, true);
+    log();
 }
 
 deserialization_exception::deserialization_exception(const std::string &msg) : basic_exception(msg) {
     this->info = "[Deserialization exception] " + msg;
-    logger::say(info, l::error, true);
+    log();
 }
 
 unimplemented_exception::unimplemented_exception(const std::string &msg) : basic_exception(msg) {
     this->info = "[Unimplemented exception] " + msg;
-    logger::say(info, l::error, true);
+    log();
 }
 
 recursion_exception::recursion_exception(const std::string &msg) : basic_exception(msg) {
     this->info = "[Recursion exception] " + msg;
-    logger::say(info, l::error, true);
+    log();
 }
 
 null_pointer_exception::null_pointer_exception(const std::string &msg) : basic_exception(msg) {
     this->info = "[Null pointer exception] " + msg;
-    logger::say(info, l::error, true);
+    log();
 }
 
 out_of_bounds_exception::out_of_bounds_exception(const std::string &msg) : basic_exception(msg) {
     this->info = "[Out of bounds exception] " + msg;
-    logger::say(info, l::error, true);
+    log();
 }
 
 conflict_exception::conflict_exception(const std::string &msg) : basic_exception(msg) {
     this->info = "[Conflict bounds exception] " + msg;
-    logger::say(info, l::error, true);
+    log();
 }
 
 rights_exception::rights_exception(const std::string &msg) : basic_exception(msg) {
     this->info = "[Rights exception] " + msg;
-    logger::say(info, l::error, true);
+    log();
 }
 
 type_exception::type_exception(const std::string &msg) : basic_exception(msg) {
     this->info = "[Type exception] " + msg;
-    logger::say(info, l::error, true);
+    log();
 }

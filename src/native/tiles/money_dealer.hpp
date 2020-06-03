@@ -21,7 +21,7 @@ namespace tile {
         const std::string& type () const override;
 
         void on_unit_enter (ent::unit& sender) override;
-        void on_unit_touch (ent::unit& sender) override;
+        void on_unit_touch (ent::unit& sender, game::abstract_game& context) override;
         void on_unit_exit (ent::unit& sender) override;
     };
 }

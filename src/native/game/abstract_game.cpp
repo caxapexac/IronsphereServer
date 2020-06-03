@@ -102,6 +102,12 @@ ent::unit& game::abstract_game::make_unit (const std::string& prototype_name, in
     // TODO simplify
 }
 
+void game::abstract_game::unmake_unit(int id) {
+    ent::unit* marked = units[id];
+    units[id] = nullptr;
+    delete marked;
+}
+
 ent::unit_prototype* game::abstract_game::get_prototype (const std::string& prototype_name) {
     return factory.get_prototype(prototype_name);
 }
@@ -131,16 +137,3 @@ tilemap::abstract_tilemap& game::abstract_game::get_tilemap () {
 void game::abstract_game::set_tilemap (std::unique_ptr<tilemap::abstract_tilemap> ntilemap) {
     tilemap = std::move(ntilemap);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

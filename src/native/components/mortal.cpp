@@ -36,7 +36,9 @@ void com::mortal::command (ent::unit& sender, ent::unit& owner, game::abstract_g
         owner.set_parameter(j_mortal::hp, hp);
         if (hp <= 0) {
             owner.set_parameter(j_mortal::is_alive, false);
-            context.get_tilemap().get_tile(owner.get_parameter<stts::vector2<int>>(j_locationable::position)).on_unit_exit(owner);
+            tile::base_tile& t = context.get_tilemap()[owner.get_parameter<stts::vector2<int>>(j_locationable::position)];
+            if (t.get_occupier_id() == owner.get_id()) t.on_unit_exit(owner);
+            context.unmake_unit(owner.get_id());
         }
     }
 }

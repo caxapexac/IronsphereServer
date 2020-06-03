@@ -10,8 +10,10 @@ private:
     std::string info;
 protected:
     explicit basic_exception (const std::string& msg);
+    void log();
 public:
     const char* what () const noexcept override;
+    void pass();
 };
 
 

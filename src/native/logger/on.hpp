@@ -20,7 +20,6 @@ namespace l {
         abstract_logger** logs;
         streams stream;
         std::ostringstream alpha;
-        bool safe_mode;
 
         using utils::singleton<on>::get;
 
@@ -31,11 +30,12 @@ namespace l {
         ~on ();
 
         static void enable_logger (bool enabled, loggers logger);
+        static void enable_all (bool enabled);
 
-        static on& say (streams str = message, bool safe = false);
+        static on& say (streams str = message);
         template<typename T>
-        static void say (const T& value, streams str = message, bool safe = false);
-        static void say (json& object, streams str = message, bool safe = false);
+        static void say (const T& value, streams str = message);
+        static void say (json& object, streams str = message);
 
         template<typename T>
         friend l::on& operator<< (l::on& out, const T& value);
@@ -56,11 +56,10 @@ namespace l {
     }
 
     template<typename T>
-    void l::on::say (const T &value, l::streams str, bool safe) {
+    void l::on::say (const T &value, l::streams str) {
         on& fin = utils::singleton<on>::get();
         fin.stream = str;
         fin.alpha << value;
-        fin.safe_mode = safe;
         fin.send(true);
     }
 }

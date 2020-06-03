@@ -44,6 +44,7 @@ namespace game {
         void set_prototype(ent::unit_prototype* prototype);
 
         ent::unit& make_unit (const std::string& prototype_name, int player_uid);
+        void unmake_unit (int id);
         ent::unit* get_unit (int id);
 
         stts::player& get_player (int uid);

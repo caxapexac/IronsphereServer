@@ -18,4 +18,7 @@ void com::locationable::command (ent::unit& sender, ent::unit& owner, game::abst
 
 void com::locationable::signal (ent::unit& owner, game::abstract_game& context, json& input) {}
 
-void com::locationable::update (ent::unit& owner, game::abstract_game& context) {}
+void com::locationable::update (ent::unit& owner, game::abstract_game& context) {
+    stts::vector2<int> position = owner.get_parameter<stts::vector2<int>>(j_locationable::position);
+    context.get_tilemap()[position].on_unit_touch(owner, context);
+}

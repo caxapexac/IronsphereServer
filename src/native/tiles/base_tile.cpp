@@ -73,8 +73,8 @@ void tile::base_tile::on_unit_enter (ent::unit& sender) {
     // Do nothing
 }
 
-void tile::base_tile::on_unit_touch (ent::unit& sender) {
-    occupier_uid = sender.get_id(); // FIXME delete this (only for debug)
+void tile::base_tile::on_unit_touch (ent::unit& sender, game::abstract_game& context) {
+    occupier_uid = sender.get_id();
     // Do nothing
 }
 

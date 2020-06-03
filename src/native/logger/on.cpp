@@ -1,7 +1,4 @@
 #include "on.hpp"
-#include "../online/api.hpp"
-#include "abstract_logger.hpp"
-#include "logger_user.hpp"
 
 l::on::on () : utils::singleton<on>() {
     stream = message;
@@ -11,7 +8,6 @@ l::on::on () : utils::singleton<on>() {
     logs[server_file_logger] = new logger_file();
     logs[user_logger] = new logger_user();
     alpha = std::ostringstream();
-    safe_mode = false;
 }
 
 l::on::~on () {
@@ -26,34 +22,37 @@ void l::on::enable_logger(bool enabled, l::loggers logger) {
     utils::singleton<on>::get().logs[logger]->set_enabled(enabled);
 }
 
+void l::on::enable_all(bool enabled) {
+    on& fin = utils::singleton<on>::get();
+    fin.logs[server_console_logger]->set_enabled(enabled);
+    fin.logs[broadcast_logger]->set_enabled(enabled);
+    fin.logs[server_file_logger]->set_enabled(enabled);
+    fin.logs[user_logger]->set_enabled(enabled);
+}
+
 void l::on::send (bool decorated) {
     std::string verbal = this->alpha.str();
     if (logs[server_console_logger]->is_enabled())
         logs[server_console_logger]->let(verbal, stream, decorated);
-    if (!safe_mode) {
-        if (logs[broadcast_logger]->is_enabled())
-            logs[broadcast_logger]->let(verbal, stream, decorated);
-        if (logs[server_file_logger]->is_enabled())
-            logs[server_file_logger]->let(verbal, stream, decorated);
-        if (logs[user_logger]->is_enabled())
-            logs[user_logger]->let(verbal, stream, decorated);
-    }
-    safe_mode = false;
+    if (logs[broadcast_logger]->is_enabled())
+        logs[broadcast_logger]->let(verbal, stream, decorated);
+    if (logs[server_file_logger]->is_enabled())
+        logs[server_file_logger]->let(verbal, stream, decorated);
+    if (logs[user_logger]->is_enabled())
+        logs[user_logger]->let(verbal, stream, decorated);
     alpha = std::ostringstream();
 }
 
-l::on& l::on::say (streams str, bool safe) {
+l::on& l::on::say (streams str) {
     on& fin = utils::singleton<on>::get();
     fin.stream = str;
-    fin.safe_mode = safe;
     return fin;
 }
 
-void l::on::say (json &object, l::streams str, bool safe) {
+void l::on::say (json &object, l::streams str) {
     on& fin = utils::singleton<on>::get();
     fin.stream = str;
     fin.alpha << object.dump(4);
-    fin.safe_mode = safe;
     fin.send(true);
 }
 
