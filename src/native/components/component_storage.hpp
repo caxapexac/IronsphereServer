@@ -8,6 +8,10 @@
 #include "attack.hpp"
 #include "spawner.hpp"
 #include "locationable.hpp"
+#include "miner.hpp"
+#include "base.hpp"
+#include "ai_walker.hpp"
+#include "ai_attacker.hpp"
 
 
 namespace com {

@@ -7,7 +7,6 @@ const std::string& com::move::type () const {
 }
 
 void com::move::serialize_public (const ent::unit& owner, json& output) const {
-    owner.get_parameter<stts::vector2<int>>(j_locationable::position).serialize(output[j_locationable::position]);
     output[j_move::is_moving] = owner.get_parameter<bool>(j_move::is_moving);
     // TODO p_position (float) and p_tile_position (int)
 }
@@ -68,7 +67,13 @@ void com::move::update (ent::unit& owner, game::abstract_game& context) {
                     context.get_tilemap()[next_position].on_unit_touch(owner, context);
                     owner.set_parameter(j_locationable::position, next_position);
                 } else {
-                    // TODO : try to get in.
+                    json j;
+                    context.get_unit(nt.get_occupier_id())->command(owner, context, j_storage::type, j);
+                    if (j[j_storage::stored].get<bool>() == true) {
+                        tile::base_tile& t = context.get_tilemap()[owner.get_parameter<stts::vector2<int>>(j_locationable::position)];
+                        if (t.get_occupier_id() == owner.get_id()) t.on_unit_exit(owner);
+                        owner.set_parameter(j_locationable::position, stts::vector2<int>(-1, -1));
+                    }
                 }
             }
         }

@@ -108,6 +108,10 @@ void game::abstract_game::unmake_unit(int id) {
     delete marked;
 }
 
+int game::abstract_game::get_units_count() {
+    return (int) units.size();
+}
+
 ent::unit_prototype* game::abstract_game::get_prototype (const std::string& prototype_name) {
     return factory.get_prototype(prototype_name);
 }

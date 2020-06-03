@@ -50,7 +50,7 @@ void com::spawner::update (ent::unit& owner, game::abstract_game& context) {
             stts::vector2<int> pos = owner.get_parameter<stts::vector2<int>>(j_locationable::position);
             std::vector<stts::vector2<int>> nei = context.get_tilemap().get_neighbours(pos);
             bool spawned = false;
-            for (int i = 0; i < nei.size(); ++i)
+            for (int i = 0; i < (int) nei.size(); ++i)
                 if (!context.get_tilemap().get_tile(nei[i]).is_occupied()) {
                     context.get_tilemap().transpose(context.make_unit("solemn", i), nei[i]);
                     spawned = true;
