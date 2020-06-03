@@ -1,6 +1,6 @@
 #include "perlin.hpp"
+
 #include "../utils/perlin_noise_so.hpp"
-#include "../utils/mathematics.hpp"
 #include "../game/realtime.hpp"
 #include "../tilemap/square.hpp"
 #include "../rules/skirmish.hpp"
@@ -9,7 +9,7 @@ generators::perlin::perlin (int nseed, int noctaves, float npersistance, std::se
     seed = nseed;
     octaves = noctaves;
     persistance = npersistance;
-    players_uid = nplayers_uid;
+    players_uid = std::move(nplayers_uid);
     tilemap_scale = ntilemap_scale;
 }
 
