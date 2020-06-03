@@ -13,7 +13,7 @@ namespace unit_testing {
     void test_logic() {
         std::cout << "* test_logic [started]" << std::endl; //TODO logger
 
-        stts::vector2<int> size {35, 35};
+        stts::vector2<int> size {20, 20};
         std::set<int> players;
         players.emplace(1);
         players.emplace(2);

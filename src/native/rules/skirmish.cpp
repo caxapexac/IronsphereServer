@@ -18,5 +18,5 @@ bool rules::skirmish::is_finished (std::map<int, stts::player*> players, std::ma
     for (const auto& i : units) {
         alive.emplace(i.second->get_player_id());
     }
-    return alive.size() > 1;
+    return alive.size() <= 1;
 }
