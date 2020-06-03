@@ -29,9 +29,9 @@ void generators::perlin::serialize (json& package) const {
 void generators::perlin::deserialize (json& package) {
     abstract_generator::deserialize(package);
     seed = package[j_perlin::seed].get<int>();
-    octaves = package[j_perlin::seed].get<int>();
-    persistance = package[j_perlin::seed].get<float>();
-    players_uid = package[j_perlin::seed].get<std::set<int>>();
+    octaves = package[j_perlin::octaves].get<int>();
+    persistance = package[j_perlin::persistance].get<float>();
+    players_uid = package[j_perlin::players_uid].get<std::set<int>>();
     tilemap_scale = stts::vector2<int>(package[j_perlin::tilemap_scale]);
 }
 
