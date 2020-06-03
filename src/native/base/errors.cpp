@@ -2,6 +2,7 @@
 #include "includes.hpp"
 
 const char *basic_exception::what() const noexcept {
+    std::cout << "!!!" << info << "!!!" << std::endl;
     return info.c_str();
 }
 

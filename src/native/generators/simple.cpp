@@ -2,7 +2,6 @@
 #include "../game/realtime.hpp"
 #include "../tilemap/square.hpp"
 #include "../rules/skirmish.hpp"
-#include "../utils/mathematics.hpp"
 
 generators::simple::simple (int nseed, std::set<int> nplayers_uid, const stts::vector2<int>& ntilemap_scale) {
     seed = nseed;

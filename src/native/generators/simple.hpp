@@ -4,6 +4,7 @@
 #include "abstract_generator.hpp"
 #include "../base/includes.hpp"
 #include "../structs/vector2.hpp"
+#include "../utils/mathematics.hpp"
 
 namespace generators {
     namespace j_simple {

@@ -1,6 +1,6 @@
 #include "perlin.hpp"
+
 #include "../utils/perlin_noise_so.hpp"
-#include "../utils/mathematics.hpp"
 #include "../game/realtime.hpp"
 #include "../tilemap/square.hpp"
 #include "../rules/skirmish.hpp"
@@ -9,7 +9,7 @@ generators::perlin::perlin (int nseed, int noctaves, float npersistance, std::se
     seed = nseed;
     octaves = noctaves;
     persistance = npersistance;
-    players_uid = nplayers_uid;
+    players_uid = std::move(nplayers_uid);
     tilemap_scale = ntilemap_scale;
 }
 
@@ -29,9 +29,9 @@ void generators::perlin::serialize (json& package) const {
 void generators::perlin::deserialize (json& package) {
     abstract_generator::deserialize(package);
     seed = package[j_perlin::seed].get<int>();
-    octaves = package[j_perlin::seed].get<int>();
-    persistance = package[j_perlin::seed].get<float>();
-    players_uid = package[j_perlin::seed].get<std::set<int>>();
+    octaves = package[j_perlin::octaves].get<int>();
+    persistance = package[j_perlin::persistance].get<float>();
+    players_uid = package[j_perlin::players_uid].get<std::set<int>>();
     tilemap_scale = stts::vector2<int>(package[j_perlin::tilemap_scale]);
 }
 
