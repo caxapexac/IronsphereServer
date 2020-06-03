@@ -10,7 +10,7 @@
 #include "../generators/perlin.hpp"
 
 namespace unit_testing {
-    void test_logic() {
+    void test_logic () {
         std::cout << "* test_logic [started]" << std::endl; //TODO logger
 
         stts::vector2<int> size {35, 35};
@@ -47,6 +47,11 @@ namespace unit_testing {
                 json j;
                 game->update(j);
             }
+            else if (command == "p") {
+                json j;
+                game->serialize_concrete_player(2, j);
+                std::cout << j.dump(2) << std::endl;
+            }
             else if (command == "q") {
                 break;
             }
@@ -71,8 +76,7 @@ namespace unit_testing {
             int money;
             game->get_player(1).get(stts::player_params::money, money);
             std::cout << "Player 1 ownes objects 1, 2; has " << money << " money." << std::endl;
-            std::cout << "Object 1 is generating " << game->get_unit(1)->get_parameter<int>(com::j_spawner::production_line) << " objects " <<
-                    "(first be ready in " << 10 - game->get_unit(1)->get_parameter<int>(com::j_spawner::production_tikz) << " updates)." << std::endl;
+            std::cout << "Object 1 is generating " << game->get_unit(1)->get_parameter<int>(com::j_spawner::production_line) << " objects " << "(first be ready in " << 10 - game->get_unit(1)->get_parameter<int>(com::j_spawner::production_tikz) << " updates)." << std::endl;
             stts::vector2<int> first_moves = game->get_unit(2)->get_parameter<stts::vector2<int>>(com::j_move::move_target);
             stts::vector2<int> first_at = game->get_unit(2)->get_parameter<stts::vector2<int>>(com::j_locationable::position);
             std::cout << "Object 2 is in tile (" << first_at.x << " ," << first_at.y << ") and is moving towards (" << first_moves.x << " ," << first_moves.y << "). " <<
@@ -84,6 +88,9 @@ namespace unit_testing {
             if (game->get_unit(2)) std::cout << "Object 2 has " << game->get_unit(2)->get_parameter<float>(com::j_mortal::hp) << " HP and "  <<
                                              game->get_unit(2)->get_parameter<float>(com::j_mortal::armor) << " armor left." << std::endl;
             else std::cout << "Object 2 has died." << std::endl;
+            std::cout << "Object 2 is in tile (" << first_at.x << " ," << first_at.y << ") and is moving towards (" << first_moves.x << " ," << first_moves.y << "). " << "It is attacking object " << game->get_unit(2)->get_parameter<int>(com::j_attack::attack_target) << " with damage " << game->get_unit(2)->get_parameter<float>(com::j_attack::damage) << "." << std::endl;
+            if (game->get_unit(3))
+                std::cout << "Object 3 has " << game->get_unit(3)->get_parameter<float>(com::j_mortal::hp) << " HP and " << game->get_unit(3)->get_parameter<float>(com::j_mortal::armor) << " armor left." << std::endl;
             nlohmann::json_tools::print_tilemap(game->get_tilemap());
             //
         }

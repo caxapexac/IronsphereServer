@@ -44,8 +44,3 @@ void com::attack::update (ent::unit& owner, game::abstract_game& context) {
         }
     }
 }
-
-
-
-
-
