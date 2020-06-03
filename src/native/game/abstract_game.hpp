@@ -17,6 +17,10 @@ namespace game {
         const std::string tilemap = TOSTRING(tilemap); // : abstract_tilemap?
     }
 
+    namespace j_commands {
+        const std::string sacrifice = TOSTRING(sacrifice);
+    }
+
     class abstract_game : public iserializable, public iserializable_public, public ityped {
     protected:
         ent::unit_factory factory;

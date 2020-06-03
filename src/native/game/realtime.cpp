@@ -41,6 +41,11 @@ void game::realtime::update (json& output) {
     for (const auto& i : units) {
         if (i.second) i.second->update(*this);
     }
+    for (const auto& i : units) {
+        json j;
+        j[j_commands::sacrifice] = true;
+        if (i.second) i.second->command(*(i.second), *this, com::j_mortal::type, j);
+    }
 }
 
 

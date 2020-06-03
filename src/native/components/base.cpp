@@ -32,13 +32,14 @@ void com::base::update (ent::unit& owner, game::abstract_game& context) {
                     break;
                 }
             owner.set_parameter<int>(j_base::defenders_tikz, 0);
+            owner.set_parameter<bool>(j_base::is_defeated, false);
         } else {
             owner.set_parameter<int>(j_base::defenders_tikz, defenders_tikz + 1);
         }
     }
     if (!is_defeated) {
-        int units = 1;
-        for (int i = 1; i < context.get_units_count(); ++i) {
+        int units = 0;
+        for (int i = 1; i <= context.get_units_count(); ++i) {
             if (context.get_unit(i))
                 if (context.get_unit(i)->get_player_id() == owner.get_player_id()) units++;
         }
