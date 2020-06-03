@@ -7,6 +7,7 @@
 #include "../tilemap/square.hpp"
 #include "../components/component_storage.hpp"
 #include "../generators/simple.hpp"
+#include "../generators/perlin.hpp"
 
 namespace unit_testing {
     void test_logic() {
@@ -16,7 +17,8 @@ namespace unit_testing {
         std::set<int> players;
         players.emplace(1);
         players.emplace(2);
-        generators::simple gen(1, players, size);
+        //generators::simple gen(1, players, size);
+        generators::perlin gen(1, 3, 0.5, players, size);
         std::unique_ptr<game::abstract_game> game = gen.generate();
 
         // saving
