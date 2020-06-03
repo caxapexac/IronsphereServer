@@ -13,7 +13,7 @@ namespace unit_testing {
     void test_logic() {
         std::cout << "* test_logic [started]" << std::endl; //TODO logger
 
-        stts::vector2<int> size {20, 20};
+        stts::vector2<int> size {35, 35};
         std::set<int> players;
         players.emplace(1);
         players.emplace(2);
@@ -46,6 +46,11 @@ namespace unit_testing {
             if (command.empty()) {
                 json j;
                 game->update(j);
+            }
+            else if (command == "p") {
+                json j;
+                game->serialize_concrete_player(2, j);
+                std::cout << j.dump(2) << std::endl;
             }
             else if (command == "q") {
                 break;

@@ -71,9 +71,11 @@ void ent::unit::ensure_cache () const {
         cache_public = cache;
 
         parameter_map::serialize(cache);
+        OBSOLETE parameter_map::serialize(cache_public);
         if (prototype) {
             prototype->serialize(cache[j_unit::prototype]);
-            prototype->get_cache_public(*this, cache_public); //FIXME
+            OBSOLETE prototype->serialize(cache_public[j_unit::prototype]);
+            //prototype->get_cache_public(*this, cache_public); //FIXME
         }
         is_dirty = false;
     }
