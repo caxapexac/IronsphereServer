@@ -5,7 +5,7 @@
 #include "unit_prototype.hpp"
 #include "unit.hpp"
 
-namespace ent {
+namespace ent { // PATTERN : FACTORY
     // JSON
     namespace j_unit_factory {
         const std::string prototypes = TOSTRING(prototypes); // : map<std::string, unit_prototype>

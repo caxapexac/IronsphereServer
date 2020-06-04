@@ -46,7 +46,12 @@ void ent::unit_prototype::get_cache_public (const ent::unit& head, json& output)
 void ent::unit_prototype::update (ent::unit& head, game::abstract_game& game, int ttl) {
     if (--ttl <= 0) throw recursion_exception("128 layers of inheritance reached!");
     for (const auto& i : components)
-        i.second->update(head, game);
+        if (i.second) {
+            logger::say() << "\t" << "Updating component " << i.second->type() << "..." << logger::over;
+            i.second->update(head, game);
+        } else {
+            logger::say(l::error) << "\t" << "Component is NULL, possible bug!" << logger::over;
+        }
     if (prototype) prototype->update(head, game, ttl);
 }
 

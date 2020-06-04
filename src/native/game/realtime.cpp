@@ -39,7 +39,10 @@ void game::realtime::serialize_concrete_player (int player_uid, json& package) {
 
 void game::realtime::update (json& output) {
     for (const auto& i : units) {
-        if (i.second) i.second->update(*this);
+        if (i.second) {
+            logger::say(l::debug) << "Updating unit id " << i.second->get_id() << " (owner " << i.second->get_player_id() << ")..." << logger::out;
+            i.second->update(*this);
+        }
     }
     for (const auto& i : units) {
         json j;

@@ -35,6 +35,7 @@ void com::attack::update (ent::unit& owner, game::abstract_game& context) {
     bool is_attacking = owner.get_parameter<bool>(j_attack::is_attacking);
     if (is_attacking) {
         int attack_target = owner.get_parameter<int>(j_attack::attack_target);
+        logger::say() << "\t\t" << "Unit is attacking unit id " << attack_target << logger::over;
         if (context.get_unit(attack_target)) {
             json package;
             package[j_attack::damage] = owner.get_parameter<float>(j_attack::damage);
@@ -42,5 +43,7 @@ void com::attack::update (ent::unit& owner, game::abstract_game& context) {
         } else {
             owner.set_parameter<bool>(j_attack::is_attacking, false);
         }
+    } else {
+        logger::say() << "\t\t" << "Unit is beating around the bush." << logger::over;
     }
 }

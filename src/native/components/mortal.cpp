@@ -51,7 +51,15 @@ void com::mortal::signal (ent::unit& owner, game::abstract_game& context, json& 
     // FIXME: nothing??
 }
 
-void com::mortal::update (ent::unit& owner, game::abstract_game& context) { }
+void com::mortal::update (ent::unit& owner, game::abstract_game& context) {
+    bool alive = owner.get_parameter<bool>(j_mortal::is_alive);
+    float armor = owner.get_parameter<float>(j_mortal::armor);
+    float hp = owner.get_parameter<float>(j_mortal::hp);
+    float evade = owner.get_parameter<float>(j_mortal::evading_chance);
+    logger::say() << "\t\t" << "Unit " << (alive ? "is" : "is not") << " alive." << logger::over;
+    logger::say() << "\t\t" << "Unit has " << hp << " HP and " << armor << " armor." << logger::over;
+    logger::say() << "\t\t" << "Unit has " << evade << " evading chance." << logger::over;
+}
 
 
 

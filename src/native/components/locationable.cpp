@@ -3,7 +3,7 @@
 #include "../game/abstract_game.hpp"
 
 const std::string& com::locationable::type () const {
-    return j_move::type;
+    return j_locationable::type;
 }
 
 void com::locationable::serialize_public (const ent::unit& owner, json& output) const {
@@ -25,5 +25,6 @@ void com::locationable::signal (ent::unit& owner, game::abstract_game& context, 
 
 void com::locationable::update (ent::unit& owner, game::abstract_game& context) {
     stts::vector2<int> position = owner.get_parameter<stts::vector2<int>>(j_locationable::position);
+    logger::say() << "\t\t" << "Unit at position (" << position.x << ", " << position.y << ")." << logger::over;
     context.get_tilemap()[position].on_unit_touch(owner, context);
 }

@@ -83,6 +83,7 @@ std::unique_ptr<game::abstract_game> generators::simple::generate () {
 
     // Players
     for (auto i : players_uid) {
+        logger::say() << "" << "Making player id " << i << logger::over;
         stts::player *player = new stts::player(i);
         player->set(stts::player_params::money, seed % 400 + 100);
         game->set_player(i, player);
@@ -111,10 +112,12 @@ std::unique_ptr<game::abstract_game> generators::simple::generate () {
         // Base
         ent::unit &u_base = game->make_unit("base", i);
         game->get_tilemap().transpose(u_base, spawn + stts::vector2<int>(radius / 2, 0));
+        logger::say() << "\t" << "Spawned base to (" << (spawn + stts::vector2<int>(radius / 2, 0)).x << ", " << (spawn + stts::vector2<int>(radius / 2, 0)).y << ")." << logger::over;
 
         // Units
         ent::unit &u_runner_1 = game->make_unit("solemn", i);
         game->get_tilemap().transpose(u_runner_1, spawn + stts::vector2<int>(-radius/2, 0));
+        logger::say() << "\t" << "Spawned solemn to (" << (spawn + stts::vector2<int>(-radius/2, 0)).x << ", " << (spawn + stts::vector2<int>(-radius/2, 0)).y << ")." << logger::over;
 
         /*if (unit1_offset != unit2_offset) { // TODO: remove this to test on SANE-SIZED maps
             ent::unit &u_runner_2 = game->make_unit("solemn", i);

@@ -37,13 +37,18 @@ void com::spawner::update (ent::unit& owner, game::abstract_game& context) {
     if (producing) {
         int tikz = owner.get_parameter<int>(j_spawner::production_tikz);
         int line = owner.get_parameter<int>(j_spawner::production_line);
+        logger::say() << "\t\t" << "Unit is spawning " << line << " objects (type: solemn)." << logger::over;
+        logger::say() << "\t\t" << "Updates until next is ready: " << 10 - tikz << logger::over;
         if (tikz == 10) { // FIXME random tikz value?
+            logger::say() << "\t\t" << "Unit is ready to spawn!" << logger::over;
             int money;
             context.get_player(owner.get_player_id()).get(stts::player_params::money, money);
             money -= 10;
             if (money < 0) {
+                logger::say() << "\t\t" << "Insufficient money :(" << logger::over;
                 return;
             } else {
+                logger::say() << "\t\t" << "Player has " << money << " money left." << logger::over;
                 context.get_player(owner.get_player_id()).set(stts::player_params::money, money);
             }
 
@@ -52,7 +57,8 @@ void com::spawner::update (ent::unit& owner, game::abstract_game& context) {
             bool spawned = false;
             for (int i = 0; i < (int) nei.size(); ++i)
                 if (!context.get_tilemap().get_tile(nei[i]).is_occupied()) {
-                    context.get_tilemap().transpose(context.make_unit("solemn", i), nei[i]);
+                    logger::say() << "\t\t" << "Spawned solemn to (" << nei[i].x << ", " << nei[i].y << ")." << logger::over;
+                    context.get_tilemap().transpose(context.make_unit("solemn", owner.get_player_id()), nei[i]);
                     spawned = true;
                     break;
                 }
@@ -65,5 +71,7 @@ void com::spawner::update (ent::unit& owner, game::abstract_game& context) {
         } else {
             owner.set_parameter(j_spawner::production_tikz, tikz + 1);
         }
+    } else {
+        logger::say() << "\t\t" << "Unit is not spawning anything." << logger::over;
     }
 }
